@@ -46,6 +46,14 @@ export const QuizMode: React.FC = observer(() => {
 
     // Wait for feedback animation
     await new Promise(resolve => setTimeout(resolve, 1000));
+    
+    // Handle the answer result
+    if (isCorrect) {
+      await gameStore.handleCorrectAnswer();
+    } else {
+      await gameStore.handleIncorrectAnswer();
+    }
+    
     await gameStore.prepareNextFlag();
   };
 

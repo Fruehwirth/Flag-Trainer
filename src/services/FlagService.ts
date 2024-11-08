@@ -1,4 +1,4 @@
-import { Flag, FlagSet } from '../types/Flag';
+import { Flag } from '../types/Flag';
 import { Region } from '../types/Settings';
 import { shuffle } from '../utils/helpers';
 
