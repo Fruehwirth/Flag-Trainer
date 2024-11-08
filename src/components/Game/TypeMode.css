@@ -1,0 +1,31 @@
+.type-input-container {
+    width: 100%;
+    max-width: 500px;
+    position: relative;
+  }
+  
+  .answer-input {
+    width: 100%;
+    padding: 14px;
+    font-size: 18px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+    text-align: left;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+  }
+  
+  .answer-input:focus {
+    outline: none;
+    border-color: #555;
+  }
+  
+  .answer-input.correct {
+    border-color: green;
+    background-color: rgba(0, 128, 0, 0.1);
+  }
+  
+  .answer-input.incorrect {
+    border-color: red;
+    background-color: rgba(255, 0, 0, 0.1);
+  }

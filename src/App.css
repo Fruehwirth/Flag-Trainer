@@ -1,0 +1,48 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+.app {
+  min-height: 100vh;
+  min-width: 100vw;
+  display: flex;
+  flex-direction: column;
+  background-color: #f0f0f0;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+.game-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  padding: 20px;
+  max-width: 600px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 50px;
+  max-height: calc(100vh - 80px);
+  overflow-y: auto;
+  padding-top: 90px;
+}
+
+@media (max-width: 768px) {
+  .game-container {
+    padding: 10px;
+    gap: 30px;
+  }
+  
+  .type-mode .game-container {
+    top: 76px;
+    transform: translateX(-50%);
+    padding-top: 20px;
+  }
+}

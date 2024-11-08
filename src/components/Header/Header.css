@@ -1,0 +1,39 @@
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 76px;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    z-index: 100;
+  }
+  
+  .settings-button {
+    background: none;
+    border: none;
+    font-size: 36px;
+    cursor: pointer;
+    color: #333;
+    padding: 8px;
+  }
+  
+  .score-container {
+    margin-left: auto;
+    font-size: 18px;
+    color: #333;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+  }
+  
+  .header h1 {
+    margin: 0;
+    margin-left: 30px;
+    flex-grow: 1;
+    text-align: left;
+    font-size: 24px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+  }

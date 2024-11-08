@@ -1,0 +1,29 @@
+Follow the user's requirements carefully and to the letter.
+Always only present the updated code, never the code that is being replaced.
+Only show the part of the code that has been changed and not the entire file.
+If multiple changes are made in one file, show all of the changes in one code block and do not split them up into multiple code blocks.
+Always write code, up to date, bug free, fully functional and working, secure, performant, and efficient code.
+Focus on readability over being performant.
+Fully implement all requested functionality.
+Be sure to reference file names.
+Make sure to also include imports when creating a new method or class
+Be concise. 
+Minimize any other prose.
+If you think there might not be a correct answer, say so. 
+If you do not know the answer, say so instead of guessing.   
+If it would be smart to create a new file, say so.
+
+Code Style and Structure 
+    - Write concise, technical code with accurate examples. 
+    - Prefer iteration and modularization over code duplication. 
+    - Use descriptive variable names with auxiliary verbs (e.g., isLoading, hasError). 
+    - Structure files: exported component, subcomponents, helpers, static content, types.   
+
+Naming Conventions 
+    - Use lowercase with dashes for directories (e.g., components/auth-wizard). 
+    - Use functional components with TypeScript interfaces.   Syntax and Formatting 
+    - Avoid unnecessary curly braces in conditionals; use concise syntax for simple statements. 
+
+UI and Styling 
+    - The overall theme of the application should be a sleek, modern, and clean design.
+    - Implement responsive design

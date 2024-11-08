@@ -1,0 +1,16 @@
+[
+    {"country": "AU", "url": "https://flagcdn.com/au.svg"},
+    {"country": "FJ", "url": "https://flagcdn.com/fj.svg"},
+    {"country": "KI", "url": "https://flagcdn.com/ki.svg"},
+    {"country": "MH", "url": "https://flagcdn.com/mh.svg"},
+    {"country": "FM", "url": "https://flagcdn.com/fm.svg"},
+    {"country": "NR", "url": "https://flagcdn.com/nr.svg"},
+    {"country": "NZ", "url": "https://flagcdn.com/nz.svg"},
+    {"country": "PW", "url": "https://flagcdn.com/pw.svg"},
+    {"country": "PG", "url": "https://flagcdn.com/pg.svg"},
+    {"country": "WS", "url": "https://flagcdn.com/ws.svg"},
+    {"country": "SB", "url": "https://flagcdn.com/sb.svg"},
+    {"country": "TO", "url": "https://flagcdn.com/to.svg"},
+    {"country": "TV", "url": "https://flagcdn.com/tv.svg"},
+    {"country": "VU", "url": "https://flagcdn.com/vu.svg"}
+]
