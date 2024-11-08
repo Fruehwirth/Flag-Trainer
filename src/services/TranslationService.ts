@@ -25,7 +25,8 @@ export class TranslationService {
     // Create new loading promise
     this.loadingPromises[language] = (async () => {
       try {
-        const response = await fetch(`/assets/translations/${language}.json`);
+        const basePath = import.meta.env.DEV ? '' : '/flag-trainer';
+        const response = await fetch(`${basePath}/assets/translations/${language}.json`);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
