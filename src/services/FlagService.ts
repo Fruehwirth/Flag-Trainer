@@ -12,17 +12,13 @@ export class FlagService {
     oceania: []
   };
 
-  private static getBasePath(): string {
-    return import.meta.env.BASE_URL;
-  }
-
   static async fetchFlagSet(region: Region): Promise<Flag[]> {
     if (this.cache[region].length > 0) {
       return this.cache[region];
     }
 
     try {
-      const response = await fetch(`${this.getBasePath()}data/playsets/${region}.json`);
+      const response = await fetch(`./data/playsets/${region}.json`);
       if (!response.ok) {
         throw new Error(`Failed to fetch ${region} flags`);
       }

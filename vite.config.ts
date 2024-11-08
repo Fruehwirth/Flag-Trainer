@@ -1,8 +1,8 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-export default defineConfig({
-  base: process.env.NODE_ENV === 'production' ? '/flag-trainer/' : '/',
+export default defineConfig(({ command }) => ({
+  base: command === 'serve' ? '/' : '/flag-trainer/',
   plugins: [react()],
   server: {
     port: 3000,
@@ -16,4 +16,4 @@ export default defineConfig({
       }
     }
   }
-})
+}))
