@@ -45,8 +45,7 @@ export const TypeMode: React.FC = observer(() => {
     setFeedback(null);
     setCorrectAnswer('');
     
-    gameStore.checkAnswer(normalizedAnswer);
-    await gameStore.prepareNextFlag();
+    await gameStore.handleAnswer(normalizedAnswer);
 
     if (inputRef.current) {
       inputRef.current.focus();

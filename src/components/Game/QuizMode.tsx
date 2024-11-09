@@ -19,7 +19,6 @@ export const QuizMode: React.FC = observer(() => {
         const countryOptions = flagOptions.map(flag => flag.country);
         setOptions(countryOptions);
 
-        // Load translations
         const translations = await Promise.all(
           countryOptions.map(country => 
             TranslationService.getTranslation(settingsStore.language, country)
@@ -37,24 +36,13 @@ export const QuizMode: React.FC = observer(() => {
   const handleAnswer = async (answer: string, index: number) => {
     if (isAnswered) return;
     
-    // Batch state updates together
-    const isCorrect = gameStore.checkAnswer(options[index]);
     React.startTransition(() => {
       setSelectedAnswer(answer);
       setIsAnswered(true);
     });
 
-    // Wait for feedback animation
     await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    // Handle the answer result
-    if (isCorrect) {
-      await gameStore.handleCorrectAnswer();
-    } else {
-      await gameStore.handleIncorrectAnswer();
-    }
-    
-    await gameStore.prepareNextFlag();
+    await gameStore.handleAnswer(options[index]);
   };
 
   return (
