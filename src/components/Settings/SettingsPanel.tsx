@@ -4,6 +4,7 @@ import { useStores } from '../../hooks/useStores';
 import { GameMode, Language, Region } from '../../types/Settings';
 import './SettingsPanel.css';
 import { useTranslation } from '../../hooks/useTranslation';
+import { RegionGrid } from './RegionGrid';
 
 export const SettingsPanel: React.FC<{
   isOpen: boolean;
@@ -110,18 +111,7 @@ export const SettingsPanel: React.FC<{
 
       <section className="settings-section">
         <h3>{regionsText}</h3>
-        <div className="checkbox-group">
-          {['africa', 'asia', 'europe', 'north_america', 'south_america', 'oceania'].map((region) => (
-            <label key={region}>
-              <input
-                type="checkbox"
-                checked={settingsStore.selectedRegions.includes(region as Region)}
-                onChange={() => handleRegionToggle(region as Region)}
-              />
-              {region.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())}
-            </label>
-          ))}
-        </div>
+        <RegionGrid />
       </section>
     </div>
   );

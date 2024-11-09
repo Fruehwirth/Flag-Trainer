@@ -13,6 +13,7 @@
     --color-error-dark: #d32f2f;
     
     /* Neutral colors */
+    --region-image-filter: none;
     --color-background: #f5f5f5;
     --color-surface: #ffffff;
     --color-text: #000000;
@@ -28,6 +29,7 @@
     
     /* Dark mode colors */
     @media (prefers-color-scheme: dark) {
+      --region-image-filter: invert(1);
       --color-background: #121212;
       --color-surface: #1e1e1e;
       --color-text: #e0e0e0;
