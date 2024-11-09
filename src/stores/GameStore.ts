@@ -3,6 +3,7 @@ import { Flag } from '../types/Flag';
 import { FlagService } from '../services/FlagService';
 import { SettingsStore } from './SettingsStore';
 import { shuffle } from '../utils/helpers';
+import { StorageService } from '../services/StorageService';
 
 export class GameStore {
   currentFlag: Flag | null = null;
@@ -13,9 +14,54 @@ export class GameStore {
   isLoading: boolean = false;
   isGameOver: boolean = false;
 
+  private quizState: {
+    options: string[];
+    translatedOptions: string[];
+    isAnswered: boolean;
+    selectedAnswer: string | null;
+  } | null = null;
+
+  private typeState: {
+    answer: string;
+    feedback: 'correct' | 'incorrect' | null;
+    correctAnswer: string;
+    isProcessing: boolean;
+  } | null = null;
+
   constructor(private settingsStore: SettingsStore) {
     makeAutoObservable(this);
-    this.initializeGame();
+    this.loadFromStorage();
+  }
+
+  private loadFromStorage(): void {
+    const stored = StorageService.getGameState();
+    if (stored) {
+      this.currentFlag = stored.currentFlag;
+      this.remainingFlags = stored.remainingFlags;
+      this.allFlags = stored.allFlags;
+      this.correctCount = stored.correctCount;
+      this.incorrectFlags = stored.incorrectFlags;
+      this.isLoading = false;
+      this.isGameOver = stored.isGameOver;
+      this.quizState = stored.quizState;
+      this.typeState = stored.typeState;
+    } else {
+      this.initializeGame();
+    }
+  }
+
+  private saveToStorage(): void {
+    StorageService.saveGameState({
+      currentFlag: this.currentFlag,
+      remainingFlags: this.remainingFlags,
+      allFlags: this.allFlags,
+      correctCount: this.correctCount,
+      incorrectFlags: this.incorrectFlags,
+      isLoading: this.isLoading,
+      isGameOver: this.isGameOver,
+      quizState: this.quizState,
+      typeState: this.typeState
+    });
   }
 
   async initializeGame(): Promise<void> {
@@ -30,6 +76,9 @@ export class GameStore {
         this.incorrectFlags = [];
         this.isGameOver = false;
         this.isLoading = false;
+        this.quizState = null;
+        this.typeState = null;
+        this.saveToStorage();
       });
     } catch (error) {
       console.error('Failed to initialize game:', error);
@@ -54,11 +103,13 @@ export class GameStore {
       }
       this.remainingFlags = this.remainingFlags.slice(1);
       this.currentFlag = this.remainingFlags[0] || null;
+      this.quizState = null;
       
       if (this.remainingFlags.length === 0) {
         this.isGameOver = true;
         this.currentFlag = null;
       }
+      this.saveToStorage();
     });
 
     return answerIsCorrect;
@@ -73,7 +124,13 @@ export class GameStore {
       this.incorrectFlags = [];
       this.isGameOver = false;
       this.isLoading = false;
+      this.saveToStorage();
     });
+  }
+
+  async restartGame(): Promise<void> {
+    StorageService.clearStorage();
+    await this.initializeGame();
   }
 
   get progress(): number {
@@ -86,7 +143,12 @@ export class GameStore {
     return ((this.correctCount / totalCount) * 100).toFixed(0);
   }
 
-  async restartGame(): Promise<void> {
-    await this.initializeGame();
+  getQuizState() {
+    return this.quizState;
+  }
+
+  saveQuizState(state: typeof this.quizState) {
+    this.quizState = state;
+    this.saveToStorage();
   }
 }

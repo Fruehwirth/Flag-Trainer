@@ -14,7 +14,21 @@ export const QuizMode: React.FC = observer(() => {
 
   React.useEffect(() => {
     const loadOptions = async () => {
+      setOptions([]);
+      setTranslatedOptions([]);
+      setIsAnswered(false);
+      setSelectedAnswer(null);
+
       if (gameStore.currentFlag) {
+        const savedState = gameStore.getQuizState();
+        if (savedState) {
+          setOptions(savedState.options);
+          setTranslatedOptions(savedState.translatedOptions);
+          setIsAnswered(savedState.isAnswered);
+          setSelectedAnswer(savedState.selectedAnswer);
+          return;
+        }
+
         const flagOptions = FlagService.getRandomOptions(gameStore.allFlags, gameStore.currentFlag);
         const countryOptions = flagOptions.map(flag => flag.country);
         setOptions(countryOptions);
@@ -25,12 +39,17 @@ export const QuizMode: React.FC = observer(() => {
           )
         );
         setTranslatedOptions(translations);
+
+        gameStore.saveQuizState({
+          options: countryOptions,
+          translatedOptions: translations,
+          isAnswered: false,
+          selectedAnswer: null
+        });
       }
     };
 
     loadOptions();
-    setIsAnswered(false);
-    setSelectedAnswer(null);
   }, [gameStore.currentFlag, settingsStore.language]);
 
   const handleAnswer = async (answer: string, index: number) => {
@@ -39,6 +58,12 @@ export const QuizMode: React.FC = observer(() => {
     React.startTransition(() => {
       setSelectedAnswer(answer);
       setIsAnswered(true);
+      gameStore.saveQuizState({
+        options,
+        translatedOptions,
+        isAnswered: true,
+        selectedAnswer: answer
+      });
     });
 
     await new Promise(resolve => setTimeout(resolve, 1000));

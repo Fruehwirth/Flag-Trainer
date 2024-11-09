@@ -1,5 +1,6 @@
 import { makeAutoObservable } from 'mobx';
 import { GameMode, Language, Region } from '../types/Settings';
+import { StorageService } from '../services/StorageService';
 
 const getBrowserLanguage = (): Language => {
   const browserLang = navigator.language.toLowerCase();
@@ -19,14 +20,34 @@ export class SettingsStore {
 
   constructor() {
     makeAutoObservable(this);
+    this.loadFromStorage();
+  }
+
+  private loadFromStorage(): void {
+    const stored = StorageService.getSettingsState();
+    if (stored) {
+      this.gameMode = stored.gameMode;
+      this.language = stored.language;
+      this.selectedRegions = stored.selectedRegions;
+    }
+  }
+
+  private saveToStorage(): void {
+    StorageService.saveSettingsState({
+      gameMode: this.gameMode,
+      language: this.language,
+      selectedRegions: this.selectedRegions
+    });
   }
 
   setGameMode(mode: GameMode): void {
     this.gameMode = mode;
+    this.saveToStorage();
   }
 
   setLanguage(language: Language): void {
     this.language = language;
+    this.saveToStorage();
   }
 
   toggleRegion(region: Region): void {
@@ -36,5 +57,6 @@ export class SettingsStore {
     } else {
       this.selectedRegions.splice(index, 1);
     }
+    this.saveToStorage();
   }
 }

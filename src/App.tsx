@@ -14,7 +14,9 @@ export const App: React.FC = observer(() => {
   const [isSettingsOpen, setIsSettingsOpen] = React.useState(false);
 
   React.useEffect(() => {
-    gameStore.initializeGame();
+    if (!gameStore.currentFlag && !gameStore.isGameOver) {
+      gameStore.initializeGame();
+    }
   }, []);
 
   return (

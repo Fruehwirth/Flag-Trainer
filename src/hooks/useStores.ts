@@ -10,16 +10,15 @@ interface StoresContext {
 const storesContext = React.createContext<StoresContext | null>(null);
 
 export const StoresProvider = ({ children }: { children: React.ReactNode }) => {
-  const settingsStore = React.useMemo(() => new SettingsStore(), []);
-  const gameStore = React.useMemo(() => new GameStore(settingsStore), [settingsStore]);
-
-  const stores = React.useMemo(
-    () => ({
+  // Create stores only once and persist them
+  const [stores] = React.useState(() => {
+    const settingsStore = new SettingsStore();
+    const gameStore = new GameStore(settingsStore);
+    return {
       gameStore,
       settingsStore,
-    }),
-    [gameStore, settingsStore]
-  );
+    };
+  });
 
   return React.createElement(storesContext.Provider, { value: stores }, children);
 };
