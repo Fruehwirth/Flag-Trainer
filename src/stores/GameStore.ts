@@ -91,8 +91,8 @@ export class GameStore {
 
     const isCorrect = answer.toLowerCase() === this.currentFlag.country.toLowerCase();
     runInAction(() => {
+      this.totalCount++;
       if (isCorrect) {
-        this.totalCount++;
         this.correctCount++;
       }
     });
@@ -118,7 +118,7 @@ export class GameStore {
 
   get scorePercentage(): string {
     if (this.totalCount === 0) return '0';
-    return Math.round((this.correctCount / this.totalCount) * 100).toString();
+    return ((this.correctCount / this.totalCount) * 100).toFixed(0);
   }
 
   async handleCorrectAnswer(): Promise<void> {
