@@ -3,6 +3,10 @@ import { GameMode, Language, Region } from '../types/Settings';
 import { StorageService } from '../services/StorageService';
 
 const getBrowserLanguage = (): Language => {
+  const storedLanguage = localStorage.getItem('flagTrainer_language');
+  if (storedLanguage) {
+    return storedLanguage as Language;
+  }
   const browserLang = navigator.language.toLowerCase();
   return browserLang.startsWith('de') ? 'de' : 'en';
 };
@@ -47,6 +51,7 @@ export class SettingsStore {
 
   setLanguage(language: Language): void {
     this.language = language;
+    localStorage.setItem('flagTrainer_language', language);
     this.saveToStorage();
   }
 
