@@ -1,7 +1,6 @@
 import { makeAutoObservable, runInAction } from 'mobx';
 import { Flag } from '../types/Flag';
 import { FlagService } from '../services/FlagService';
-import { StorageService } from '../services/StorageService';
 import { SettingsStore } from './SettingsStore';
 import { shuffle } from '../utils/helpers';
 
@@ -16,19 +15,7 @@ export class GameStore {
 
   constructor(private settingsStore: SettingsStore) {
     makeAutoObservable(this);
-    this.loadGameState();
-  }
-
-  private loadGameState(): void {
-    const savedState = StorageService.loadGameState();
-    if (savedState) {
-      this.currentFlag = savedState.currentFlag;
-      this.remainingFlags = savedState.remainingFlags;
-      this.allFlags = savedState.allFlags;
-      this.correctCount = savedState.correctCount;
-      this.incorrectFlags = savedState.incorrectFlags;
-      this.isGameOver = savedState.remainingFlags.length === 0;
-    }
+    this.initializeGame();
   }
 
   async initializeGame(): Promise<void> {
@@ -44,7 +31,6 @@ export class GameStore {
         this.isGameOver = false;
         this.isLoading = false;
       });
-      this.saveGameState();
     } catch (error) {
       console.error('Failed to initialize game:', error);
       runInAction(() => {
@@ -75,7 +61,6 @@ export class GameStore {
       }
     });
 
-    this.saveGameState();
     return answerIsCorrect;
   }
 
@@ -88,17 +73,6 @@ export class GameStore {
       this.incorrectFlags = [];
       this.isGameOver = false;
       this.isLoading = false;
-    });
-    this.saveGameState();
-  }
-
-  private saveGameState(): void {
-    StorageService.saveGameState({
-      currentFlag: this.currentFlag,
-      remainingFlags: this.remainingFlags,
-      allFlags: this.allFlags,
-      correctCount: this.correctCount,
-      incorrectFlags: this.incorrectFlags,
     });
   }
 

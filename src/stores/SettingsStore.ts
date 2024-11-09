@@ -1,16 +1,15 @@
 import { makeAutoObservable } from 'mobx';
-import { Settings, GameMode, Language, Region } from '../types/Settings';
-import { StorageService } from '../services/StorageService';
+import { GameMode, Language, Region } from '../types/Settings';
 
 const getBrowserLanguage = (): Language => {
   const browserLang = navigator.language.toLowerCase();
   return browserLang.startsWith('de') ? 'de' : 'en';
 };
 
-const DEFAULT_SETTINGS: Settings = {
-  gameMode: 'quiz',
+const DEFAULT_SETTINGS = {
+  gameMode: 'quiz' as GameMode,
   language: getBrowserLanguage(),
-  selectedRegions: ['europe', 'asia', 'north_america', 'africa', 'oceania', 'south_america']
+  selectedRegions: ['europe', 'asia', 'north_america', 'africa', 'oceania', 'south_america'] as Region[]
 };
 
 export class SettingsStore {
@@ -20,27 +19,14 @@ export class SettingsStore {
 
   constructor() {
     makeAutoObservable(this);
-    this.loadSettings();
-  }
-
-  private loadSettings(): void {
-    console.log('navigator.language', navigator.language);
-    const savedSettings = StorageService.loadSettings();
-    if (savedSettings) {
-      this.gameMode = savedSettings.gameMode;
-      this.language = savedSettings.language;
-      this.selectedRegions = savedSettings.selectedRegions;
-    }
   }
 
   setGameMode(mode: GameMode): void {
     this.gameMode = mode;
-    this.saveSettings();
   }
 
   setLanguage(language: Language): void {
     this.language = language;
-    this.saveSettings();
   }
 
   toggleRegion(region: Region): void {
@@ -50,14 +36,5 @@ export class SettingsStore {
     } else {
       this.selectedRegions.splice(index, 1);
     }
-    this.saveSettings();
-  }
-
-  private saveSettings(): void {
-    StorageService.saveSettings({
-      gameMode: this.gameMode,
-      language: this.language,
-      selectedRegions: this.selectedRegions
-    });
   }
 }
