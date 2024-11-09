@@ -15,8 +15,32 @@
     /* Neutral colors */
     --color-background: #f5f5f5;
     --color-surface: #ffffff;
-    --color-text: #333333;
-    --color-text-secondary: #666666;
+    --color-text: #000000;
+    --color-text-highcontrast: #d6d6d6;
+    --color-border: #dddddd;
+    --color-button: rgb(85, 85, 85);
+    --color-button-hover: rgb(70, 70, 70);
+    --color-header: #ffffff;
+    --color-progress: #000000;
+    --color-input-background: #ffffff;
+    --color-settings-hover: #f5f5f5;
+    --color-stat-background: #f5f5f5;
+    
+    /* Dark mode colors */
+    @media (prefers-color-scheme: dark) {
+      --color-background: #121212;
+      --color-surface: #1e1e1e;
+      --color-text: #e0e0e0;
+      --color-text-highcontrast: #d7d7d7;
+      --color-border: #444444;
+      --color-button: rgb(100, 100, 100);
+      --color-button-hover: rgb(85, 85, 85);
+      --color-header: #1e1e1e;
+      --color-progress: #ffffff;
+      --color-input-background: #2a2a2a;
+      --color-settings-hover: #2a2a2a;
+      --color-stat-background: #2a2a2a;
+    }
     
     /* Spacing */
     --spacing-xs: 4px;

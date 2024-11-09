@@ -3,7 +3,8 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: white;
+  background-color: var(--color-surface);
+  color: var(--color-text);
   padding: 3rem;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
@@ -34,18 +35,18 @@
   display: flex;
   justify-content: space-between;
   padding: 1rem;
-  background-color: #f5f5f5;
+  background-color: var(--color-stat-background);
   border-radius: 8px;
   font-size: 1.1rem;
 }
 
 .stat-item label {
-  color: #666;
+  color: var(--color-text);
   font-weight: 500;
 }
 
 .stat-item span {
-  color: #333;
+  color: var(--color-text);
   font-weight: 600;
 }
 

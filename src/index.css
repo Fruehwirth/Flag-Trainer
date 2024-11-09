@@ -1,81 +1,85 @@
+@import './styles/variables.css';
+@import './styles/animations.css';
+
+/* Keep existing animations and utility classes */
 @keyframes fadeIn {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
+  from {
+    opacity: 0;
   }
-  
-  @keyframes slideInRight {
-    from {
-      transform: translateX(100%);
-    }
-    to {
-      transform: translateX(0);
-    }
+  to {
+    opacity: 1;
   }
-  
-  @keyframes slideInLeft {
-    from {
-      transform: translateX(-100%);
-    }
-    to {
-      transform: translateX(0);
-    }
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
   }
-  
-  @keyframes slideInUp {
-    from {
-      transform: translateY(100%);
-    }
-    to {
-      transform: translateY(0);
-    }
+  to {
+    transform: translateX(0);
   }
-  
-  @keyframes pulse {
-    0% {
-      transform: scale(1);
-    }
-    50% {
-      transform: scale(1.05);
-    }
-    100% {
-      transform: scale(1);
-    }
+}
+
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-100%);
   }
-  
-  @keyframes spin {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
-    }
+  to {
+    transform: translateX(0);
   }
-  
-  /* Utility classes */
-  .animate-fadeIn {
-    animation: fadeIn var(--transition-normal);
+}
+
+@keyframes slideInUp {
+  from {
+    transform: translateY(100%);
   }
-  
-  .animate-slideInRight {
-    animation: slideInRight var(--transition-normal);
+  to {
+    transform: translateY(0);
   }
-  
-  .animate-slideInLeft {
-    animation: slideInLeft var(--transition-normal);
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
   }
-  
-  .animate-slideInUp {
-    animation: slideInUp var(--transition-normal);
+  50% {
+    transform: scale(1.05);
   }
-  
-  .animate-pulse {
-    animation: pulse var(--transition-slow) infinite;
+  100% {
+    transform: scale(1);
   }
-  
-  .animate-spin {
-    animation: spin var(--transition-normal) infinite linear;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
   }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Utility classes */
+.animate-fadeIn {
+  animation: fadeIn var(--transition-normal);
+}
+
+.animate-slideInRight {
+  animation: slideInRight var(--transition-normal);
+}
+
+.animate-slideInLeft {
+  animation: slideInLeft var(--transition-normal);
+}
+
+.animate-slideInUp {
+  animation: slideInUp var(--transition-normal);
+}
+
+.animate-pulse {
+  animation: pulse var(--transition-slow) infinite;
+}
+
+.animate-spin {
+  animation: spin var(--transition-normal) infinite linear;
+}

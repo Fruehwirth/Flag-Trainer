@@ -11,8 +11,10 @@
     margin-bottom: 10px;
     box-sizing: border-box;
     text-align: left;
-    border: 1px solid #ddd;
+    border: 1px solid var(--color-border);
     border-radius: 8px;
+    background-color: var(--color-input-background);
+    color: var(--color-text);
   }
   
   .answer-input:focus {
