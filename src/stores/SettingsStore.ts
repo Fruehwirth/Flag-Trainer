@@ -2,9 +2,14 @@ import { makeAutoObservable } from 'mobx';
 import { Settings, GameMode, Language, Region } from '../types/Settings';
 import { StorageService } from '../services/StorageService';
 
+const getBrowserLanguage = (): Language => {
+  const browserLang = navigator.language.toLowerCase();
+  return browserLang.startsWith('de') ? 'de' : 'en';
+};
+
 const DEFAULT_SETTINGS: Settings = {
   gameMode: 'quiz',
-  language: 'de',
+  language: getBrowserLanguage(),
   selectedRegions: ['europe', 'asia', 'north_america', 'africa', 'oceania', 'south_america']
 };
 
@@ -19,6 +24,7 @@ export class SettingsStore {
   }
 
   private loadSettings(): void {
+    console.log('navigator.language', navigator.language);
     const savedSettings = StorageService.loadSettings();
     if (savedSettings) {
       this.gameMode = savedSettings.gameMode;
