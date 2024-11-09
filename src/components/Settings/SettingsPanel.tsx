@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { observer } from 'mobx-react-lite';
 import { useStores } from '../../hooks/useStores';
-import { GameMode, Language, Region } from '../../types/Settings';
+import { GameMode, Language } from '../../types/Settings';
 import './SettingsPanel.css';
 import { useTranslation } from '../../hooks/useTranslation';
 import { RegionGrid } from './RegionGrid';
@@ -49,13 +49,6 @@ export const SettingsPanel: React.FC<{
   const handleGameModeChange = async (mode: GameMode) => {
     settingsStore.setGameMode(mode);
     await gameStore.initializeGame();
-  };
-
-  const handleRegionToggle = async (region: Region) => {
-    settingsStore.toggleRegion(region);
-    if (settingsStore.selectedRegions.length > 0) {
-      await gameStore.initializeGame();
-    }
   };
 
   if (!isOpen) return null;
