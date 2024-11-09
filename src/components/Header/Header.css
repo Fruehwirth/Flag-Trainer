@@ -12,7 +12,7 @@
     z-index: 100;
   }
   
-  .settings-button {
+  .settings-button, .refresh-button {
     background: none;
     border: none;
     font-size: 36px;
@@ -21,12 +21,31 @@
     padding: 8px;
   }
   
+  .refresh-button {
+    margin-left: 16px;
+  }
+  
+  .refresh-button.rotating {
+    animation: rotate-once 0.3s ease;
+  }
+  
+  @keyframes rotate-once {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
   .score-container {
     margin-left: auto;
     font-size: 18px;
     color: var(--color-text);
     font-family: 'Inter', sans-serif;
     font-weight: 500;
+    display: flex;
+    align-items: center;
   }
   
   .header h1 {
