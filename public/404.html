@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Redirecting...</title>
+    <script>
+        const segment = 1;
+        const path = window.location.pathname;
+        const repo = '/flag-trainer';
+        
+        if (!path.includes(repo)) {
+            window.location.replace(repo + path);
+        }
+    </script>
+</head>
+<body>
+    <p>Redirecting...</p>
+</body>
+</html>
