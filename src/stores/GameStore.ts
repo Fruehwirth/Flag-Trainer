@@ -86,7 +86,6 @@ export class GameStore {
   }
 
   get scorePercentage(): string {
-    console.log(this.allFlags.length, this.remainingFlags.length);
     let totalCount = this.allFlags.length - this.remainingFlags.length;
     if (totalCount === 0) return '0';
     return ((this.correctCount / totalCount) * 100).toFixed(0);
