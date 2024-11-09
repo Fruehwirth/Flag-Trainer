@@ -17,7 +17,7 @@ export const RegionGrid: React.FC = observer(() => {
 
   return (
     <div className="region-grid">
-      {['africa', 'asia', 'europe', 'north_america', 'south_america', 'oceania'].map((region) => (
+      {['north_america', 'europe', 'asia', 'south_america', 'africa', 'oceania'].map((region) => (
         <button
           key={region}
           className={`region-item ${settingsStore.selectedRegions.includes(region as Region) ? 'selected' : ''}`}
