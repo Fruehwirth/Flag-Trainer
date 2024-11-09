@@ -14,5 +14,6 @@
   "restart": "Neu starten",
   "roundComplete": "Runde beendet!",
   "finalScore": "Endpunktzahl",
-  "startNewRound": "Neue Runde starten"
+  "startNewRound": "Runde starten",
+  "replayIncorrect": "Falsche wiederholen"
 } 

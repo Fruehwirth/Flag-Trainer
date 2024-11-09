@@ -14,5 +14,6 @@
   "restart": "Restart",
   "roundComplete": "Round Complete!",
   "finalScore": "Final Score",
-  "startNewRound": "Start New Round"
+  "startNewRound": "New Round",
+  "replayIncorrect": "Replay incorrect"
 }

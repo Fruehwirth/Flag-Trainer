@@ -17,6 +17,49 @@
   z-index: 50;
 }
 
+.game-over-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.restart-button, .replay-incorrect-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 500;
+  font-family: 'Inter', sans-serif;
+  transition: background-color 0.2s;
+  border: none;
+}
+
+.restart-button {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.replay-incorrect-button {
+  background-color: #f44336;
+  color: white;
+}
+
+.restart-button:hover {
+  background-color: #357c39;
+}
+
+.replay-incorrect-button:hover:not(:disabled) {
+  background-color: #ac2929;
+}
+
+.replay-incorrect-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
 .game-over h2 {
   margin-bottom: 2rem;
   color: var(--color-text);
@@ -48,28 +91,6 @@
 .stat-item span {
   color: var(--color-text);
   font-weight: 600;
-}
-
-.restart-button {
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  padding: 1rem 2rem;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 1.2rem;
-  font-weight: 500;
-  font-family: 'Inter', sans-serif;
-  transition: background-color 0.2s, transform 0.1s;
-}
-
-.restart-button:hover {
-  background-color: #45a049;
-  transform: translateY(-1px);
-}
-
-.restart-button:active {
-  transform: translateY(0);
 }
 
 @keyframes fadeIn {

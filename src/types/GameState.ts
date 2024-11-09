@@ -5,4 +5,5 @@ export interface GameState {
   remainingFlags: Flag[];
   allFlags: Flag[];
   correctCount: number;
+  incorrectFlags: Flag[];
 }

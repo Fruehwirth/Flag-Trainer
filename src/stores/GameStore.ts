@@ -10,6 +10,7 @@ export class GameStore {
   remainingFlags: Flag[] = [];
   allFlags: Flag[] = [];
   correctCount: number = 0;
+  incorrectFlags: Flag[] = [];
   isLoading: boolean = false;
   isGameOver: boolean = false;
 
@@ -25,6 +26,7 @@ export class GameStore {
       this.remainingFlags = savedState.remainingFlags;
       this.allFlags = savedState.allFlags;
       this.correctCount = savedState.correctCount;
+      this.incorrectFlags = savedState.incorrectFlags;
       this.isGameOver = savedState.remainingFlags.length === 0;
     }
   }
@@ -38,6 +40,7 @@ export class GameStore {
         this.remainingFlags = shuffle([...flags]);
         this.currentFlag = this.remainingFlags[0] || null;
         this.correctCount = 0;
+        this.incorrectFlags = [];
         this.isGameOver = false;
         this.isLoading = false;
       });
@@ -60,6 +63,8 @@ export class GameStore {
     runInAction(() => {
       if (answerIsCorrect) {
         this.correctCount++;
+      } else {
+        this.incorrectFlags.push(this.currentFlag!);
       }
       this.remainingFlags = this.remainingFlags.slice(1);
       this.currentFlag = this.remainingFlags[0] || null;
@@ -74,12 +79,26 @@ export class GameStore {
     return answerIsCorrect;
   }
 
+  async replayIncorrect(): Promise<void> {
+    runInAction(() => {
+      this.allFlags = [...this.incorrectFlags];
+      this.remainingFlags = shuffle([...this.incorrectFlags]);
+      this.currentFlag = this.remainingFlags[0] || null;
+      this.correctCount = 0;
+      this.incorrectFlags = [];
+      this.isGameOver = false;
+      this.isLoading = false;
+    });
+    this.saveGameState();
+  }
+
   private saveGameState(): void {
     StorageService.saveGameState({
       currentFlag: this.currentFlag,
       remainingFlags: this.remainingFlags,
       allFlags: this.allFlags,
       correctCount: this.correctCount,
+      incorrectFlags: this.incorrectFlags,
     });
   }
 
