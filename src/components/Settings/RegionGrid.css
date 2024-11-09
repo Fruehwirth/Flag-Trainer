@@ -28,11 +28,34 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%) scale(0);
   color: var(--color-text);
   font-size: 24px;
   -webkit-text-stroke: 8px var(--color-surface);
   paint-order: stroke fill;
+  animation: checkmarkIn 0.15s ease forwards;
+}
+
+.region-item.deselecting .checkmark {
+  animation: checkmarkOut 0.15s ease forwards;
+}
+
+@keyframes checkmarkIn {
+  from {
+    transform: translate(-50%, -50%) scale(0);
+  }
+  to {
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes checkmarkOut {
+  from {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  to {
+    transform: translate(-50%, -50%) scale(0);
+  }
 }
 
 @media (prefers-color-scheme: dark) {
