@@ -50,13 +50,15 @@ export class GameStore {
     }
   }
 
-  async handleAnswer(answer: string): Promise<boolean> {
+  async handleAnswer(answer: string, isCorrect?: boolean): Promise<boolean> {
     if (!this.currentFlag) return false;
 
-    const isCorrect = answer.toLowerCase() === this.currentFlag.country.toLowerCase();
+    const answerIsCorrect = isCorrect !== undefined ? 
+      isCorrect : 
+      answer.toLowerCase() === this.currentFlag.country.toLowerCase();
     
     runInAction(() => {
-      if (isCorrect) {
+      if (answerIsCorrect) {
         this.correctCount++;
       }
       this.remainingFlags = this.remainingFlags.slice(1);
@@ -69,7 +71,7 @@ export class GameStore {
     });
 
     this.saveGameState();
-    return isCorrect;
+    return answerIsCorrect;
   }
 
   private saveGameState(): void {

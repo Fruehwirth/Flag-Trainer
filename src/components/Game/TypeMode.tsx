@@ -10,6 +10,7 @@ export const TypeMode: React.FC = observer(() => {
   const [answer, setAnswer] = React.useState('');
   const [feedback, setFeedback] = React.useState<'correct' | 'incorrect' | null>(null);
   const [correctAnswer, setCorrectAnswer] = React.useState<string>('');
+  const [isProcessing, setIsProcessing] = React.useState(false);
   const inputRef = React.useRef<HTMLInputElement>(null);
   const placeholderText = useTranslation('typeCountryName', settingsStore.language, true);
 
@@ -19,10 +20,17 @@ export const TypeMode: React.FC = observer(() => {
     }
   }, [gameStore.currentFlag]);
 
+  React.useEffect(() => {
+    if (!isProcessing && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [isProcessing]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!answer.trim()) return;
+    if (!answer.trim() || isProcessing) return;
 
+    setIsProcessing(true);
     const normalizedAnswer = answer.trim().toLowerCase();
     const currentCountry = gameStore.currentFlag?.country;
     if (!currentCountry) return;
@@ -43,15 +51,12 @@ export const TypeMode: React.FC = observer(() => {
     }
 
     await new Promise(resolve => setTimeout(resolve, 1000));
+    await gameStore.handleAnswer(normalizedAnswer, isCorrect);
+    
     setAnswer('');
     setFeedback(null);
     setCorrectAnswer('');
-    
-    await gameStore.handleAnswer(normalizedAnswer);
-
-    if (inputRef.current) {
-      inputRef.current.focus();
-    }
+    setIsProcessing(false);
   };
 
   return (
@@ -63,6 +68,7 @@ export const TypeMode: React.FC = observer(() => {
         onChange={(e) => setAnswer(e.target.value)}
         className={`answer-input ${feedback || ''}`}
         placeholder={placeholderText}
+        disabled={isProcessing}
       />
       {feedback === 'incorrect' && correctAnswer && (
         <div className="correct-answer">
