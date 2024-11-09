@@ -3,6 +3,7 @@ import { observer } from 'mobx-react-lite';
 import { useStores } from '../../hooks/useStores';
 import { TranslationService } from '../../services/TranslationService';
 import './TypeMode.css';
+import { useTranslation } from '../../hooks/useTranslation';
 
 export const TypeMode: React.FC = observer(() => {
   const { gameStore, settingsStore } = useStores();
@@ -10,6 +11,7 @@ export const TypeMode: React.FC = observer(() => {
   const [feedback, setFeedback] = React.useState<'correct' | 'incorrect' | null>(null);
   const [correctAnswer, setCorrectAnswer] = React.useState<string>('');
   const inputRef = React.useRef<HTMLInputElement>(null);
+  const placeholderText = useTranslation('typeCountryName', settingsStore.language, true);
 
   React.useEffect(() => {
     if (inputRef.current) {
@@ -53,16 +55,14 @@ export const TypeMode: React.FC = observer(() => {
   };
 
   return (
-    <form className="type-input-container" onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="type-input-container">
       <input
         ref={inputRef}
         type="text"
         value={answer}
         onChange={(e) => setAnswer(e.target.value)}
         className={`answer-input ${feedback || ''}`}
-        placeholder="Type country name..."
-        autoComplete="off"
-        disabled={!!feedback}
+        placeholder={placeholderText}
       />
       {feedback === 'incorrect' && correctAnswer && (
         <div className="correct-answer">

@@ -2,12 +2,14 @@ import React from 'react';
 import { observer } from 'mobx-react-lite';
 import { useStores } from '../../hooks/useStores';
 import './FlagDisplay.css';
+import { useTranslation } from '../../hooks/useTranslation';
 
 export const FlagDisplay: React.FC = observer(() => {
-  const { gameStore } = useStores();
+  const { gameStore, settingsStore } = useStores();
+  const loadingText = useTranslation('loading', settingsStore.language, true);
   
   if (!gameStore.currentFlag) {
-    return <div className="flag-placeholder">Loading...</div>;
+    return <div className="flag-placeholder">{loadingText}</div>;
   }
 
   return (

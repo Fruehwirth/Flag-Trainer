@@ -4,8 +4,8 @@ import { StorageService } from '../services/StorageService';
 
 const DEFAULT_SETTINGS: Settings = {
   gameMode: 'quiz',
-  language: 'en',
-  selectedRegions: ['europe', 'asia', 'north_america']
+  language: 'de',
+  selectedRegions: ['europe', 'asia', 'north_america', 'africa', 'oceania', 'south_america']
 };
 
 export class SettingsStore {

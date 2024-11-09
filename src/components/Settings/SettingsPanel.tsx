@@ -1,16 +1,25 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import { observer } from 'mobx-react-lite';
 import { useStores } from '../../hooks/useStores';
 import { GameMode, Language, Region } from '../../types/Settings';
 import './SettingsPanel.css';
+import { useTranslation } from '../../hooks/useTranslation';
 
 export const SettingsPanel: React.FC<{
   isOpen: boolean;
   onClose: () => void;
 }> = observer(({ isOpen, onClose }) => {
   const { settingsStore, gameStore } = useStores();
-  const [isClosing, setIsClosing] = React.useState(false);
-  const panelRef = React.useRef<HTMLDivElement>(null);
+  const [isClosing, setIsClosing] = useState(false);
+  const panelRef = useRef<HTMLDivElement>(null);
+
+  // Translation hooks
+  const settingsText = useTranslation('settings', settingsStore.language, true);
+  const gameModeText = useTranslation('gameMode', settingsStore.language, true);
+  const quizText = useTranslation('quiz', settingsStore.language, true);
+  const typeText = useTranslation('type', settingsStore.language, true);
+  const languageText = useTranslation('language', settingsStore.language, true);
+  const regionsText = useTranslation('regions', settingsStore.language, true);
 
   const handleClose = () => {
     setIsClosing(true);
@@ -60,10 +69,10 @@ export const SettingsPanel: React.FC<{
         close
       </button>
 
-      <h2>Settings</h2>
+      <h2>{settingsText}</h2>
 
       <section className="settings-section">
-        <h3>Game Mode</h3>
+        <h3>{gameModeText}</h3>
         <div className="radio-group">
           <label>
             <input
@@ -73,7 +82,7 @@ export const SettingsPanel: React.FC<{
               checked={settingsStore.gameMode === 'quiz'}
               onChange={() => handleGameModeChange('quiz')}
             />
-            Quiz
+            {quizText}
           </label>
           <label>
             <input
@@ -83,13 +92,13 @@ export const SettingsPanel: React.FC<{
               checked={settingsStore.gameMode === 'type'}
               onChange={() => handleGameModeChange('type')}
             />
-            Type
+            {typeText}
           </label>
         </div>
       </section>
 
       <section className="settings-section">
-        <h3>Language</h3>
+        <h3>{languageText}</h3>
         <select
           value={settingsStore.language}
           onChange={(e) => settingsStore.setLanguage(e.target.value as Language)}
@@ -100,7 +109,7 @@ export const SettingsPanel: React.FC<{
       </section>
 
       <section className="settings-section">
-        <h3>Regions</h3>
+        <h3>{regionsText}</h3>
         <div className="checkbox-group">
           {['africa', 'asia', 'europe', 'north_america', 'south_america', 'oceania'].map((region) => (
             <label key={region}>

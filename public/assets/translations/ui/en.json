@@ -1,0 +1,18 @@
+{
+  "settings": "Settings",
+  "gameMode": "Game Mode",
+  "quiz": "Quiz",
+  "type": "Type",
+  "language": "Language",
+  "regions": "Regions",
+  "loading": "Loading...",
+  "typeCountryName": "Type country name...",
+  "gameOver": "Game Over",
+  "totalFlags": "Total Flags",
+  "correctAnswers": "Correct Answers",
+  "accuracy": "Accuracy",
+  "restart": "Restart",
+  "roundComplete": "Round Complete!",
+  "finalScore": "Final Score",
+  "startNewRound": "Start New Round"
+}

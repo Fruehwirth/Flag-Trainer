@@ -1,0 +1,18 @@
+{
+  "settings": "Einstellungen",
+  "gameMode": "Spielmodus",
+  "quiz": "Quiz",
+  "type": "Eingabe",
+  "language": "Sprache",
+  "regions": "Regionen",
+  "loading": "Lädt...",
+  "typeCountryName": "Ländername eingeben...",
+  "gameOver": "Spiel vorbei",
+  "totalFlags": "Flaggen gesamt",
+  "correctAnswers": "Richtige Antworten",
+  "accuracy": "Genauigkeit",
+  "restart": "Neu starten",
+  "roundComplete": "Runde beendet!",
+  "finalScore": "Endpunktzahl",
+  "startNewRound": "Neue Runde starten"
+} 
