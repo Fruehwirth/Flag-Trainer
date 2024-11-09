@@ -12,20 +12,17 @@ export class TranslationService {
   };
 
   static async loadTranslations(language: Language): Promise<Record<string, string>> {
-    // Return cached translations if available
     if (Object.keys(this.cache[language]).length > 0) {
       return this.cache[language];
     }
 
-    // If there's already a loading promise, return it
     if (this.loadingPromises[language]) {
       return this.loadingPromises[language]!;
     }
 
-    // Create new loading promise
     this.loadingPromises[language] = (async () => {
       try {
-        const basePath = import.meta.env.DEV ? '' : '/flag-trainer';
+        const basePath = import.meta.env.DEV ? '' : 'https://fruehwirth.github.io/Flag-Trainer';
         const response = await fetch(`${basePath}/assets/translations/${language}.json`);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
