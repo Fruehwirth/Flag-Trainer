@@ -41,9 +41,9 @@ export class FlagService {
     return shuffle(flagSets.flat());
   }
 
-  static getRandomOptions(flags: Flag[], correctFlag: Flag, count: number = 3): Flag[] {
+  static getRandomOptions(flags: Flag[], correctFlag: Flag, count: number = 3, sourceFlags?: Flag[]): Flag[] {
     const options = [correctFlag];
-    const availableFlags = flags.filter(f => f.country !== correctFlag.country);
+    const availableFlags = (sourceFlags || flags).filter(f => f.country !== correctFlag.country);
     
     while (options.length < count + 1 && availableFlags.length > 0) {
       const randomIndex = Math.floor(Math.random() * availableFlags.length);

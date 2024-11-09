@@ -29,7 +29,12 @@ export const QuizMode: React.FC = observer(() => {
           return;
         }
 
-        const flagOptions = FlagService.getRandomOptions(gameStore.allFlags, gameStore.currentFlag);
+        const flagOptions = FlagService.getRandomOptions(
+          gameStore.allFlags, 
+          gameStore.currentFlag, 
+          3, 
+          gameStore.originalFlags
+        );
         const countryOptions = flagOptions.map(flag => flag.country);
         setOptions(countryOptions);
 

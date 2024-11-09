@@ -5,10 +5,12 @@ interface GameState {
   currentFlag: Flag | null;
   remainingFlags: Flag[];
   allFlags: Flag[];
+  originalFlags: Flag[];
   correctCount: number;
   incorrectFlags: Flag[];
   isLoading: boolean;
   isGameOver: boolean;
+  isReplayMode: boolean;
   quizState: {
     options: string[];
     translatedOptions: string[];

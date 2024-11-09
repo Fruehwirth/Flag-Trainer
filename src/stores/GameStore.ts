@@ -9,6 +9,7 @@ export class GameStore {
   currentFlag: Flag | null = null;
   remainingFlags: Flag[] = [];
   allFlags: Flag[] = [];
+  originalFlags: Flag[] = [];
   correctCount: number = 0;
   incorrectFlags: Flag[] = [];
   isLoading: boolean = false;
@@ -28,6 +29,8 @@ export class GameStore {
     isProcessing: boolean;
   } | null = null;
 
+  private isReplayMode: boolean = false;
+
   constructor(private settingsStore: SettingsStore) {
     makeAutoObservable(this);
     this.loadFromStorage();
@@ -43,6 +46,7 @@ export class GameStore {
       this.incorrectFlags = stored.incorrectFlags;
       this.isLoading = false;
       this.isGameOver = stored.isGameOver;
+      this.isReplayMode = stored.isReplayMode;
       this.quizState = stored.quizState;
       this.typeState = stored.typeState;
     } else {
@@ -55,10 +59,12 @@ export class GameStore {
       currentFlag: this.currentFlag,
       remainingFlags: this.remainingFlags,
       allFlags: this.allFlags,
+      originalFlags: this.originalFlags,
       correctCount: this.correctCount,
       incorrectFlags: this.incorrectFlags,
       isLoading: this.isLoading,
       isGameOver: this.isGameOver,
+      isReplayMode: this.isReplayMode,
       quizState: this.quizState,
       typeState: this.typeState
     });
@@ -69,6 +75,7 @@ export class GameStore {
     try {
       const flags = await FlagService.getFlagsForRegions(this.settingsStore.selectedRegions);
       runInAction(() => {
+        this.originalFlags = flags;
         this.allFlags = flags;
         this.remainingFlags = shuffle([...flags]);
         this.currentFlag = this.remainingFlags[0] || null;
@@ -117,6 +124,7 @@ export class GameStore {
 
   async replayIncorrect(): Promise<void> {
     runInAction(() => {
+      this.isReplayMode = true;
       this.allFlags = [...this.incorrectFlags];
       this.remainingFlags = shuffle([...this.incorrectFlags]);
       this.currentFlag = this.remainingFlags[0] || null;
@@ -129,16 +137,22 @@ export class GameStore {
   }
 
   async restartGame(): Promise<void> {
+    this.isReplayMode = false;
     StorageService.clearStorage();
     await this.initializeGame();
   }
 
   get progress(): number {
+    if (this.remainingFlags === this.incorrectFlags) {
+      return ((this.incorrectFlags.length - this.remainingFlags.length) / this.incorrectFlags.length) * 100;
+    }
     return ((this.allFlags.length - this.remainingFlags.length) / this.allFlags.length) * 100;
   }
 
   get scorePercentage(): string {
-    let totalCount = this.allFlags.length - this.remainingFlags.length;
+    let totalCount = this.isReplayMode ? 
+      this.allFlags.length : 
+      this.allFlags.length - this.remainingFlags.length;
     if (totalCount === 0) return '0';
     return ((this.correctCount / totalCount) * 100).toFixed(0);
   }
