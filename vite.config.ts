@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react'
 import { resolve } from 'path'
 
 export default defineConfig(({ command }) => ({
-  base: command === 'serve' ? '/' : '/flag-trainer/',
+  base: '/flag-trainer/',
   plugins: [react()],
   server: {
     port: 3000,
