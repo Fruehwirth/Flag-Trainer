@@ -14,12 +14,14 @@ export const Header: React.FC<HeaderProps> = observer(({ onSettingsClick, showCo
   const { gameStore } = useStores();
   const [longPressTimer, setLongPressTimer] = React.useState<NodeJS.Timeout | null>(null);
   const [isVisible, setIsVisible] = React.useState(showControls);
+  const hasAnsweredAny = gameStore.allFlags.length !== gameStore.remainingFlags.length;
+  const shouldShowScore = showControls && !gameStore.isGameOver;
 
   React.useEffect(() => {
     if (!showControls) {
       const timer = setTimeout(() => {
         setIsVisible(false);
-      }, 300); // Match the CSS transition duration
+      }, 300);
       return () => clearTimeout(timer);
     }
     setIsVisible(true);
@@ -42,11 +44,21 @@ export const Header: React.FC<HeaderProps> = observer(({ onSettingsClick, showCo
 
   const handleRefreshClick = () => {
     const button = document.querySelector('.refresh-button') as HTMLElement;
+    const scoreContainer = document.querySelector('.score-container') as HTMLElement;
+    
     button?.classList.remove('rotating');
-    // Trigger reflow
     void button?.offsetWidth;
     button?.classList.add('rotating');
-    onRestart();
+    
+    if (scoreContainer) {
+      scoreContainer.classList.add('fade-out');
+      setTimeout(() => {
+        onRestart();
+        scoreContainer.classList.remove('fade-out');
+      }, 500);
+    } else {
+      onRestart();
+    }
   };
   
   return (
@@ -61,11 +73,13 @@ export const Header: React.FC<HeaderProps> = observer(({ onSettingsClick, showCo
       
       <h1>Flag Trainer</h1>
       
-      {isVisible && (
+      {isVisible && shouldShowScore && (
         <div className={`score-container ${!showControls ? 'hidden' : ''}`}>
-          <span className="score">
-            {gameStore.scorePercentage}%
-          </span>
+          {hasAnsweredAny && (
+            <span className="score">
+              {gameStore.scorePercentage}%
+            </span>
+          )}
           <button
             className="refresh-button material-symbols-outlined"
             onClick={handleRefreshClick}
