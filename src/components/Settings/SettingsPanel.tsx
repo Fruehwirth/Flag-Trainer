@@ -133,6 +133,11 @@ export const SettingsPanel: React.FC<{
       </section>
 
       <section className="settings-section">
+        <h3>{regionsText}</h3>
+        <RegionGrid />
+      </section>
+
+      <section className="settings-section">
         <h3>{languageText}</h3>
         <select
           value={settingsStore.language}
@@ -141,11 +146,6 @@ export const SettingsPanel: React.FC<{
           <option value="en">English</option>
           <option value="de">Deutsch</option>
         </select>
-      </section>
-
-      <section className="settings-section">
-        <h3>{regionsText}</h3>
-        <RegionGrid />
       </section>
     </div>
   );
