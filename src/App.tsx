@@ -16,21 +16,23 @@ export const App: React.FC = observer(() => {
   const [showStartScreen, setShowStartScreen] = React.useState(true);
 
   React.useEffect(() => {
-    if (showStartScreen) {
-      gameStore.initializeGame();
-    }
+    const initialize = async () => {
+      await gameStore.initializeGame();
+    };
+    initialize();
     return () => {
       gameStore.stopTimer();
     };
-  }, [showStartScreen]);
+  }, []);
 
   const handleGameStart = () => {
     setShowStartScreen(false);
   };
 
   const handleRestart = () => {
-    setShowStartScreen(true);
     gameStore.clearGameState();
+    gameStore.initializeGame();
+    setShowStartScreen(true);
   };
 
   return (
@@ -41,26 +43,22 @@ export const App: React.FC = observer(() => {
         onRestart={handleRestart}
       />
       
-      {showStartScreen ? (
-        <>
-          <StartScreen onStart={handleGameStart} />
-          <div style={{ position: 'absolute', opacity: 0, pointerEvents: 'none' }}>
+      {showStartScreen && <StartScreen onStart={handleGameStart} />}
+      
+      <div style={{ 
+        opacity: showStartScreen ? 0 : 1,
+        pointerEvents: showStartScreen ? 'none' : 'auto',
+        transition: 'opacity 0.3s ease'
+      }}>
+        {!gameStore.isGameOver ? (
+          <main className="game-container">
             <FlagDisplay />
-          </div>
-        </>
-      ) : (
-        <>
-          {!gameStore.isGameOver && (
-            <main className="game-container">
-              <FlagDisplay />
-              {settingsStore.gameMode === 'quiz' ? <QuizMode /> : <TypeMode />}
-            </main>
-          )}
-          {gameStore.isGameOver && (
-            <GameOver onRestart={() => setShowStartScreen(true)} />
-          )}
-        </>
-      )}
+            {settingsStore.gameMode === 'quiz' ? <QuizMode /> : <TypeMode />}
+          </main>
+        ) : (
+          <GameOver onRestart={() => setShowStartScreen(true)} />
+        )}
+      </div>
 
       <SettingsPanel 
         isOpen={isSettingsOpen} 

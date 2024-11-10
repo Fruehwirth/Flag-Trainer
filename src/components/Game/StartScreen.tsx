@@ -20,8 +20,7 @@ export const StartScreen: React.FC<{
     settingsStore.setGameMode(mode);
   };
 
-  const handleStart = async () => {
-    await gameStore.initializeGame();
+  const handleStart = () => {
     onStart();
   };
 
