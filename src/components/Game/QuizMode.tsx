@@ -12,6 +12,21 @@ export const QuizMode: React.FC = observer(() => {
   const [isAnswered, setIsAnswered] = React.useState(false);
   const [selectedAnswer, setSelectedAnswer] = React.useState<string | null>(null);
 
+  const updateTranslations = React.useCallback(async () => {
+    if (options.length > 0) {
+      const translations = await Promise.all(
+        options.map(country => 
+          TranslationService.getTranslation(settingsStore.language, country)
+        )
+      );
+      setTranslatedOptions(translations);
+    }
+  }, [options, settingsStore.language]);
+
+  React.useEffect(() => {
+    updateTranslations();
+  }, [settingsStore.language, updateTranslations]);
+
   React.useEffect(() => {
     const loadOptions = async () => {
       setOptions([]);
@@ -55,7 +70,7 @@ export const QuizMode: React.FC = observer(() => {
     };
 
     loadOptions();
-  }, [gameStore.currentFlag, settingsStore.language]);
+  }, [gameStore.currentFlag]);
 
   const handleAnswer = async (answer: string, index: number) => {
     if (isAnswered) return;
