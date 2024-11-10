@@ -12,7 +12,6 @@
   min-height: 300px;
   width: 300px;
   max-width: 500px;
-  font-family: 'Inter', sans-serif;
   animation: fadeIn 0.3s ease-out;
   z-index: 50;
 }
@@ -32,7 +31,6 @@
   cursor: pointer;
   font-size: 0.8rem;
   font-weight: 500;
-  font-family: 'Inter', sans-serif;
   transition: background-color 0.2s;
   border: none;
 }

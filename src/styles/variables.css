@@ -69,6 +69,7 @@
     --font-size-md: 16px;
     --font-size-lg: 18px;
     --font-size-xl: 24px;
+    --font-family-base: 'Poppins', sans-serif;
     
     /* Transitions */
     --transition-fast: 150ms ease;

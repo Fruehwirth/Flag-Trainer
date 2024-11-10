@@ -3,6 +3,7 @@ html, body {
   padding: 0;
   width: 100%;
   overflow-x: hidden;
+  font-family: var(--font-family-base);
 }
 
 .app {

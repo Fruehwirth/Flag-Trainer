@@ -15,7 +15,7 @@
     border-radius: 8px;
     background-color: var(--color-input-background);
     color: var(--color-text);
-    font-family: 'Inter', sans-serif;
+    font-family: var(--font-family-base);
   }
   
   .answer-input:focus {

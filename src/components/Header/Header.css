@@ -42,7 +42,6 @@
     margin-left: auto;
     font-size: 18px;
     color: var(--color-text);
-    font-family: 'Inter', sans-serif;
     font-weight: 500;
     display: flex;
     align-items: center;
@@ -54,6 +53,5 @@
     flex-grow: 1;
     text-align: left;
     font-size: 24px;
-    font-family: 'Inter', sans-serif;
     font-weight: 600;
   }

@@ -23,6 +23,7 @@
   justify-content: center;
   text-align: center;
   word-break: break-word;
+  font-family: var(--font-family-base);
 }
 
 .option:hover:not(:disabled) {
