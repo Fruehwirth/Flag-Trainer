@@ -14,6 +14,7 @@ export class GameStore {
   incorrectFlags: Flag[] = [];
   isLoading: boolean = false;
   isGameOver: boolean = false;
+  elapsedTime: number = 0;
 
   private quizState: {
     options: string[];
@@ -30,6 +31,7 @@ export class GameStore {
   } | null = null;
 
   private isReplayMode: boolean = false;
+  private timerInterval: NodeJS.Timer | null = null;
 
   constructor(private settingsStore: SettingsStore) {
     makeAutoObservable(this);
@@ -50,6 +52,7 @@ export class GameStore {
       this.isReplayMode = stored.isReplayMode;
       this.quizState = stored.quizState;
       this.typeState = stored.typeState;
+      this.elapsedTime = stored.elapsedTime;
       FlagService.preloadImage(this.currentFlag?.url || '');
     } else {
       this.initializeGame();
@@ -68,12 +71,14 @@ export class GameStore {
       isGameOver: this.isGameOver,
       isReplayMode: this.isReplayMode,
       quizState: this.quizState,
-      typeState: this.typeState
+      typeState: this.typeState,
+      elapsedTime: this.elapsedTime
     });
   }
 
   async initializeGame(): Promise<void> {
     this.isLoading = true;
+    this.elapsedTime = 0;
     try {
       const flags = await FlagService.getFlagsForRegions(this.settingsStore.selectedRegions);
       runInAction(() => {
@@ -87,6 +92,7 @@ export class GameStore {
         this.isLoading = false;
         this.quizState = null;
         this.typeState = null;
+        this.startTimer();
         this.saveToStorage();
       });
     } catch (error) {
@@ -117,6 +123,7 @@ export class GameStore {
       if (this.remainingFlags.length === 0) {
         this.isGameOver = true;
         this.currentFlag = null;
+        this.stopTimer();
       }
       this.saveToStorage();
     });
@@ -134,6 +141,8 @@ export class GameStore {
       this.incorrectFlags = [];
       this.isGameOver = false;
       this.isLoading = false;
+      this.elapsedTime = 0;
+      this.startTimer();
       this.saveToStorage();
     });
   }
@@ -183,5 +192,29 @@ export class GameStore {
       this.typeState = null;
       StorageService.clearGameState();
     });
+  }
+
+  startTimer(): void {
+    if (!this.timerInterval) {
+      this.timerInterval = setInterval(() => {
+        runInAction(() => {
+          this.elapsedTime += 1;
+          this.saveToStorage();
+        });
+      }, 1000);
+    }
+  }
+
+  stopTimer(): void {
+    if (this.timerInterval) {
+      clearInterval(this.timerInterval as NodeJS.Timeout);
+      this.timerInterval = null;
+    }
+  }
+
+  formatTime(): string {
+    const minutes = Math.floor(this.elapsedTime / 60);
+    const seconds = this.elapsedTime % 60;
+    return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
   }
 }

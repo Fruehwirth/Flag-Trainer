@@ -9,6 +9,7 @@ export const GameOver: React.FC = observer(() => {
   const roundCompleteText = useTranslation('roundComplete', settingsStore.language, true);
   const finalScoreText = useTranslation('finalScore', settingsStore.language, true);
   const correctAnswersText = useTranslation('correctAnswers', settingsStore.language, true);
+  const timeText = useTranslation('time', settingsStore.language, true);
   const startNewRoundText = useTranslation('startNewRound', settingsStore.language, true);
   const replayIncorrectText = useTranslation('replayIncorrect', settingsStore.language, true);
 
@@ -23,6 +24,10 @@ export const GameOver: React.FC = observer(() => {
         <div className="stat-item">
           <label>{correctAnswersText}:</label>
           <span>{gameStore.correctCount} / {gameStore.allFlags.length}</span>
+        </div>
+        <div className="stat-item">
+          <label>{timeText}:</label>
+          <span>{gameStore.formatTime()}</span>
         </div>
       </div>
       <div className="game-over-buttons">

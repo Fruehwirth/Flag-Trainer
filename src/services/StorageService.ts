@@ -11,6 +11,7 @@ interface GameState {
   isLoading: boolean;
   isGameOver: boolean;
   isReplayMode: boolean;
+  elapsedTime: number;
   quizState: {
     options: string[];
     translatedOptions: string[];

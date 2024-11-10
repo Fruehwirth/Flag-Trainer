@@ -17,6 +17,10 @@ export const App: React.FC = observer(() => {
     if (!gameStore.currentFlag && !gameStore.isGameOver) {
       gameStore.initializeGame();
     }
+
+    return () => {
+      gameStore.stopTimer();
+    };
   }, []);
 
   return (
