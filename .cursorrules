@@ -14,17 +14,62 @@ If you do not know the answer, say so instead of guessing.   
 If it would be smart to create a new file, say so.
 I am running this on Windows.
 
-Code Style and Structure 
-    - Write concise, technical code with accurate examples. 
-    - Prefer iteration and modularization over code duplication. 
-    - Use descriptive variable names with auxiliary verbs (e.g., isLoading, hasError). 
-    - Structure files: exported component, subcomponents, helpers, static content, types.   
+# Flag Trainer Application Features
 
-Naming Conventions 
-    - Use lowercase with dashes for directories (e.g., components/auth-wizard). 
-    - Use functional components with TypeScript interfaces.   Syntax and Formatting 
-    - Avoid unnecessary curly braces in conditionals; use concise syntax for simple statements. 
+## Core Functionality
+- An educational web application for learning world flags
+- Users can practice identifying flags through two game modes:
+  1. Quiz Mode: Multiple choice selection from 4 options
+  2. Type Mode: Direct text input of country names
 
-UI and Styling 
-    - The overall theme of the application should be a sleek, modern, and clean design.
-    - Implement responsive design
+## Game Mechanics
+- Flags are randomly presented to users
+- Progress is tracked and displayed via a progress bar
+- Score percentage is shown and updated in real-time
+- Game state is preserved across sessions
+- Correct/incorrect feedback is provided instantly
+- Smooth transitions between flags
+- Pre-loading of next flag for seamless experience
+
+## Customization Options
+- Region Selection:
+  - Europe, Asia, North America, South America, Africa, Oceania
+  - Users can select multiple regions
+  - At least one region must be selected
+  - Changes trigger new game session
+
+- Language Support:
+  - English and German interfaces
+  - Automatic detection of browser language
+  - Country names are translated in both game modes
+  - UI elements adapt to selected language
+
+## Settings and Configuration
+- Persistent settings across sessions
+- Game mode toggle between Quiz and Type
+- Visual feedback for selected options
+- Settings panel accessible via header button
+- Region selection with visual map representations
+
+## Game Progress Features
+- End-of-game summary with statistics
+- Option to replay incorrectly answered flags
+- Complete game restart capability
+- Long-press refresh for cache clearing
+- Session preservation for interrupted games
+
+## Accessibility and UX
+- Responsive design for all screen sizes
+- Dark/light mode support based on system preferences
+- Touch-friendly interface
+- Keyboard navigation support
+- Clear visual feedback for all interactions
+
+## Data Management
+- Progress saving
+- State restoration on page reload
+- Cached translations for performance
+- Offline capability for core features
+- Clean state management
+
+These features should be preserved and considered when making any modifications to the application. Any new features should integrate seamlessly with existing functionality and maintain the current user experience standards.

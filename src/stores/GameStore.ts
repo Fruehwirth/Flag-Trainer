@@ -41,7 +41,8 @@ export class GameStore {
     if (stored) {
       this.currentFlag = stored.currentFlag;
       this.remainingFlags = stored.remainingFlags;
-      this.allFlags = stored.allFlags;
+      this.originalFlags = stored.originalFlags;
+      this.allFlags = stored.originalFlags;
       this.correctCount = stored.correctCount;
       this.incorrectFlags = stored.incorrectFlags;
       this.isLoading = false;
