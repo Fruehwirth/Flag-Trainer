@@ -1,8 +1,5 @@
 const CACHE_NAME = 'flag-trainer-v1';
 const urlsToCache = [
-  '/',
-  '/index.html',
-  '/src/index.tsx',
   '/assets/translations/en.json',
   '/assets/translations/de.json',
   '/assets/translations/ui/en.json',
@@ -17,6 +14,10 @@ self.addEventListener('install', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
+  if (event.request.url.match(/\.(html|js|tsx)$/)) {
+    return fetch(event.request);
+  }
+
   event.respondWith(
     caches.match(event.request)
       .then((response) => response || fetch(event.request))
