@@ -9,17 +9,17 @@ import { StartScreen } from './components/Game/StartScreen';
 import { SettingsPanel } from './components/Settings/SettingsPanel';
 import { useStores } from './hooks/useStores';
 import './App.css';
+import { StorageService } from './services/StorageService';
 
 export const App: React.FC = observer(() => {
   const { settingsStore, gameStore } = useStores();
   const [isSettingsOpen, setIsSettingsOpen] = React.useState(false);
-  const [showStartScreen, setShowStartScreen] = React.useState(true);
+  const [showStartScreen, setShowStartScreen] = React.useState(() => {
+    // Show start screen only if there's no stored game state
+    return !StorageService.getGameState();
+  });
 
   React.useEffect(() => {
-    const initialize = async () => {
-      await gameStore.initializeGame();
-    };
-    initialize();
     return () => {
       gameStore.stopTimer();
     };
@@ -43,12 +43,20 @@ export const App: React.FC = observer(() => {
         onRestart={handleRestart}
       />
       
-      {showStartScreen && <StartScreen onStart={handleGameStart} />}
+      {showStartScreen && (
+        <div style={{
+          opacity: showStartScreen ? 1 : 0,
+          pointerEvents: showStartScreen ? 'auto' : 'none',
+          transition: 'opacity 0.5s ease'
+        }}>
+          <StartScreen onStart={handleGameStart} />
+        </div>
+      )}
       
       <div style={{ 
         opacity: showStartScreen ? 0 : 1,
         pointerEvents: showStartScreen ? 'none' : 'auto',
-        transition: 'opacity 0.3s ease'
+        transition: 'opacity 0.5s ease'
       }}>
         {!gameStore.isGameOver ? (
           <main className="game-container">
