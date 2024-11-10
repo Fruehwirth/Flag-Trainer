@@ -75,6 +75,8 @@ export const QuizMode: React.FC = observer(() => {
   const handleAnswer = async (answer: string, index: number) => {
     if (isAnswered) return;
     
+    const isCorrect = options[index] === gameStore.currentFlag?.country;
+    
     React.startTransition(() => {
       setSelectedAnswer(answer);
       setIsAnswered(true);
@@ -86,7 +88,7 @@ export const QuizMode: React.FC = observer(() => {
       });
     });
 
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise(resolve => setTimeout(resolve, isCorrect ? 400 : 1000));
     await gameStore.handleAnswer(options[index]);
   };
 

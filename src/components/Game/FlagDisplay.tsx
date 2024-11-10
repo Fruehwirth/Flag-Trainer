@@ -9,13 +9,20 @@ export const FlagDisplay: React.FC = observer(() => {
   const { gameStore, settingsStore } = useStores();
   const loadingText = useTranslation('loading', settingsStore.language, true);
   const [imageSrc, setImageSrc] = React.useState<string>('');
+  const [isChanging, setIsChanging] = React.useState(false);
   
   React.useEffect(() => {
-    // Pre-cache the next flag and update current image source
     const updateFlags = async () => {
       if (gameStore.currentFlag) {
+        setIsChanging(true);
+        await new Promise(resolve => setTimeout(resolve, 150)); // Reduced from 300ms
+        
         await FlagService.preloadImage(gameStore.currentFlag.url);
         setImageSrc(gameStore.currentFlag.url);
+        
+        // Small delay to ensure the new image is loaded
+        await new Promise(resolve => setTimeout(resolve, 25)); // Reduced from 50ms
+        setIsChanging(false);
       }
       
       // Pre-cache next flag if available
@@ -37,7 +44,7 @@ export const FlagDisplay: React.FC = observer(() => {
       <img
         src={imageSrc}
         alt="Flag to identify"
-        className="flag-image"
+        className={`flag-image ${isChanging ? 'changing' : ''}`}
         loading="eager"
       />
     </div>

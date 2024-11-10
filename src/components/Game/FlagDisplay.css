@@ -12,6 +12,12 @@
     max-height: 100%;
     border-radius: 20px;
     object-fit: contain;
+    transition: transform 0.15s ease, opacity 0.15s ease;
+  }
+  
+  .flag-image.changing {
+    transform: scale(0.9);
+    opacity: 0;
   }
   
   .flag-placeholder {
