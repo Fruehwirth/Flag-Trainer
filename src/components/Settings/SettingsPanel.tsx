@@ -13,6 +13,8 @@ export const SettingsPanel: React.FC<{
   const { settingsStore, gameStore } = useStores();
   const [isClosing, setIsClosing] = useState(false);
   const panelRef = useRef<HTMLDivElement>(null);
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
 
   // Translation hooks
   const settingsText = useTranslation('settings', settingsStore.language, true);
@@ -28,6 +30,26 @@ export const SettingsPanel: React.FC<{
       onClose();
       setIsClosing(false);
     }, 300);
+  };
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > 50;
+    
+    if (isLeftSwipe) {
+      handleClose();
+    }
   };
 
   React.useEffect(() => {
@@ -55,7 +77,13 @@ export const SettingsPanel: React.FC<{
   if (!isOpen) return null;
 
   return (
-    <div className={`settings-panel ${isClosing ? 'closing' : ''}`} ref={panelRef}>
+    <div 
+      className={`settings-panel ${isClosing ? 'closing' : ''}`} 
+      ref={panelRef}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+    >
       <button 
         className="close-button material-symbols-outlined"
         onClick={handleClose}
