@@ -48,6 +48,7 @@ export const SettingsPanel: React.FC<{
 
   const handleGameModeChange = async (mode: GameMode) => {
     settingsStore.setGameMode(mode);
+    gameStore.clearGameState();
     await gameStore.initializeGame();
   };
 

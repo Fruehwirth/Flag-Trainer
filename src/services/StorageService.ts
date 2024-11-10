@@ -57,4 +57,8 @@ export class StorageService {
     localStorage.removeItem(this.GAME_STATE_KEY);
     localStorage.removeItem(this.SETTINGS_STATE_KEY);
   }
+
+  static clearGameState(): void {
+    localStorage.removeItem(this.GAME_STATE_KEY);
+  }
 } 

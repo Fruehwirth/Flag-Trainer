@@ -167,4 +167,21 @@ export class GameStore {
     this.quizState = state;
     this.saveToStorage();
   }
+
+  clearGameState(): void {
+    runInAction(() => {
+      this.currentFlag = null;
+      this.remainingFlags = [];
+      this.allFlags = [];
+      this.originalFlags = [];
+      this.correctCount = 0;
+      this.incorrectFlags = [];
+      this.isLoading = false;
+      this.isGameOver = false;
+      this.isReplayMode = false;
+      this.quizState = null;
+      this.typeState = null;
+      StorageService.clearGameState();
+    });
+  }
 }
