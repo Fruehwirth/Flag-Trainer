@@ -1,8 +1,8 @@
 :root {
     /* Colors */
-    --color-primary: #2196f3;
-    --color-primary-light: #64b5f6;
-    --color-primary-dark: #1976d2;
+    --color-primary: #008eff;
+    --color-primary-light: #008eff24;
+    --color-primary-dark: #0a85ff;
     
     --color-success: #4caf50;
     --color-success-light: #81c784;
@@ -16,11 +16,12 @@
     --region-image-filter: none;
     --color-background: #f5f5f5;
     --color-surface: #ffffff;
-    --color-text: #000000;
+    --color-text: #3a3a3a;
     --color-text-highcontrast: #d6d6d6;
     --color-border: #dddddd;
     --color-button: rgb(85, 85, 85);
-    --color-button-hover: rgb(70, 70, 70);
+    --color-button-hover: rgba(0, 0, 0, 0.111);
+    --color-button-background: rgba(0, 0, 0, 0.032);
     --color-header: #ffffff;
     --color-progress: #000000;
     --color-input-background: #ffffff;
@@ -36,7 +37,8 @@
       --color-text-highcontrast: #d7d7d7;
       --color-border: #444444;
       --color-button: rgb(100, 100, 100);
-      --color-button-hover: rgb(85, 85, 85);
+      --color-button-hover: rgba(255, 255, 255, 0.111);
+      --color-button-background: rgba(255, 255, 255, 0.081);
       --color-header: #1e1e1e;
       --color-progress: #ffffff;
       --color-input-background: #2a2a2a;

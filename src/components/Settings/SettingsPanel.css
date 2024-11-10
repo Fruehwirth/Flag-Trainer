@@ -95,3 +95,48 @@ select {
         padding: 15px;
     }
 }
+
+.game-mode-options {
+    display: flex;
+    gap: 12px;
+    width: 100%;
+}
+
+.game-mode-option {
+    flex: 1;
+    position: relative;
+}
+
+.game-mode-option input {
+    position: absolute;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.game-mode-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 16px;
+    background-color: var(--color-surface);
+    border: 2px solid var(--color-border);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.game-mode-option input:checked + .game-mode-label {
+    border-color: var(--color-primary);
+    background-color: var(--color-primary-light);
+}
+
+.game-mode-option:hover .game-mode-label {
+    border-color: var(--color-primary-light);
+}
+
+.game-mode-icon {
+    font-size: 32px;
+}

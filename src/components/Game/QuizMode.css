@@ -12,9 +12,9 @@
   height: 100px;
   padding: 14px;
   font-size: 20px;
-  background-color: var(--color-button);
-  color: var(--color-text-highcontrast);
-  border: none;
+  background-color: var(--color-button-background);
+  color: var(--color-text);
+  border: 2px solid var(--color-button);
   border-radius: 20px;
   cursor: pointer;
   transition: background-color 0.3s ease;
@@ -30,9 +30,11 @@
 }
 
 .option.correct {
-  background-color: green !important;
+  background-color: rgba(0, 128, 0, 0.301) !important;
+  border: 2px solid rgba(0, 128, 0, 0.678) !important;
 }
 
 .option.incorrect {
-  background-color: red !important;
+  background-color: rgba(255, 0, 0, 0.371) !important;
+  border: 2px solid rgba(255, 0, 0, 0.715) !important;
 }

@@ -67,27 +67,39 @@ export const SettingsPanel: React.FC<{
 
       <section className="settings-section">
         <h3>{gameModeText}</h3>
-        <div className="radio-group">
-          <label>
+        <div className="game-mode-options">
+          <div className="game-mode-option">
             <input
               type="radio"
+              id="quiz-mode"
               name="game-mode"
               value="quiz"
               checked={settingsStore.gameMode === 'quiz'}
               onChange={() => handleGameModeChange('quiz')}
             />
-            {quizText}
-          </label>
-          <label>
+            <label htmlFor="quiz-mode" className="game-mode-label">
+              <span className="game-mode-icon material-symbols-outlined">
+                quiz
+              </span>
+              {quizText}
+            </label>
+          </div>
+          <div className="game-mode-option">
             <input
               type="radio"
+              id="type-mode"
               name="game-mode"
               value="type"
               checked={settingsStore.gameMode === 'type'}
               onChange={() => handleGameModeChange('type')}
             />
-            {typeText}
-          </label>
+            <label htmlFor="type-mode" className="game-mode-label">
+              <span className="game-mode-icon material-symbols-outlined">
+                keyboard
+              </span>
+              {typeText}
+            </label>
+          </div>
         </div>
       </section>
 
