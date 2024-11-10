@@ -1,18 +1,29 @@
-Follow the user's requirements carefully and to the letter.
-Always only present the updated code, never the code that is being replaced.
-Only show the part of the code that has been changed and not the entire file.
-If multiple changes are made in one file, show all of the changes in one code block and do not split them up into multiple code blocks.
-Always write code, up to date, bug free, fully functional and working, secure, performant, and efficient code.
-Focus on readability over being performant.
-Fully implement all requested functionality.
-Be sure to reference file names.
-Make sure to also include imports when creating a new method or class
-Be concise. 
-Minimize any other prose.
-If you think there might not be a correct answer, say so. 
-If you do not know the answer, say so instead of guessing.   
-If it would be smart to create a new file, say so.
-I am running this on Windows.
+# Code Response Rules
+
+1. ONLY show new or modified code
+2. NEVER show existing code
+3. ALWAYS include the file path at the start of each code block
+4. Format all code blocks as:
+```
+language:path/to/file
+new/modified code here
+```
+5. If multiple changes in one file, combine them in a single code block
+6. Include brief explanation of changes unless specifically asked not to
+7. Include necessary imports for new code
+8. Flag if new file needs to be created
+9. Focus on readability over performance
+10. Be concise in explanations
+11. Admit if answer is uncertain
+12. Specify if running on Windows matters
+
+Example response format:
+```
+typescript:src/components/Game/StartScreen.tsx
+new code here
+```
+Brief explanation of changes (unless specifically asked not to provide one).
+
 
 # Flag Trainer Application Features
 
