@@ -4,7 +4,9 @@ import { useStores } from '../../hooks/useStores';
 import { useTranslation } from '../../hooks/useTranslation';
 import './GameOver.css';
 
-export const GameOver: React.FC = observer(() => {
+export const GameOver: React.FC<{
+  onRestart: () => void;
+}> = observer(({ onRestart }) => {
   const { gameStore, settingsStore } = useStores();
   const roundCompleteText = useTranslation('roundComplete', settingsStore.language, true);
   const finalScoreText = useTranslation('finalScore', settingsStore.language, true);
@@ -31,7 +33,7 @@ export const GameOver: React.FC = observer(() => {
         </div>
       </div>
       <div className="game-over-buttons">
-        <button className="restart-button" onClick={() => gameStore.restartGame()}>
+        <button className="restart-button" onClick={onRestart}>
           <span className="material-symbols-outlined">play_arrow</span>
           {startNewRoundText}
         </button>
