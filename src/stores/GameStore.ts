@@ -42,7 +42,7 @@ export class GameStore {
       this.currentFlag = stored.currentFlag;
       this.remainingFlags = stored.remainingFlags;
       this.originalFlags = stored.originalFlags;
-      this.allFlags = stored.originalFlags;
+      this.allFlags = stored.allFlags;
       this.correctCount = stored.correctCount;
       this.incorrectFlags = stored.incorrectFlags;
       this.isLoading = false;
@@ -50,6 +50,7 @@ export class GameStore {
       this.isReplayMode = stored.isReplayMode;
       this.quizState = stored.quizState;
       this.typeState = stored.typeState;
+      FlagService.preloadImage(this.currentFlag?.url || '');
     } else {
       this.initializeGame();
     }

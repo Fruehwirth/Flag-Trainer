@@ -1,6 +1,7 @@
 .quiz-options {
   width: 100%;
   max-width: 500px;
+  min-height: 220px;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 20px;
