@@ -5,36 +5,79 @@ import { FlagDisplay } from './components/Game/FlagDisplay';
 import { QuizMode } from './components/Game/QuizMode';
 import { TypeMode } from './components/Game/TypeMode';
 import { GameOver } from './components/Game/GameOver';
+import { StartScreen } from './components/Game/StartScreen';
 import { SettingsPanel } from './components/Settings/SettingsPanel';
 import { useStores } from './hooks/useStores';
 import './App.css';
+import { StorageService } from './services/StorageService';
 
 export const App: React.FC = observer(() => {
   const { settingsStore, gameStore } = useStores();
   const [isSettingsOpen, setIsSettingsOpen] = React.useState(false);
+  const [showStartScreen, setShowStartScreen] = React.useState(() => {
+    return !StorageService.getGameState();
+  });
+  const [isGameContainerVisible, setIsGameContainerVisible] = React.useState(true);
 
   React.useEffect(() => {
-    if (!gameStore.currentFlag && !gameStore.isGameOver) {
-      gameStore.initializeGame();
-    }
-
     return () => {
       gameStore.stopTimer();
     };
   }, []);
 
+  const handleGameStart = () => {
+    setShowStartScreen(false);
+  };
+
+  const handleRestart = () => {
+    setIsGameContainerVisible(false);
+    setTimeout(() => {
+      gameStore.clearGameState();
+      gameStore.initializeGame();
+      setShowStartScreen(true);
+      setIsGameContainerVisible(true);
+    }, 200);
+  };
+
   return (
     <div className={`app ${settingsStore.gameMode === 'type' ? 'type-mode' : ''}`}>
-      <Header onSettingsClick={() => setIsSettingsOpen(true)} />
+      <Header 
+        onSettingsClick={() => setIsSettingsOpen(true)} 
+        showControls={!showStartScreen}
+        onRestart={handleRestart}
+      />
       
-      {gameStore.isGameOver && <GameOver />}
+      <div 
+        className="start-screen-container"
+        style={{
+          position: 'fixed',
+          top: '76px',
+          left: 0,
+          right: 0,
+          bottom: 0,
+          opacity: showStartScreen ? 1 : 0,
+          pointerEvents: showStartScreen ? 'auto' : 'none',
+          transition: 'opacity 0.2s ease',
+          zIndex: showStartScreen ? 40 : -1
+        }}
+      >
+        <StartScreen onStart={handleGameStart} />
+      </div>
       
-      {!gameStore.isGameOver && (
-        <main className="game-container">
-          <FlagDisplay />
-          {settingsStore.gameMode === 'quiz' ? <QuizMode /> : <TypeMode />}
-        </main>
-      )}
+      <div style={{ 
+        opacity: showStartScreen || !isGameContainerVisible ? 0 : 1,
+        pointerEvents: showStartScreen ? 'none' : 'auto',
+        transition: 'opacity 0.2s ease'
+      }}>
+        {!gameStore.isGameOver ? (
+          <main className="game-container">
+            <FlagDisplay />
+            {settingsStore.gameMode === 'quiz' ? <QuizMode /> : <TypeMode />}
+          </main>
+        ) : (
+          <GameOver onRestart={handleRestart} />
+        )}
+      </div>
 
       <SettingsPanel 
         isOpen={isSettingsOpen} 

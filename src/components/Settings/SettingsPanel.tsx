@@ -1,16 +1,15 @@
 import React, { useState, useRef } from 'react';
 import { observer } from 'mobx-react-lite';
 import { useStores } from '../../hooks/useStores';
-import { GameMode, Language } from '../../types/Settings';
+import { Language } from '../../types/Settings';
 import './SettingsPanel.css';
 import { useTranslation } from '../../hooks/useTranslation';
-import { RegionGrid } from './RegionGrid';
 
 export const SettingsPanel: React.FC<{
   isOpen: boolean;
   onClose: () => void;
 }> = observer(({ isOpen, onClose }) => {
-  const { settingsStore, gameStore } = useStores();
+  const { settingsStore } = useStores();
   const [isClosing, setIsClosing] = useState(false);
   const panelRef = useRef<HTMLDivElement>(null);
   const [touchStart, setTouchStart] = useState<number | null>(null);
@@ -18,11 +17,7 @@ export const SettingsPanel: React.FC<{
 
   // Translation hooks
   const settingsText = useTranslation('settings', settingsStore.language, true);
-  const gameModeText = useTranslation('gameMode', settingsStore.language, true);
-  const quizText = useTranslation('quiz', settingsStore.language, true);
-  const typeText = useTranslation('type', settingsStore.language, true);
   const languageText = useTranslation('language', settingsStore.language, true);
-  const regionsText = useTranslation('regions', settingsStore.language, true);
 
   const handleClose = () => {
     setIsClosing(true);
@@ -68,12 +63,6 @@ export const SettingsPanel: React.FC<{
     };
   }, [isOpen]);
 
-  const handleGameModeChange = async (mode: GameMode) => {
-    settingsStore.setGameMode(mode);
-    gameStore.clearGameState();
-    await gameStore.initializeGame();
-  };
-
   if (!isOpen) return null;
 
   return (
@@ -95,52 +84,9 @@ export const SettingsPanel: React.FC<{
       <h2>{settingsText}</h2>
 
       <section className="settings-section">
-        <h3>{gameModeText}</h3>
-        <div className="game-mode-options">
-          <div className="game-mode-option">
-            <input
-              type="radio"
-              id="quiz-mode"
-              name="game-mode"
-              value="quiz"
-              checked={settingsStore.gameMode === 'quiz'}
-              onChange={() => handleGameModeChange('quiz')}
-            />
-            <label htmlFor="quiz-mode" className="game-mode-label">
-              <span className="game-mode-icon material-symbols-outlined">
-                quiz
-              </span>
-              {quizText}
-            </label>
-          </div>
-          <div className="game-mode-option">
-            <input
-              type="radio"
-              id="type-mode"
-              name="game-mode"
-              value="type"
-              checked={settingsStore.gameMode === 'type'}
-              onChange={() => handleGameModeChange('type')}
-            />
-            <label htmlFor="type-mode" className="game-mode-label">
-              <span className="game-mode-icon material-symbols-outlined">
-                keyboard
-              </span>
-              {typeText}
-            </label>
-          </div>
-        </div>
-      </section>
-
-      <section className="settings-section">
-        <h3>{regionsText}</h3>
-        <RegionGrid />
-      </section>
-
-      <section className="settings-section">
         <h3>{languageText}</h3>
-        <select
-          value={settingsStore.language}
+        <select 
+          value={settingsStore.language} 
           onChange={(e) => settingsStore.setLanguage(e.target.value as Language)}
         >
           <option value="en">English</option>

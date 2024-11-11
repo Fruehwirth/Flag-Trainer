@@ -6,11 +6,26 @@ import './Header.css';
 
 interface HeaderProps {
   onSettingsClick: () => void;
+  showControls: boolean;
+  onRestart: () => void;
 }
 
-export const Header: React.FC<HeaderProps> = observer(({ onSettingsClick }) => {
+export const Header: React.FC<HeaderProps> = observer(({ onSettingsClick, showControls, onRestart }) => {
   const { gameStore } = useStores();
   const [longPressTimer, setLongPressTimer] = React.useState<NodeJS.Timeout | null>(null);
+  const [isVisible, setIsVisible] = React.useState(showControls);
+  const hasAnsweredAny = gameStore.allFlags.length !== gameStore.remainingFlags.length;
+  const shouldShowScore = showControls && !gameStore.isGameOver;
+
+  React.useEffect(() => {
+    if (!showControls) {
+      const timer = setTimeout(() => {
+        setIsVisible(false);
+      }, 300);
+      return () => clearTimeout(timer);
+    }
+    setIsVisible(true);
+  }, [showControls]);
 
   const handleRefreshStart = () => {
     const timer = setTimeout(() => {
@@ -29,11 +44,21 @@ export const Header: React.FC<HeaderProps> = observer(({ onSettingsClick }) => {
 
   const handleRefreshClick = () => {
     const button = document.querySelector('.refresh-button') as HTMLElement;
+    const scoreContainer = document.querySelector('.score-container') as HTMLElement;
+    
     button?.classList.remove('rotating');
-    // Trigger reflow
     void button?.offsetWidth;
     button?.classList.add('rotating');
-    gameStore.restartGame();
+    
+    if (scoreContainer) {
+      scoreContainer.classList.add('fade-out');
+      onRestart();
+      setTimeout(() => {
+        scoreContainer.classList.remove('fade-out');
+      }, 200);
+    } else {
+      onRestart();
+    }
   };
   
   return (
@@ -48,23 +73,27 @@ export const Header: React.FC<HeaderProps> = observer(({ onSettingsClick }) => {
       
       <h1>Flag Trainer</h1>
       
-      <div className="score-container">
-        <span className="score">
-          {gameStore.scorePercentage}%
-        </span>
-        <button
-          className="refresh-button material-symbols-outlined"
-          onClick={handleRefreshClick}
-          onMouseDown={handleRefreshStart}
-          onMouseUp={handleRefreshEnd}
-          onMouseLeave={handleRefreshEnd}
-          onTouchStart={handleRefreshStart}
-          onTouchEnd={handleRefreshEnd}
-          aria-label="Restart game"
-        >
-          refresh
-        </button>
-      </div>
+      {isVisible && shouldShowScore && (
+        <div className={`score-container ${!showControls ? 'hidden' : ''}`}>
+          {hasAnsweredAny && (
+            <span className="score">
+              {gameStore.scorePercentage}%
+            </span>
+          )}
+          <button
+            className="refresh-button material-symbols-outlined"
+            onClick={handleRefreshClick}
+            onMouseDown={handleRefreshStart}
+            onMouseUp={handleRefreshEnd}
+            onMouseLeave={handleRefreshEnd}
+            onTouchStart={handleRefreshStart}
+            onTouchEnd={handleRefreshEnd}
+            aria-label="Restart game"
+          >
+            refresh
+          </button>
+        </div>
+      )}
       
       <ProgressBar progress={gameStore.progress} />
     </header>
