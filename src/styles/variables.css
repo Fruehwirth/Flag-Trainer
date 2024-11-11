@@ -14,14 +14,14 @@
     
     /* Neutral colors */
     --region-image-filter: none;
-    --color-background: #f5f5f5;
+    --color-background: #ebebeb;
     --color-surface: #ffffff;
     --color-text: #3a3a3a;
     --color-text-highcontrast: #d6d6d6;
     --color-border: #dddddd;
     --color-button: rgb(85, 85, 85);
     --color-button-hover: rgba(0, 0, 0, 0.111);
-    --color-button-background: rgba(0, 0, 0, 0.032);
+    --color-button-background: rgba(0, 0, 0, 0.064);
     --color-header: #ffffff;
     --color-progress: #000000;
     --color-input-background: #ffffff;
