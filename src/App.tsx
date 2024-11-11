@@ -15,9 +15,9 @@ export const App: React.FC = observer(() => {
   const { settingsStore, gameStore } = useStores();
   const [isSettingsOpen, setIsSettingsOpen] = React.useState(false);
   const [showStartScreen, setShowStartScreen] = React.useState(() => {
-    // Show start screen only if there's no stored game state
     return !StorageService.getGameState();
   });
+  const [isGameContainerVisible, setIsGameContainerVisible] = React.useState(true);
 
   React.useEffect(() => {
     return () => {
@@ -30,9 +30,13 @@ export const App: React.FC = observer(() => {
   };
 
   const handleRestart = () => {
-    gameStore.clearGameState();
-    gameStore.initializeGame();
-    setShowStartScreen(true);
+    setIsGameContainerVisible(false);
+    setTimeout(() => {
+      gameStore.clearGameState();
+      gameStore.initializeGame();
+      setShowStartScreen(true);
+      setIsGameContainerVisible(true);
+    }, 200);
   };
 
   return (
@@ -43,20 +47,27 @@ export const App: React.FC = observer(() => {
         onRestart={handleRestart}
       />
       
-      {showStartScreen && (
-        <div style={{
+      <div 
+        className="start-screen-container"
+        style={{
+          position: 'fixed',
+          top: '76px',
+          left: 0,
+          right: 0,
+          bottom: 0,
           opacity: showStartScreen ? 1 : 0,
           pointerEvents: showStartScreen ? 'auto' : 'none',
-          transition: 'opacity 0.5s ease'
-        }}>
-          <StartScreen onStart={handleGameStart} />
-        </div>
-      )}
+          transition: 'opacity 0.2s ease',
+          zIndex: showStartScreen ? 40 : -1
+        }}
+      >
+        <StartScreen onStart={handleGameStart} />
+      </div>
       
       <div style={{ 
-        opacity: showStartScreen ? 0 : 1,
+        opacity: showStartScreen || !isGameContainerVisible ? 0 : 1,
         pointerEvents: showStartScreen ? 'none' : 'auto',
-        transition: 'opacity 0.5s ease'
+        transition: 'opacity 0.2s ease'
       }}>
         {!gameStore.isGameOver ? (
           <main className="game-container">
@@ -64,7 +75,7 @@ export const App: React.FC = observer(() => {
             {settingsStore.gameMode === 'quiz' ? <QuizMode /> : <TypeMode />}
           </main>
         ) : (
-          <GameOver onRestart={() => setShowStartScreen(true)} />
+          <GameOver onRestart={handleRestart} />
         )}
       </div>
 

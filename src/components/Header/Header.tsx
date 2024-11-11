@@ -52,10 +52,10 @@ export const Header: React.FC<HeaderProps> = observer(({ onSettingsClick, showCo
     
     if (scoreContainer) {
       scoreContainer.classList.add('fade-out');
+      onRestart();
       setTimeout(() => {
-        onRestart();
         scoreContainer.classList.remove('fade-out');
-      }, 500);
+      }, 200);
     } else {
       onRestart();
     }
