@@ -9,7 +9,7 @@ import './StartScreen.css';
 export const StartScreen: React.FC<{
   onStart: () => void;
 }> = observer(({ onStart }) => {
-  const { settingsStore, gameStore } = useStores();
+  const { settingsStore } = useStores();
   const gameModeText = useTranslation('gameMode', settingsStore.language, true);
   const quizText = useTranslation('quiz', settingsStore.language, true);
   const typeText = useTranslation('type', settingsStore.language, true);
