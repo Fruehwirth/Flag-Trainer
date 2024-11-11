@@ -73,7 +73,11 @@ export const App: React.FC = observer(() => {
         {!gameStore.isGameOver ? (
           <main className="game-container">
             <FlagDisplay />
-            {settingsStore.gameMode === 'quiz' ? <QuizMode /> : <TypeMode />}
+            {settingsStore.gameMode === 'quiz' ? (
+              <QuizMode />
+            ) : (
+              <TypeMode shouldAutoFocus={!showStartScreen} />
+            )}
           </main>
         ) : (
           <GameOver onRestart={handleRestart} />

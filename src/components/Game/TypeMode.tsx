@@ -5,7 +5,11 @@ import { TranslationService } from '../../services/TranslationService';
 import './TypeMode.css';
 import { useTranslation } from '../../hooks/useTranslation';
 
-export const TypeMode: React.FC = observer(() => {
+interface TypeModeProps {
+  shouldAutoFocus?: boolean;
+}
+
+export const TypeMode: React.FC<TypeModeProps> = observer(({ shouldAutoFocus = false }) => {
   const { gameStore, settingsStore } = useStores();
   const [answer, setAnswer] = React.useState('');
   const [feedback, setFeedback] = React.useState<'correct' | 'incorrect' | null>(null);
@@ -15,16 +19,16 @@ export const TypeMode: React.FC = observer(() => {
   const placeholderText = useTranslation('typeCountryName', settingsStore.language, true);
 
   React.useEffect(() => {
-    if (inputRef.current) {
+    if (shouldAutoFocus && inputRef.current) {
       inputRef.current.focus();
     }
-  }, [gameStore.currentFlag]);
+  }, [gameStore.currentFlag, shouldAutoFocus]);
 
   React.useEffect(() => {
-    if (!isProcessing && inputRef.current) {
+    if (shouldAutoFocus && !isProcessing && inputRef.current) {
       inputRef.current.focus();
     }
-  }, [isProcessing]);
+  }, [isProcessing, shouldAutoFocus]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
