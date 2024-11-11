@@ -15,7 +15,8 @@ export const App: React.FC = observer(() => {
   const { settingsStore, gameStore } = useStores();
   const [isSettingsOpen, setIsSettingsOpen] = React.useState(false);
   const [showStartScreen, setShowStartScreen] = React.useState(() => {
-    return !StorageService.getGameState();
+    const gameState = StorageService.getGameState();
+    return !gameState || (gameState.allFlags.length === gameState.remainingFlags.length);
   });
   const [isGameContainerVisible, setIsGameContainerVisible] = React.useState(true);
 
