@@ -113,33 +113,35 @@ export class GameStore {
       isCorrect : 
       answer.toLowerCase() === this.currentFlag.country.toLowerCase();
     
-      runInAction(() => {
-        if (answerIsCorrect) {
-          this.correctCount++;
+    runInAction(() => {
+      if (answerIsCorrect) {
+        this.correctCount++;
+      } else {
+        this.incorrectFlags.push(this.currentFlag!);
+      }
+      
+      if (this.remainingFlags.length === 1) {
+        this.isGameOver = true;
+        this.stopTimer();
+        
+        if (this.incorrectFlags.length > 0) {
+          setTimeout(() => {
+            this.preparedReplayFlags = shuffle([...this.incorrectFlags]);
+            this.remainingFlags = [];
+            this.currentFlag = this.preparedReplayFlags[0];
+          }, 300);
         } else {
-          this.incorrectFlags.push(this.currentFlag!);
+          this.remainingFlags = [];
+          this.currentFlag = null;
         }
+      } else {
         this.remainingFlags = this.remainingFlags.slice(1);
         this.currentFlag = this.remainingFlags[0] || null;
-        this.quizState = null;
-        
-        if (this.remainingFlags.length === 0) {
-          this.isGameOver = true;
-          this.stopTimer();
-          
-          // Prepare replay mode if there are incorrect flags
-          if (this.incorrectFlags.length > 0) {
-            setTimeout(() => {
-              this.preparedReplayFlags = shuffle([...this.incorrectFlags]);
-              // Set the current flag to the first incorrect flag
-              this.currentFlag = this.preparedReplayFlags[0];
-            }, 300);
-          } else {
-            this.currentFlag = null;
-          }
-        }
-        this.saveToStorage();
-      });
+      }
+      
+      this.quizState = null;
+      this.saveToStorage();
+    });
 
     return answerIsCorrect;
   }
@@ -148,7 +150,6 @@ export class GameStore {
     runInAction(() => {
       this.isReplayMode = true;
       this.allFlags = [...this.incorrectFlags];
-      // Since currentFlag is already set, we just need to set the remaining flags
       this.remainingFlags = this.preparedReplayFlags;
       this.correctCount = 0;
       this.incorrectFlags = [];
