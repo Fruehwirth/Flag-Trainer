@@ -15,6 +15,10 @@ export const GameOver: React.FC<{
   const startNewRoundText = useTranslation('startNewRound', settingsStore.language, true);
   const replayIncorrectText = useTranslation('replayIncorrect', settingsStore.language, true);
 
+  const handleReplayIncorrect = () => {
+    gameStore.replayIncorrect();
+  };
+
   return (
     <div className="game-over">
       <h2>{roundCompleteText}</h2>
@@ -39,7 +43,7 @@ export const GameOver: React.FC<{
         </button>
         <button 
           className="replay-incorrect-button" 
-          onClick={() => gameStore.replayIncorrect()}
+          onClick={handleReplayIncorrect}
           disabled={gameStore.incorrectFlags.length === 0}
         >
           <span className="material-symbols-outlined">replay</span>

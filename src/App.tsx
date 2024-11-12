@@ -70,17 +70,19 @@ export const App: React.FC = observer(() => {
         pointerEvents: showStartScreen ? 'none' : 'auto',
         transition: 'opacity 0.2s ease'
       }}>
-        {!gameStore.isGameOver ? (
-          <main className="game-container">
-            <FlagDisplay />
-            {settingsStore.gameMode === 'quiz' ? (
-              <QuizMode />
-            ) : (
-              <TypeMode shouldAutoFocus={!showStartScreen} />
-            )}
-          </main>
-        ) : (
-          <GameOver onRestart={handleRestart} />
+        <main className="game-container">
+          <FlagDisplay />
+          {settingsStore.gameMode === 'quiz' ? (
+            <QuizMode />
+          ) : (
+            <TypeMode shouldAutoFocus={!showStartScreen} />
+          )}
+        </main>
+        {gameStore.isGameOver && (
+          <>
+            <div className="game-over-overlay" />
+            <GameOver onRestart={handleRestart} />
+          </>
         )}
       </div>
 
