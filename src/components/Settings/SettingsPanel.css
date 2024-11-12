@@ -78,7 +78,7 @@
 }
 
 select, option {
-    width: 100px;
+    width: 120px;
     padding: 10px;
     background-color: var(--color-input-background);
     color: var(--color-text);
