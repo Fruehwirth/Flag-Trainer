@@ -33,6 +33,9 @@ export class GameStore {
   private isReplayMode: boolean = false;
   private timerInterval: NodeJS.Timer | null = null;
 
+  // Add new property to track prepared replay data
+  private preparedReplayFlags: Flag[] = [];
+
   constructor(private settingsStore: SettingsStore) {
     makeAutoObservable(this);
     this.loadFromStorage();
@@ -116,37 +119,48 @@ export class GameStore {
       } else {
         this.incorrectFlags.push(this.currentFlag!);
       }
-      this.remainingFlags = this.remainingFlags.slice(1);
-      this.currentFlag = this.remainingFlags[0] || null;
-      this.quizState = null;
       
-      if (this.remainingFlags.length === 0) {
+      if (this.remainingFlags.length === 1) {
         this.isGameOver = true;
-        this.currentFlag = null;
         this.stopTimer();
+        
+        if (this.incorrectFlags.length > 0) {
+          setTimeout(() => {
+            this.preparedReplayFlags = shuffle([...this.incorrectFlags]);
+            this.remainingFlags = [];
+            this.currentFlag = this.preparedReplayFlags[0];
+          }, 300);
+        } else {
+          this.remainingFlags = [];
+          this.currentFlag = null;
+        }
+      } else {
+        this.remainingFlags = this.remainingFlags.slice(1);
+        this.currentFlag = this.remainingFlags[0] || null;
       }
+      
+      this.quizState = null;
       this.saveToStorage();
     });
 
     return answerIsCorrect;
   }
-
+  
   async replayIncorrect(): Promise<void> {
     runInAction(() => {
       this.isReplayMode = true;
       this.allFlags = [...this.incorrectFlags];
-      this.remainingFlags = shuffle([...this.incorrectFlags]);
-      this.currentFlag = this.remainingFlags[0] || null;
+      this.remainingFlags = this.preparedReplayFlags;
       this.correctCount = 0;
       this.incorrectFlags = [];
       this.isGameOver = false;
-      this.isLoading = false;
       this.elapsedTime = 0;
       this.startTimer();
+      this.preparedReplayFlags = [];
       this.saveToStorage();
     });
   }
-
+  
   async restartGame(): Promise<void> {
     this.isReplayMode = false;
     StorageService.clearStorage();
@@ -217,4 +231,5 @@ export class GameStore {
     const seconds = this.elapsedTime % 60;
     return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
   }
+
 }
