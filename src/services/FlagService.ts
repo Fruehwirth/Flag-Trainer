@@ -1,7 +1,6 @@
 import { Flag } from '../types/Flag';
 import { Region, Difficulty } from '../types/Settings';
 import { shuffle } from '../utils/helpers';
-import { TranslationService } from '../services/TranslationService';
 
 interface DifficultyGroup {
   name: string;
