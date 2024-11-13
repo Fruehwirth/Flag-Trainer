@@ -1,8 +1,9 @@
 .region-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  width: 100%;
-  max-width: 345px;
+  width: calc(min(345px, 35vh));
+  gap: min(8px, 0.8vh);
+  margin: 0 auto;
 }
 
 .region-item {
@@ -12,7 +13,7 @@
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  padding: 10px;
+  padding: min(8px, 0.8vh);
   transition: all 0.2s ease;
 }
 
@@ -60,5 +61,11 @@
 @media (prefers-color-scheme: dark) {
   .region-image {
     filter: invert(1);
+  }
+}
+
+@media (max-width: 400px) {
+  .region-grid {
+    width: calc(min(100%, 35vh));
   }
 } 
