@@ -80,15 +80,14 @@ export class FlagService {
                             difficulty === 'medium' ? 0.5 : 0.9;
     
     const similarCount = Math.round(count * similarPercentage);
-    const randomCount = count - similarCount;
 
     // Log current flag info
-    const translation = await TranslationService.getTranslation('en', correctFlag.country);
-    console.log(`Current Flag: ${translation} | ${correctFlag.country}`);
-    console.log('Member of Groups:');
-    correctGroups.forEach(group => {
-      console.log(`\t${group.name} [${group.weight}]`);
-    });
+    // const translation = await TranslationService.getTranslation('en', correctFlag.country);
+    // console.log(`Current Flag: ${translation} | ${correctFlag.country}`);
+    // console.log('Member of Groups:');
+    // correctGroups.forEach(group => {
+    //   console.log(`\t${group.name} [${group.weight}]`);
+    // });
 
     // Get similar flags
     if (similarCount > 0) {
@@ -122,14 +121,14 @@ export class FlagService {
     const shuffledOptions = shuffle(options);
 
     // Log options info
-    console.log('Shown Options:');
-    for (const option of shuffledOptions) {
-      const optionTranslation = await TranslationService.getTranslation('en', option.country);
-      const commonGroups = this.getGroupsForCountry(option.country)
-        .filter(group => correctGroups.some(g => g.name === group.name))
-        .map(g => g.name);
-      console.log(`${optionTranslation} | ${option.country}: ${commonGroups.join(', ') || 'No common groups'}`);
-    }
+    // console.log('Shown Options:');
+    // for (const option of shuffledOptions) {
+    //   const optionTranslation = await TranslationService.getTranslation('en', option.country);
+    //   const commonGroups = this.getGroupsForCountry(option.country)
+    //     .filter(group => correctGroups.some(g => g.name === group.name))
+    //     .map(g => g.name);
+    //   console.log(`${optionTranslation} | ${option.country}: ${commonGroups.join(', ') || 'No common groups'}`);
+    // }
 
     return shuffledOptions;
   }
