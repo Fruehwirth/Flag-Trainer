@@ -95,6 +95,8 @@ export class GameStore {
         this.isLoading = false;
         this.quizState = null;
         this.typeState = null;
+        this.isReplayMode = false;
+        this.preparedReplayFlags = [];
         this.startTimer();
         this.saveToStorage();
       });
