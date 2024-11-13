@@ -1,4 +1,4 @@
-import { GameMode, Language, Region } from '../types/Settings';
+import { GameMode, Language, Region, Difficulty } from '../types/Settings';
 import { Flag } from '../types/Flag';
 
 interface GameState {
@@ -30,6 +30,7 @@ interface SettingsState {
   gameMode: GameMode;
   language: Language;
   selectedRegions: Region[];
+  difficulty: Difficulty;
 }
 
 export class StorageService {

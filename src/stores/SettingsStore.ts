@@ -1,5 +1,5 @@
 import { makeAutoObservable } from 'mobx';
-import { GameMode, Language, Region } from '../types/Settings';
+import { GameMode, Language, Region, Difficulty } from '../types/Settings';
 import { StorageService } from '../services/StorageService';
 
 const getBrowserLanguage = (): Language => {
@@ -14,13 +14,15 @@ const getBrowserLanguage = (): Language => {
 const DEFAULT_SETTINGS = {
   gameMode: 'quiz' as GameMode,
   language: getBrowserLanguage(),
-  selectedRegions: ['europe', 'asia', 'north_america', 'africa', 'oceania', 'south_america'] as Region[]
+  selectedRegions: ['europe', 'asia', 'north_america', 'africa', 'oceania', 'south_america'] as Region[],
+  difficulty: 'medium' as Difficulty
 };
 
 export class SettingsStore {
   gameMode: GameMode = DEFAULT_SETTINGS.gameMode;
   language: Language = DEFAULT_SETTINGS.language;
   selectedRegions: Region[] = DEFAULT_SETTINGS.selectedRegions;
+  difficulty: Difficulty = DEFAULT_SETTINGS.difficulty;
 
   constructor() {
     makeAutoObservable(this);
@@ -33,6 +35,7 @@ export class SettingsStore {
       this.gameMode = stored.gameMode;
       this.language = stored.language;
       this.selectedRegions = stored.selectedRegions;
+      this.difficulty = stored.difficulty;
     }
   }
 
@@ -40,7 +43,8 @@ export class SettingsStore {
     StorageService.saveSettingsState({
       gameMode: this.gameMode,
       language: this.language,
-      selectedRegions: this.selectedRegions
+      selectedRegions: this.selectedRegions,
+      difficulty: this.difficulty
     });
   }
 
@@ -62,6 +66,11 @@ export class SettingsStore {
     } else {
       this.selectedRegions.splice(index, 1);
     }
+    this.saveToStorage();
+  }
+
+  setDifficulty(difficulty: Difficulty): void {
+    this.difficulty = difficulty;
     this.saveToStorage();
   }
 }

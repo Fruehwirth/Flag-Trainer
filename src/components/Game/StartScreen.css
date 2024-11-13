@@ -73,4 +73,56 @@
 
 .start-button .material-symbols-outlined {
   font-size: 24px;
+}
+
+.difficulty-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.difficulty-button {
+  padding: 10px 26px;
+  font-size: 0.9rem;
+  border: 2px solid var(--color-border);
+  border-radius: 8px;
+  background: var(--color-surface);
+  color: var(--color-text);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: var(--font-family-base);
+}
+
+.difficulty-button.selected {
+  border-color: var(--color-primary);
+  background-color: var(--color-primary);
+}
+
+.difficulty-button:hover:not(.selected) {
+  border-color: var(--color-primary);
+}
+
+.difficulty-button.selected.easy {
+  border-color: var(--color-success);
+  background-color: var(--color-success);
+}
+
+.difficulty-button.selected.hard {
+  border-color: var(--color-error);
+  background-color: var(--color-error);
+}
+
+.difficulty-button:hover:not(.selected).easy {
+  border-color: var(--color-success);
+}
+
+.difficulty-button:hover:not(.selected).hard {
+  border-color: var(--color-error);
+}
+
+.settings-section h3 {
+  text-align: center;
+  font-size: 1.3rem;
+  margin-bottom: 20px;
 } 

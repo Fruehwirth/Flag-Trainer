@@ -2,19 +2,41 @@ import React from 'react';
 import { observer } from 'mobx-react-lite';
 import { useStores } from '../../hooks/useStores';
 import { useTranslation } from '../../hooks/useTranslation';
-import { GameMode } from '../../types/Settings';
+import { GameMode, Difficulty } from '../../types/Settings';
 import { RegionGrid } from '../Settings/RegionGrid';
 import './StartScreen.css';
+
+const DifficultyButton: React.FC<{
+  difficulty: Difficulty;
+  selected: boolean;
+  onClick: () => void;
+}> = ({ difficulty, selected, onClick }) => {
+  const { settingsStore } = useStores();
+  const text = useTranslation(difficulty, settingsStore.language, true);
+  
+  return (
+    <button
+      className={`difficulty-button ${selected ? 'selected' : ''} ${difficulty}`}
+      onClick={onClick}
+    >
+      {text}
+    </button>
+  );
+};
 
 export const StartScreen: React.FC<{
   onStart: () => void;
 }> = observer(({ onStart }) => {
-  const { settingsStore } = useStores();
+  const { settingsStore, gameStore } = useStores();
   const gameModeText = useTranslation('gameMode', settingsStore.language, true);
   const quizText = useTranslation('quiz', settingsStore.language, true);
   const typeText = useTranslation('type', settingsStore.language, true);
   const regionsText = useTranslation('regions', settingsStore.language, true);
   const startNewRoundText = useTranslation('startNewRound', settingsStore.language, true);
+  const difficultyText = useTranslation('difficulty', settingsStore.language, true);
+  const easyText = useTranslation('easy', settingsStore.language, true);
+  const mediumText = useTranslation('medium', settingsStore.language, true);
+  const hardText = useTranslation('hard', settingsStore.language, true);
 
   const handleGameModeChange = (mode: GameMode) => {
     settingsStore.setGameMode(mode);
@@ -62,6 +84,23 @@ export const StartScreen: React.FC<{
         <section className="settings-section">
           <h3>{regionsText}</h3>
           <RegionGrid />
+        </section>
+
+        <section className="settings-section">
+          <h3>{difficultyText}</h3>
+          <div className="difficulty-buttons">
+            {(['easy', 'medium', 'hard'] as Difficulty[]).map(diff => (
+              <DifficultyButton
+                key={diff}
+                difficulty={diff}
+                selected={settingsStore.difficulty === diff}
+                onClick={() => {
+                  settingsStore.setDifficulty(diff);
+                  gameStore.initializeGame();
+                }}
+              />
+            ))}
+          </div>
         </section>
 
         <button 

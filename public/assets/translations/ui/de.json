@@ -16,5 +16,9 @@
   "finalScore": "Endpunktzahl",
   "startNewRound": "Runde starten",
   "replayIncorrect": "Falsche wiederholen",
-  "time": "Zeit"
+  "time": "Zeit",
+  "difficulty": "Schwierigkeit",
+  "easy": "Einfach",
+  "medium": "Normal",
+  "hard": "Schwer"
 } 

@@ -16,5 +16,9 @@
   "finalScore": "Final Score",
   "startNewRound": "New Round",
   "replayIncorrect": "Replay incorrect",
-  "time": "Time"
+  "time": "Time",
+  "difficulty": "Difficulty",
+  "easy": "Easy",
+  "medium": "Normal",
+  "hard": "Hard"
 }
