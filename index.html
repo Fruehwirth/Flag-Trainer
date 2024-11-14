@@ -7,11 +7,42 @@
     <meta name="google" content="notranslate">
     <title>Flag Trainer</title>
     <link rel="manifest" href="/assets/images/site.webmanifest">
-    <meta name="theme-color" content="#ffffff">
+    <meta name="theme-color" content="#ffffff" id="theme-color-meta">
     <meta name="description" content="Learn world flags through interactive quizzes">
     <link rel="apple-touch-icon" href="/assets/images/android-chrome-192x192.png">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <script>
+      // Function to update theme color
+      function updateThemeColor(isDark) {
+        const color = isDark ? '#1e1e1e' : '#ffffff';
+        document.getElementById('theme-color-meta').setAttribute('content', color);
+        
+        // Notify service worker about theme change
+        if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+          navigator.serviceWorker.controller.postMessage({
+            type: 'THEME_CHANGE',
+            isDark: isDark
+          });
+        }
+      }
+
+      // Listen for theme changes from service worker
+      navigator.serviceWorker.addEventListener('message', (event) => {
+        if (event.data && event.data.type === 'UPDATE_THEME_COLOR') {
+          document.getElementById('theme-color-meta').setAttribute('content', event.data.color);
+        }
+      });
+
+      // Initial theme check
+      const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+      updateThemeColor(darkModeMediaQuery.matches);
+
+      // Listen for theme changes
+      darkModeMediaQuery.addEventListener('change', (e) => {
+        updateThemeColor(e.matches);
+      });
+    </script>
   </head>
   <body>
     <div id="root"></div>

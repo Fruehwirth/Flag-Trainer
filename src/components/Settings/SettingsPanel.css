@@ -187,7 +187,7 @@ select, option {
 }
 
 .install-button {
-    width: 140px;
+    width: 170px;
     padding: 16px;
     background-color: var(--color-surface);
     border: 2px solid var(--color-border);

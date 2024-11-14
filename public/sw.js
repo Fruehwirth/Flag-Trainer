@@ -2,6 +2,28 @@ const VERSION = '1.1.0';
 const CACHE_NAME = `flag-trainer-v${VERSION}`;
 const BASE_PATH = location.hostname === 'localhost' ? '' : '/flag-trainer';
 
+// Add theme colors
+const THEME_COLORS = {
+  light: '#ffffff',
+  dark: '#1e1e1e'
+};
+
+// Listen for theme change messages
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'THEME_CHANGE') {
+    const color = event.data.isDark ? THEME_COLORS.dark : THEME_COLORS.light;
+    // Update theme-color meta tag in all clients
+    self.clients.matchAll().then(clients => {
+      clients.forEach(client => {
+        client.postMessage({
+          type: 'UPDATE_THEME_COLOR',
+          color: color
+        });
+      });
+    });
+  }
+});
+
 const urlsToCache = [
   `${BASE_PATH}/assets/translations/en.json`,
   `${BASE_PATH}/assets/translations/de.json`,

@@ -16,6 +16,25 @@ const isPWA = () => {
          document.referrer.includes('android-app://');
 };
 
+const isAppInstalled = () => {
+  // Check if running as PWA
+  if (isPWA()) return true;
+  
+  // Check if on iOS and installed to home screen
+  if ((window.navigator as any).standalone) return true;
+  
+  // Check if using installed PWA on Android
+  if (window.matchMedia('(display-mode: standalone)').matches) return true;
+  
+  // Check if installed through browser
+  if (document.referrer.includes('android-app://')) return true;
+  
+  // Check if using TWA (Trusted Web Activity)
+  if (window.matchMedia('(display-mode: fullscreen)').matches) return true;
+  
+  return false;
+};
+
 export const SettingsPanel: React.FC<{
   isOpen: boolean;
   onClose: () => void;
@@ -30,18 +49,22 @@ export const SettingsPanel: React.FC<{
   // Translation hooks
   const settingsText = useTranslation('settings', settingsStore.language, true);
   const languageText = useTranslation('language', settingsStore.language, true);
+  const installAppText = useTranslation('installApp', settingsStore.language, true);
 
   useEffect(() => {
-    const handleBeforeInstallPrompt = (e: Event) => {
-      e.preventDefault();
-      setDeferredPrompt(e as BeforeInstallPromptEvent);
-    };
+    // Only add the event listener if the app is not already installed
+    if (!isAppInstalled()) {
+      const handleBeforeInstallPrompt = (e: Event) => {
+        e.preventDefault();
+        setDeferredPrompt(e as BeforeInstallPromptEvent);
+      };
 
-    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+      window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
 
-    return () => {
-      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-    };
+      return () => {
+        window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+      };
+    }
   }, []);
 
   const handleInstallClick = async () => {
@@ -133,13 +156,10 @@ export const SettingsPanel: React.FC<{
       </section>
 
       <div className="bottom-container">
-        {deferredPrompt && !isPWA() && (
-          <button 
-            className="install-button"
-            onClick={handleInstallClick}
-          >
+        {deferredPrompt && !isAppInstalled() && (
+          <button className="install-button" onClick={handleInstallClick}>
             <span className="material-symbols-outlined">download</span>
-            Install App
+            {installAppText}
           </button>
         )}
 
