@@ -36,7 +36,6 @@
   }
   
   .start-button {
-    margin: 10px auto 0;
     padding: 0.7rem 1.2rem;
   }
 }
@@ -61,7 +60,7 @@
 
 .start-button {
   width: 210px;
-  margin: 20px auto 0;
+  margin: 20px auto;
   display: flex;
   align-items: center;
   justify-content: center;
