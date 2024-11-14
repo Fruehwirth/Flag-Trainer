@@ -1,9 +1,20 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
 import { useStores } from '../../hooks/useStores';
 import { Language } from '../../types/Settings';
 import './SettingsPanel.css';
 import { useTranslation } from '../../hooks/useTranslation';
+
+interface BeforeInstallPromptEvent extends Event {
+  prompt: () => Promise<void>;
+  userChoice: Promise<{ outcome: 'accepted' | 'dismissed' }>;
+}
+
+const isPWA = () => {
+  return window.matchMedia('(display-mode: standalone)').matches ||
+         (window.navigator as any).standalone === true ||
+         document.referrer.includes('android-app://');
+};
 
 export const SettingsPanel: React.FC<{
   isOpen: boolean;
@@ -14,10 +25,35 @@ export const SettingsPanel: React.FC<{
   const panelRef = useRef<HTMLDivElement>(null);
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
+  const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
 
   // Translation hooks
   const settingsText = useTranslation('settings', settingsStore.language, true);
   const languageText = useTranslation('language', settingsStore.language, true);
+
+  useEffect(() => {
+    const handleBeforeInstallPrompt = (e: Event) => {
+      e.preventDefault();
+      setDeferredPrompt(e as BeforeInstallPromptEvent);
+    };
+
+    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+
+    return () => {
+      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    };
+  }, []);
+
+  const handleInstallClick = async () => {
+    if (!deferredPrompt) return;
+    
+    await deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    
+    if (outcome === 'accepted') {
+      setDeferredPrompt(null);
+    }
+  };
 
   const handleClose = () => {
     setIsClosing(true);
@@ -96,27 +132,39 @@ export const SettingsPanel: React.FC<{
         </div>
       </section>
 
-      <div className="author-section">
-        <span>Made by Michael Frühwirth</span>
-        <div className="links">
-          <a 
-            href="https://fruehwirth.online" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            aria-label="Visit personal website"
+      <div className="bottom-container">
+        {deferredPrompt && !isPWA() && (
+          <button 
+            className="install-button"
+            onClick={handleInstallClick}
           >
-            <span className="material-symbols-outlined globe-icon">public</span>
-          </a>
-          <a 
-            href="https://github.com/fruehwirth/flag-trainer" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            aria-label="View source on GitHub"
-          >
-            <svg className="github-icon" viewBox="0 0 16 16">
-              <path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
-            </svg>
-          </a>
+            <span className="material-symbols-outlined">download</span>
+            Install App
+          </button>
+        )}
+
+        <div className="author-section">
+          <span>Made by Michael Frühwirth</span>
+          <div className="links">
+            <a 
+              href="https://fruehwirth.online" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              aria-label="Visit personal website"
+            >
+              <span className="material-symbols-outlined globe-icon">public</span>
+            </a>
+            <a 
+              href="https://github.com/fruehwirth/flag-trainer" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              aria-label="View source on GitHub"
+            >
+              <svg className="github-icon" viewBox="0 0 16 16">
+                <path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+              </svg>
+            </a>
+          </div>
         </div>
       </div>
     </div>

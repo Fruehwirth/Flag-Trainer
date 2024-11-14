@@ -26,8 +26,9 @@
               await registration.unregister();
             }
             
-            // Register the new service worker
-            const registration = await navigator.serviceWorker.register('/sw.js');
+            // Add base path for GitHub Pages
+            const basePath = location.hostname === 'localhost' ? '' : '/flag-trainer';
+            const registration = await navigator.serviceWorker.register(`${basePath}/sw.js`);
             console.log('ServiceWorker registration successful');
           } catch (err) {
             console.log('ServiceWorker registration failed: ', err);

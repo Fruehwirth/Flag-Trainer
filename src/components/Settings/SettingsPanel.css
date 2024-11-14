@@ -151,7 +151,7 @@ select, option {
 }
 
 .author-section {
-    margin-top: auto;
+    width: 100%;
     padding-top: 20px;
     border-top: 1px solid var(--color-border);
     display: flex;
@@ -184,4 +184,36 @@ select, option {
 
 .material-symbols-outlined.globe-icon {
     font-size: 30px;
+}
+
+.install-button {
+    width: 140px;
+    padding: 16px;
+    background-color: var(--color-surface);
+    border: 2px solid var(--color-border);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: var(--font-family-base);
+    color: var(--color-text);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.install-button:hover {
+    border-color: var(--color-primary-light);
+}
+
+.install-button .material-symbols-outlined {
+    font-size: 20px;
+}
+
+.bottom-container {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
 }

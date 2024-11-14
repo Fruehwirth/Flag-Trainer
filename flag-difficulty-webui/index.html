@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flag Groups Manager</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="sticky-header">
+            <div class="header-content">
+                <div class="header-left">
+                    <input type="file" id="loadJson" accept=".json">
+                    <button id="exportJson">Export JSON</button>
+                </div>
+                <div class="header-right">
+                    <button id="addGroup">Add Group</button>
+                    <button id="showUnusedFlags">Show Flag Usage</button>
+                </div>
+            </div>
+        </header>
+        <div class="main-content">
+            <div id="groupsContainer"></div>
+        </div>
+    </div>
+
+    <div id="flagSelectorModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Select Flags</h2>
+                <div class="modal-buttons">
+                    <button id="saveFlagSelection" title="Save"><span class="material-icons">save</span></button>
+                    <button id="cancelFlagSelection" title="Cancel"><span class="material-icons">close</span></button>
+                </div>
+            </div>
+            <div id="flagGrid"></div>
+        </div>
+    </div>
+
+    <div id="unusedFlagsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Flag Usage Statistics</h2>
+                <div class="modal-buttons">
+                    <button id="closeUnusedFlags">Close</button>
+                </div>
+            </div>
+            <div id="unusedFlagsGrid"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html> 
