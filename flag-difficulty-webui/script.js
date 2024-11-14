@@ -2,6 +2,7 @@ let allFlags = {};
 let countryTranslations = {};
 let currentGroups = [];
 let currentEditingGroup = null;
+let currentDetailsFlag = null;
 
 // Load translations first
 async function loadTranslations() {
@@ -143,6 +144,8 @@ function renderGroups() {
         section.appendChild(flagsGrid);
         container.appendChild(section);
     });
+
+    addFlagClickHandlers();
 }
 
 function renderFlagItem(countryCode, container) {
@@ -163,6 +166,12 @@ function renderFlagItem(countryCode, container) {
     
     flagItem.appendChild(img);
     flagItem.appendChild(span);
+
+    // Add click handler directly in renderFlagItem
+    flagItem.addEventListener('click', () => {
+        showFlagDetails(countryCode);
+    });
+
     container.appendChild(flagItem);
 }
 
@@ -204,7 +213,15 @@ function createFlagSelectorItem(countryCode, url, container, isSelected) {
         flagItem.classList.toggle('selected');
     });
 
+    flagItem.addEventListener('click', (e) => {
+        if (e.shiftKey) {
+            e.preventDefault();
+            showFlagDetails(countryCode);
+        }
+    });
+
     container.appendChild(flagItem);
+    return flagItem;
 }
 
 document.getElementById('saveFlagSelection').addEventListener('click', () => {
@@ -361,6 +378,114 @@ function showUnusedFlags() {
 document.getElementById('showUnusedFlags').addEventListener('click', showUnusedFlags);
 document.getElementById('closeUnusedFlags').addEventListener('click', () => {
     document.getElementById('unusedFlagsModal').style.display = 'none';
+});
+
+function showFlagDetails(countryCode) {
+    currentDetailsFlag = countryCode;
+    const modal = document.getElementById('flagDetailsModal');
+    const flagPreview = modal.querySelector('.flag-preview');
+    const currentGroupsList = document.getElementById('currentGroupsList');
+    const availableGroupsList = document.getElementById('availableGroupsList');
+
+    // Clear previous content
+    flagPreview.innerHTML = '';
+    currentGroupsList.innerHTML = '';
+    availableGroupsList.innerHTML = '';
+
+    // Add flag preview
+    const flagContainer = document.createElement('div');
+    const img = document.createElement('img');
+    img.src = allFlags[countryCode];
+    const name = document.createElement('div');
+    name.textContent = countryTranslations[countryCode] || countryCode;
+    flagContainer.appendChild(img);
+    flagContainer.appendChild(name);
+    flagPreview.appendChild(flagContainer);
+
+    // Get all groups and sort by membership
+    const memberGroups = currentGroups.filter(group => 
+        group.countries.includes(countryCode)
+    );
+    const nonMemberGroups = currentGroups.filter(group => 
+        !group.countries.includes(countryCode)
+    );
+
+    // Render member groups
+    memberGroups.forEach(group => {
+        const groupItem = createGroupItem(group, true);
+        currentGroupsList.appendChild(groupItem);
+    });
+
+    // Render non-member groups
+    nonMemberGroups.forEach(group => {
+        const groupItem = createGroupItem(group, false);
+        availableGroupsList.appendChild(groupItem);
+    });
+
+    modal.style.display = 'block';
+}
+
+function createGroupItem(group, isMember) {
+    const item = document.createElement('div');
+    item.className = `group-item ${isMember ? 'member' : ''}`;
+
+    const nameSpan = document.createElement('span');
+    nameSpan.textContent = `${group.name} `;
+    
+    const weightSpan = document.createElement('span');
+    weightSpan.className = 'group-weight';
+    weightSpan.textContent = `(weight: ${group.weight})`;
+    
+    const textDiv = document.createElement('div');
+    textDiv.appendChild(nameSpan);
+    textDiv.appendChild(weightSpan);
+
+    const button = document.createElement('button');
+    button.className = 'icon-button';
+    button.innerHTML = isMember ? 
+        '<span class="material-icons">remove</span>' : 
+        '<span class="material-icons">add</span>';
+    
+    button.addEventListener('click', () => {
+        if (isMember) {
+            const index = group.countries.indexOf(currentDetailsFlag);
+            if (index > -1) {
+                group.countries.splice(index, 1);
+            }
+        } else {
+            group.countries.push(currentDetailsFlag);
+        }
+        renderGroups();
+        showFlagDetails(currentDetailsFlag);
+    });
+
+    item.appendChild(textDiv);
+    item.appendChild(button);
+    return item;
+}
+
+// Add click handlers to all flag items
+function addFlagClickHandlers() {
+    document.querySelectorAll('.flag-item').forEach(item => {
+        item.addEventListener('click', () => {
+            const countryCode = item.querySelector('span').textContent;
+            showFlagDetails(getCountryCodeFromName(countryCode));
+        });
+    });
+}
+
+function getCountryCodeFromName(name) {
+    for (const [code, translatedName] of Object.entries(countryTranslations)) {
+        if (translatedName === name) {
+            return code;
+        }
+    }
+    return name;
+}
+
+// Add close handler
+document.getElementById('closeFlagDetails').addEventListener('click', () => {
+    document.getElementById('flagDetailsModal').style.display = 'none';
 });
 
 init(); 
