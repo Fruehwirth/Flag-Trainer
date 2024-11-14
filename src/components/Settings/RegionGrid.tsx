@@ -6,7 +6,7 @@ import './RegionGrid.css';
 
 export const RegionGrid: React.FC = observer(() => {
   const { settingsStore, gameStore } = useStores();
-  const basePath = import.meta.env.DEV ? '' : '/Flag-Trainer';
+  const basePath = import.meta.env.DEV ? '' : '/flag-trainer';
   const [deselectingRegion, setDeselectingRegion] = useState<Region | null>(null);
 
   const handleRegionToggle = async (region: Region) => {

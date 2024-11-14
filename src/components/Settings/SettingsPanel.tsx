@@ -108,7 +108,7 @@ export const SettingsPanel: React.FC<{
             <span className="material-symbols-outlined globe-icon">public</span>
           </a>
           <a 
-            href="https://github.com/fruehwirth/Flag-Trainer" 
+            href="https://github.com/fruehwirth/flag-trainer" 
             target="_blank" 
             rel="noopener noreferrer"
             aria-label="View source on GitHub"
