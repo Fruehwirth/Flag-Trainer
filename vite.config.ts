@@ -4,7 +4,7 @@ import { resolve } from 'path'
 
 export default defineConfig(({ command }) => ({
   plugins: [react()],
-  base: command === 'serve' ? '' : 'https://fruehwirth.github.io/Flag-Trainer/',
+  base: command === 'serve' ? '' : '/Flag-Trainer/',
   build: {
     outDir: 'dist',
     assetsDir: 'assets',

@@ -8,6 +8,7 @@ html, body {
 
 .app {
   min-height: 100vh;
+  min-height: -webkit-fill-available;
   min-width: 100vw;
   display: flex;
   flex-direction: column;
@@ -16,6 +17,11 @@ html, body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
 
 .game-container {
@@ -34,6 +40,7 @@ html, body {
   max-height: calc(100vh - 80px);
   overflow-y: auto;
   padding-top: 90px;
+  -webkit-overflow-scrolling: touch;
 }
 
 @media (max-width: 550px) {

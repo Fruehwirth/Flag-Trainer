@@ -49,7 +49,7 @@ export class TranslationService {
 
   private static async fetchTranslations(language: Language, path: string): Promise<Record<string, string>> {
     try {
-      const basePath = import.meta.env.DEV ? '' : 'https://fruehwirth.github.io/Flag-Trainer';
+      const basePath = import.meta.env.DEV ? '' : '/Flag-Trainer';
       const response = await fetch(`${basePath}/assets/${path}/${language}.json`);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
