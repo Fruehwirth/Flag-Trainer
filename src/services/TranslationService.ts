@@ -80,3 +80,7 @@ export class TranslationService {
     return translations[key] || key;
   }
 }
+
+export const updateDocumentLanguage = (language: Language) => {
+  document.documentElement.lang = language;
+};

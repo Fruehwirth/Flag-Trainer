@@ -1,14 +1,18 @@
 import { makeAutoObservable } from 'mobx';
 import { GameMode, Language, Region, Difficulty } from '../types/Settings';
 import { StorageService } from '../services/StorageService';
+import { updateDocumentLanguage } from '../services/TranslationService';
 
 const getBrowserLanguage = (): Language => {
   const storedLanguage = localStorage.getItem('flagTrainer_language');
   if (storedLanguage) {
+    updateDocumentLanguage(storedLanguage as Language);
     return storedLanguage as Language;
   }
   const browserLang = navigator.language.toLowerCase();
-  return browserLang.startsWith('de') ? 'de' : 'en';
+  const language = browserLang.startsWith('de') ? 'de' : 'en';
+  updateDocumentLanguage(language);
+  return language;
 };
 
 const DEFAULT_SETTINGS = {
@@ -56,6 +60,7 @@ export class SettingsStore {
   setLanguage(language: Language): void {
     this.language = language;
     localStorage.setItem('flagTrainer_language', language);
+    updateDocumentLanguage(language);
     this.saveToStorage();
   }
 

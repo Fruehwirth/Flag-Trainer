@@ -1,8 +1,8 @@
 .region-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  width: calc(min(345px, 35vh));
-  gap: min(8px, 0.8vh);
+  width: 345px;
+  gap: 8px;
   margin: 0 auto;
 }
 
@@ -63,9 +63,3 @@
     filter: invert(1);
   }
 }
-
-@media (max-width: 400px) {
-  .region-grid {
-    width: calc(min(100%, 35vh));
-  }
-} 
