@@ -37,6 +37,11 @@
   
   .start-button {
     padding: 0.7rem 1.2rem;
+    margin: 15px auto;
+  }
+
+  .difficulty-buttons {
+    margin: 15px 0;
   }
 }
 

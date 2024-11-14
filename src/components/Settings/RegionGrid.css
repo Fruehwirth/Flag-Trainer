@@ -6,6 +6,13 @@
   margin: 0 auto;
 }
 
+@media (max-height: 820px) {
+  .region-grid {
+    width: 30vh;
+    max-width: 345px;
+  }
+}
+
 .region-item {
   position: relative;
   aspect-ratio: 1;

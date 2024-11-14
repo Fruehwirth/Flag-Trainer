@@ -1,4 +1,4 @@
-const VERSION = '1.1.0';
+const VERSION = '1.1.1';
 const CACHE_NAME = `flag-trainer-v${VERSION}`;
 const BASE_PATH = location.hostname === 'localhost' ? '' : '/flag-trainer';
 
