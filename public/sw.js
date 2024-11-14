@@ -1,4 +1,5 @@
-const CACHE_NAME = 'flag-trainer-v1';
+const VERSION = '1.1.0';
+const CACHE_NAME = `flag-trainer-v${VERSION}`;
 const BASE_PATH = location.hostname === 'localhost' ? '' : '/flag-trainer';
 
 const urlsToCache = [
@@ -28,14 +29,22 @@ self.addEventListener('fetch', (event) => {
 
 self.addEventListener('activate', (event) => {
   event.waitUntil(
-    caches.keys().then((cacheNames) => {
-      return Promise.all(
-        cacheNames.map((cacheName) => {
-          if (cacheName !== CACHE_NAME) {
-            return caches.delete(cacheName);
-          }
-        })
-      );
-    })
+    Promise.all([
+      // Clear old caches
+      caches.keys().then((cacheNames) => {
+        return Promise.all(
+          cacheNames.map((cacheName) => {
+            if (cacheName !== CACHE_NAME) {
+              return caches.delete(cacheName);
+            }
+          })
+        );
+      }),
+      // Force all clients to reload
+      self.clients.claim(),
+      self.clients.matchAll().then(clients => {
+        clients.forEach(client => client.navigate(client.url));
+      })
+    ])
   );
 }); 
