@@ -20,7 +20,7 @@
             "purpose": "maskable"
         }
     ],
-    "start_url": "/Flag-Trainer/",
+    "start_url": "/flag-trainer/",
     "theme_color": "#ffffff",
     "background_color": "#ffffff",
     "display": "standalone",

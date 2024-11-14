@@ -28,5 +28,5 @@
         "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
         "preview": "vite preview"
     },
-    "homepage": "https://fruehwirth.github.io/Flag-Trainer"
+    "homepage": "https://fruehwirth.github.io/flag-trainer/"
 }
