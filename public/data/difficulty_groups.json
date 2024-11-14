@@ -1,509 +1,1004 @@
 {
-    "groups": [
-      {
-        "name": "tricolor_vertical",
-        "weight": 1,
-        "countries": ["FR", "BE", "IT", "IE", "RO", "ML", "GN", "TD", "CI", "AD", "MD"]
-      },
-      {
-        "name": "tricolor_horizontal",
-        "weight": 1,
-        "countries": ["DE", "NL", "RU", "LU", "HU", "HR", "SI", "SK", "BG", "AT", "EE", "LT", "LV", "AE", "MX"]
-      },
-      {
-        "name": "red_and_white_bicolor_horizontal_without_emblem",
-        "weight": 9,
-        "countries": ["PL", "ID", "MC"]
-      },
-      {
-        "name": "red_and_white_bicolor_horizontal_with_emblem",
-        "weight": 8,
-        "countries": ["SG", "PL", "ID", "MC"]
-      },
-      {
-        "name": "nordic_cross_flags",
-        "weight": 5,
-        "countries": ["DK", "SE", "NO", "FI", "IS"]
-      },
-      {
-        "name": "flags_with_crescent_and_star",
-        "weight": 7,
-        "countries": ["TR", "PK", "MY", "TN", "LY", "MR", "AZ"]
-      },
-      {
-        "name": "flags_with_sun",
-        "weight": 6,
-        "countries": ["JP", "MK", "AR", "UY", "RW", "KZ"]
-      },
-      {
-        "name": "flags_with_union_jack",
-        "weight": 4,
-        "countries": ["GB", "AU", "NZ", "FJ", "TV"]
-      },
-      {
-        "name": "flags_with_single_star",
-        "weight": 7,
-        "countries": ["VN", "SO", "MA"]
-      },
-      {
-        "name": "flags_with_multiple_stars",
-        "weight": 4,
-        "countries": ["US", "VE", "BR", "CV", "FM", "VU", "HN"]
-      },
-      {
-        "name": "flags_with_stars_in_circle",
-        "weight": 2,
-        "countries": ["EU", "US"]
-      },
-      {
-        "name": "flags_with_white_star_on_blue",
-        "weight": 2,
-        "countries": ["SO", "VE", "BR"]
-      },
-      {
-        "name": "flags_with_yellow_star",
-        "weight": 7,
-        "countries": ["VN", "GN", "GH"]
-      },
-      {
-        "name": "flags_with_horizontal_stripes_red_white_black",
-        "weight": 5,
-        "countries": ["EG", "SY", "YE", "IQ", "SD"]
-      },
-      {
-        "name": "flags_with_horizontal_stripes_green_white_red",
-        "weight": 5,
-        "countries": ["IR", "HU", "BG"]
-      },
-      {
-        "name": "flags_with_horizontal_stripes_blue_yellow_red",
-        "weight": 6,
-        "countries": ["RO", "TD", "AD", "MD", "VE", "EC", "CO"]
-      },
-      {
-        "name": "flags_with_diagonal_stripes",
-        "weight": 6,
-        "countries": ["TZ", "PG", "DM", "NA", "CD"]
-      },
-      {
-        "name": "flags_with_pan_african_colors",
-        "weight": 4,
-        "countries": ["GH", "ET", "CM", "GN", "ML", "SN", "BJ", "ZW"]
-      },
-      {
-        "name": "flags_with_horizontal_red_white_stripes",
-        "weight": 8,
-        "countries": ["AT", "LV"]
-      },
-      {
-        "name": "flags_with_eagle_emblem",
-        "weight": 7,
-        "countries": ["AL", "EG", "MX", "ZM"]
-      },
-      {
-        "name": "flags_with_map",
-        "weight": 9,
-        "countries": ["CY", "XK"]
-      },
-      {
-        "name": "flags_with_star_and_crescent",
-        "weight": 7,
-        "countries": ["TR", "PK", "MY", "TN", "LY"]
-      },
-      {
-        "name": "flags_with_vertical_green_white_orange",
-        "weight": 5,
-        "countries": ["IE", "IN", "CI", "NG", "NI"]
-      },
-      {
-        "name": "flags_with_horizontal_blue_white_red",
-        "weight": 3,
-        "countries": ["RU", "NL", "LU", "CR", "PY", "HR", "SI", "HN"]
-      },
-      {
-        "name": "flags_with_horizontal_black_red_yellow",
-        "weight": 3,
-        "countries": ["DE", "BE", "UG", "GM"]
-      },
-      {
-        "name": "flags_with_red_circle",
-        "weight": 9,
-        "countries": ["JP", "BD", "PW"]
-      },
-      {
-        "name": "flags_with_sun_and_rays",
-        "weight": 8,
-        "countries": ["KZ", "MK", "PH"]
-      },
-      {
-        "name": "flags_with_vertical_blue_white_red",
-        "weight": 4,
-        "countries": ["FR", "SM", "KN"]
-      },
-      {
-        "name": "flags_with_horizontal_green_white_green",
-        "weight": 8,
-        "countries": ["NG", "PK", "SA"]
-      },
-      {
-        "name": "flags_with_plant_emblem",
-        "weight": 7,
-        "countries": ["LB", "NF", "HK"]
-      },
-      {
-        "name": "flags_with_horizontal_blue_yellow_red",
-        "weight": 6,
-        "countries": ["RO", "TD", "AD", "MD"]
-      },
-      {
-        "name": "flags_with_horizontal_red_yellow_green",
-        "weight": 4,
-        "countries": ["GH", "ET", "GN", "MZ"]
-      },
-      {
-        "name": "flags_with_star_of_david",
-        "weight": 9,
-        "countries": ["IL"]
-      },
-      {
-        "name": "flags_with_cross",
-        "weight": 5,
-        "countries": ["CH", "GB", "NO", "SE", "FI", "DK", "GE", "GR", "SK"]
-      },
-      {
-        "name": "flags_with_script",
-        "weight": 8,
-        "countries": ["SA", "IR", "AF", "IQ"]
-      },
-      {
-        "name": "flags_with_sun_and_moon",
-        "weight": 9,
-        "countries": ["NP"]
-      },
-      {
-        "name": "flags_with_horizontal_black_white_red",
-        "weight": 5,
-        "countries": ["YE", "EG", "SY", "IQ"]
-      },
-      {
-        "name": "flags_with_horizontal_red_white_black",
-        "weight": 5,
-        "countries": ["SY", "EG", "YE", "IQ"]
-      },
-      {
-        "name": "flags_with_dragon",
-        "weight": 9,
-        "countries": ["BT", "MT"]
-      },
-      {
-        "name": "flags_with_diagonal_red_yellow",
-        "weight": 7,
-        "countries": ["PG", "NA"]
-      },
-      {
-        "name": "flags_with_triangles",
-        "weight": 6,
-        "countries": ["GY", "BS", "KM", "TL", "DJ", "ER", "CZ", "PH", "SS", "PS", "MZ", "SZ"]
-      },
-      {
-        "name": "flags_with_horizontal_blue_white",
-        "weight": 4,
-        "countries": ["FI", "GR", "SM", "HN"]
-      },
-      {
-        "name": "flags_with_vertical_red_white",
-        "weight": 7,
-        "countries": ["CA", "MC"]
-      },
-      {
-        "name": "flags_with_star_and_stripes",
-        "weight": 5,
-        "countries": ["US", "MY", "LB", "TG"]
-      },
-      {
-        "name": "flags_with_diamond_shape",
-        "weight": 9,
-        "countries": ["BZ", "PG", "VC"]
-      },
-      {
-        "name": "flags_with_vertical_red_white_blue",
-        "weight": 4,
-        "countries": ["FR", "NL", "LU"]
-      },
-      {
-        "name": "flags_with_horizontal_green_white_red",
-        "weight": 5,
-        "countries": ["HU", "BG", "IR"]
-      },
-      {
-        "name": "flags_with_sun_and_star",
-        "weight": 8,
-        "countries": ["PH", "AR", "UY"]
-      },
-      {
-        "name": "flags_with_emblem_in_center",
-        "weight": 3,
-        "countries": ["ES", "PT", "AL", "ME", "MD", "AO"]
-      },
-      {
-        "name": "flags_with_black_red_green",
-        "weight": 6,
-        "countries": ["AF", "KE", "MW"]
-      },
-      {
-        "name": "flags_with_red_white_black_green",
-        "weight": 5,
-        "countries": ["AE", "JO", "KW", "PS"]
-      },
-      {
-        "name": "flags_with_horizontal_blue_white_red",
-        "weight": 3,
-        "countries": ["RU", "NL", "LU"]
-      },
-      {
-        "name": "flags_with_horizontal_black_yellow_red",
-        "weight": 3,
-        "countries": ["DE", "BE"]
-      },
-      {
-        "name": "flags_with_red_white_green",
-        "weight": 5,
-        "countries": ["IR", "IT", "HU", "BG"]
-      },
-      {
-        "name": "flags_with_vertical_green_white_red",
-        "weight": 5,
-        "countries": ["IT", "BG", "IR", "MX"]
-      },
-      {
-        "name": "flags_with_blue_yellow",
-        "weight": 7,
-        "countries": ["SE", "UA", "BS"]
-      },
-      {
-        "name": "flags_with_horizontal_green_yellow_blue",
-        "weight": 4,
-        "countries": ["BR", "RW", "GY", "GA"]
-      },
-      {
-        "name": "flags_with_vertical_blue_yellow_red",
-        "weight": 6,
-        "countries": ["RO", "AD", "MD", "TD"]
-      },
-      {
-        "name": "flags_with_single_color",
-        "weight": 9,
-        "countries": ["LY"]
-      },
-      {
-        "name": "flags_with_sun_and_bird",
-        "weight": 8,
-        "countries": ["UG"]
-      },
-      {
-        "name": "flags_with_horizontal_black_red",
-        "weight": 7,
-        "countries": ["DE", "BE", "UG"]
-      },
-      {
-        "name": "flags_with_horizontal_blue_white_blue",
-        "weight": 8,
-        "countries": ["FI", "GR", "SM"]
-      },
-      {
-        "name": "flags_with_bird",
-        "weight": 7,
-        "countries": ["UG", "DM", "ZM"]
-      },
-      {
-        "name": "flags_with_moon",
-        "weight": 8,
-        "countries": ["NP", "SG", "MY"]
-      },
-      {
-        "name": "flags_with_cross_and_stars",
-        "weight": 6,
-        "countries": ["AU", "NZ"]
-      },
-      {
-        "name": "flags_with_red_green",
-        "weight": 7,
-        "countries": ["BY", "BG", "IT", "IR"]
-      },
-      {
-        "name": "flags_with_horizontal_blue_white_red",
-        "weight": 3,
-        "countries": ["RU", "NL", "LU"]
-      },
-      {
-        "name": "flags_with_horizontal_yellow_blue",
-        "weight": 8,
-        "countries": ["UA", "SE"]
-      },
-      {
-        "name": "flags_with_red_yellow",
-        "weight": 6,
-        "countries": ["ES", "MK"]
-      },
-      {
-        "name": "flags_with_sun_and_mountain",
-        "weight": 9,
-        "countries": ["NP"]
-      },
-      {
-        "name": "flags_with_vertical_black_yellow_red",
-        "weight": 3,
-        "countries": ["DE", "BE"]
-      },
-      {
-        "name": "flags_with_horizontal_black_white_red",
-        "weight": 5,
-        "countries": ["EG", "SY", "YE", "IQ"]
-      },
-      {
-        "name": "flags_with_white_blue",
-        "weight": 4,
-        "countries": ["FI", "GR", "SM", "HN"]
-      },
-      {
-        "name": "flags_with_vertical_red_white_blue",
-        "weight": 4,
-        "countries": ["FR", "NL", "LU"]
-      },
-      {
-        "name": "caribbean_flags",
-        "weight": 6,
-        "countries": ["BS", "BB", "CU", "DO", "HT", "JM", "TT", "LC", "VC", "GD", "AG", "DM", "KN", "PR"]
-      },
-      {
-        "name": "central_asian_flags",
-        "weight": 7,
-        "countries": ["KZ", "KG", "TJ", "TM", "UZ"]
-      },
-      {
-        "name": "baltic_flags",
-        "weight": 8,
-        "countries": ["EE", "LV", "LT"]
-      },
-      {
-        "name": "flags_with_chevron",
-        "weight": 8,
-        "countries": ["CZ", "CU", "DJ", "PS"]
-      },
-      {
-        "name": "flags_with_shield",
-        "weight": 7,
-        "countries": ["SI", "SK", "CR", "PE"]
-      },
-      {
-        "name": "flags_with_multiple_stars",
-        "weight": 4,
-        "countries": ["US", "VE", "BR", "CV", "FM", "VU"]
-      },
-      {
-        "name": "flags_with_coat_of_arms",
-        "weight": 5,
-        "countries": ["ES", "ME", "RS", "MD", "AM", "KZ", "MX"]
-      },
-      {
-        "name": "small_island_flags",
-        "weight": 9,
-        "countries": ["MV", "SC", "MU", "KM", "ST", "CV", "SB", "FM", "WS", "TO", "VU", "NR", "KI", "TV", "MH", "VC"]
-      },
-      {
-        "name": "red_and_white_flags",
-        "weight": 5,
-        "countries": ["PL", "ID", "MC", "SG", "CH", "TR", "CA", "AT", "DK", "JP", "TN", "PE", "MT", "GE"]
-      },
-      {
-        "name": "flags_with_canton",
-        "weight": 6,
-        "countries": ["US", "CL", "PR", "LR", "MY"]
-      },
-      {
-        "name": "flags_with_philosophical_symbols",
-        "weight": 9,
-        "countries": ["KR", "IN"]
-      },
-      {
-        "name": "flags_with_red_blue_white",
-        "weight": 5,
-        "countries": ["KR", "FR", "CZ", "SK", "SI", "RU", "NL"]
-      },
-      {
-        "name": "european_flags",
-        "weight": 2,
-        "countries": ["AL", "AD", "AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IS", "IE", "IT", "LV", "LI", "LT", "LU", "MT", "MC", "NL", "NO", "PL", "PT", "RO", "SM", "RS", "SK", "SI", "ES", "SE", "CH", "GB", "VA"]
-      },
-      {
-        "name": "asian_flags",
-        "weight": 2,
-        "countries": ["AF", "AM", "AZ", "BH", "BD", "BT", "BN", "KH", "CN", "GE", "IN", "ID", "IR", "IQ", "IL", "JP", "JO", "KZ", "KW", "KG", "LA", "LB", "MY", "MV", "MN", "MM", "NP", "OM", "PK", "PH", "QA", "SA", "SG", "KR", "LK", "SY", "TW", "TJ", "TH", "TL", "TR", "TM", "AE", "UZ", "VN", "YE"]
-      },
-      {
-        "name": "african_flags",
-        "weight": 2,
-        "countries": ["DZ", "AO", "BJ", "BW", "BF", "BI", "CM", "CV", "CF", "TD", "KM", "CG", "CD", "DJ", "EG", "GQ", "ER", "ET", "GA", "GM", "GH", "GN", "GW", "CI", "KE", "LS", "LR", "LY", "MG", "MW", "ML", "MR", "MU", "MA", "MZ", "NA", "NE", "NG", "RW", "ST", "SN", "SC", "SL", "SO", "ZA", "SS", "SD", "SZ", "TZ", "TG", "TN", "UG", "ZM", "ZW"]
-      },
-      {
-        "name": "north_american_flags",
-        "weight": 2,
-        "countries": ["AG", "BS", "BB", "BZ", "CA", "CR", "CU", "DM", "DO", "SV", "GD", "GT", "HT", "HN", "JM", "MX", "NI", "PA", "KN", "LC", "VC", "TT", "US"]
-      },
-      {
-        "name": "south_american_flags",
-        "weight": 2,
-        "countries": ["AR", "BO", "BR", "CL", "CO", "EC", "GY", "PY", "PE", "SR", "UY", "VE"]
-      },
-      {
-        "name": "oceanian_flags",
-        "weight": 2,
-        "countries": ["AU", "FJ", "KI", "MH", "FM", "NR", "NZ", "PW", "PG", "WS", "SB", "TO", "TV", "VU"]
-      },
-      {
-        "name": "flags_with_tool_or_weapon",
-        "weight": 3,
-        "countries": ["AO", "MZ"]
-      },
-      {
-        "name": "flags_with_vertical_white_stripe_hoist",
-        "weight": 5,
-        "countries": ["MG", "CA", "MC"]
-      },
-      {
-        "name": "central_american_flags",
-        "weight": 8,
-        "countries": ["BZ", "CR", "SV", "GT", "HN", "NI", "PA"]
-      },
-      {
-        "name": "tricolor_vertical_green_white_red",
-        "weight": 8,
-        "countries": ["IT", "MX", "BG"]
-      },
-      {
-        "name": "tricolor_vertical_green_white_orange",
-        "weight": 8,
-        "countries": ["IE", "CI"]
-      },
-      {
-        "name": "tricolor_vertical_green_yellow_red",
-        "weight": 8,
-        "countries": ["GN", "ML", "MM", "BF", "CM", "SN", "BJ"]
-      },
-      {
-        "name": "tricolor_horizontal_red_white_green",
-        "weight": 8,
-        "countries": ["HU", "IR", "TJ", "BG"]
-      },
-      {
-        "name": "tricolor_horizontal_red_yellow_green",
-        "weight": 8,
-        "countries": ["GN", "ET", "BF"]
-      },
-      {
-        "name": "stan_countries",
-        "weight": 9,
-        "countries": ["KZ", "KG", "TJ", "TM", "UZ", "PK", "AF"]
-      }
-    ]
-  }
+  "groups": [
+    {
+      "name": "tricolor_vertical_general",
+      "weight": 2,
+      "countries": [
+        "DZ",
+        "CM",
+        "TD",
+        "GN",
+        "ML",
+        "SN",
+        "AF",
+        "MN",
+        "AD",
+        "BE",
+        "FR",
+        "IE",
+        "IT",
+        "MD",
+        "RO",
+        "BB",
+        "GT",
+        "MX",
+        "VC",
+        "PE"
+      ]
+    },
+    {
+      "name": "tricolor_horizontal_general",
+      "weight": 1,
+      "countries": [
+        "BW",
+        "CV",
+        "EG",
+        "ET",
+        "GM",
+        "GH",
+        "KE",
+        "LS",
+        "LY",
+        "MW",
+        "MR",
+        "SL",
+        "AM",
+        "AZ",
+        "IN",
+        "IR",
+        "IQ",
+        "LA",
+        "LB",
+        "RU",
+        "SY",
+        "TJ",
+        "AE",
+        "YE",
+        "AT",
+        "BG",
+        "HR",
+        "EE",
+        "DE",
+        "HU",
+        "LV",
+        "LT",
+        "LU",
+        "NL",
+        "SK",
+        "SI",
+        "SV",
+        "HN",
+        "NI",
+        "AR",
+        "BO",
+        "CO",
+        "EC",
+        "PY",
+        "VE"
+      ]
+    },
+    {
+      "name": "red_and_white_bicolor_horizontal_without_emblem",
+      "weight": 9,
+      "countries": [
+        "PL",
+        "ID",
+        "MC"
+      ]
+    },
+    {
+      "name": "nordic_cross_flags",
+      "weight": 6,
+      "countries": [
+        "DK",
+        "SE",
+        "NO",
+        "FI",
+        "IS"
+      ]
+    },
+    {
+      "name": "crescent_and_star",
+      "weight": 3,
+      "countries": [
+        "TR",
+        "PK",
+        "MY",
+        "TN",
+        "LY",
+        "MR",
+        "AZ"
+      ]
+    },
+    {
+      "name": "sun",
+      "weight": 1,
+      "countries": [
+        "JP",
+        "MK",
+        "AR",
+        "UY",
+        "RW",
+        "KZ"
+      ]
+    },
+    {
+      "name": "incl_union_jack",
+      "weight": 6,
+      "countries": [
+        "AU",
+        "FJ",
+        "NZ",
+        "TV"
+      ]
+    },
+    {
+      "name": "star",
+      "weight": 7,
+      "countries": [
+        "MA",
+        "SO",
+        "VN",
+        "FM"
+      ]
+    },
+    {
+      "name": "multiple_stars",
+      "weight": 2,
+      "countries": [
+        "US",
+        "VE",
+        "BR",
+        "CV",
+        "FM",
+        "VU",
+        "HN"
+      ]
+    },
+    {
+      "name": "horizontal_stripes_red_white_black",
+      "weight": 8,
+      "countries": [
+        "EG",
+        "SD",
+        "IQ",
+        "SY",
+        "YE"
+      ]
+    },
+    {
+      "name": "stripes_blue_yellow_red",
+      "weight": 7,
+      "countries": [
+        "RO",
+        "TD",
+        "AD",
+        "MD",
+        "VE",
+        "EC",
+        "CO"
+      ]
+    },
+    {
+      "name": "diagonal_stripes",
+      "weight": 6,
+      "countries": [
+        "BI",
+        "CD",
+        "NA",
+        "SC",
+        "TZ",
+        "JM",
+        "KN",
+        "TT",
+        "MH",
+        "PG",
+        "SB"
+      ]
+    },
+    {
+      "name": "horizontal_red_white_stripes",
+      "weight": 8,
+      "countries": [
+        "AT",
+        "LV"
+      ]
+    },
+    {
+      "name": "eagle_emblem",
+      "weight": 2,
+      "countries": [
+        "AL",
+        "EG",
+        "MX",
+        "ZM"
+      ]
+    },
+    {
+      "name": "star_and_crescent",
+      "weight": 6,
+      "countries": [
+        "TR",
+        "PK",
+        "MY",
+        "TN",
+        "LY"
+      ]
+    },
+    {
+      "name": "blue_white_red",
+      "weight": 3,
+      "countries": [
+        "LR",
+        "RU",
+        "PH",
+        "HR",
+        "CZ",
+        "LU",
+        "NL",
+        "RS",
+        "SK",
+        "SI",
+        "CR",
+        "CU",
+        "DO",
+        "PA",
+        "CL",
+        "PY"
+      ]
+    },
+    {
+      "name": "black_red_yellow",
+      "weight": 2,
+      "countries": [
+        "UG",
+        "BE",
+        "DE"
+      ]
+    },
+    {
+      "name": "circle",
+      "weight": 7,
+      "countries": [
+        "JP",
+        "BD",
+        "PW"
+      ]
+    },
+    {
+      "name": "green_white",
+      "weight": 7,
+      "countries": [
+        "DZ",
+        "NG",
+        "PK",
+        "SA",
+        "TM"
+      ]
+    },
+    {
+      "name": "horizontal_blue_yellow_red",
+      "weight": 6,
+      "countries": [
+        "RO",
+        "TD",
+        "AD",
+        "MD"
+      ]
+    },
+    {
+      "name": "red_yellow_green",
+      "weight": 4,
+      "countries": [
+        "BJ",
+        "CM",
+        "CG",
+        "ET",
+        "GH",
+        "GN",
+        "GW",
+        "ML",
+        "MZ",
+        "MM",
+        "LT",
+        "GD",
+        "BO"
+      ]
+    },
+    {
+      "name": "cross",
+      "weight": 5,
+      "countries": [
+        "CH",
+        "GB",
+        "NO",
+        "SE",
+        "FI",
+        "DK",
+        "GE",
+        "GR",
+        "SK"
+      ]
+    },
+    {
+      "name": "script",
+      "weight": 8,
+      "countries": [
+        "SA",
+        "IR",
+        "AF",
+        "IQ"
+      ]
+    },
+    {
+      "name": "horizontal_black_white_red",
+      "weight": 5,
+      "countries": [
+        "YE",
+        "EG",
+        "SY",
+        "IQ"
+      ]
+    },
+    {
+      "name": "flags_with_triangles",
+      "weight": 6,
+      "countries": [
+        "GY",
+        "BS",
+        "KM",
+        "TL",
+        "DJ",
+        "ER",
+        "CZ",
+        "PH",
+        "SS",
+        "MZ",
+        "SZ"
+      ]
+    },
+    {
+      "name": "flags_with_sun_and_star",
+      "weight": 7,
+      "countries": [
+        "PH",
+        "AR",
+        "UY"
+      ]
+    },
+    {
+      "name": "emblem_in_center",
+      "weight": 2,
+      "countries": [
+        "AO",
+        "AL",
+        "AD",
+        "MD",
+        "ME",
+        "PT",
+        "SM",
+        "RS",
+        "ES",
+        "MX"
+      ]
+    },
+    {
+      "name": "flags_with_black_red_green",
+      "weight": 7,
+      "countries": [
+        "KE",
+        "LY",
+        "MW",
+        "AF",
+        "VU"
+      ]
+    },
+    {
+      "name": "flags_with_vertical_blue_yellow_red",
+      "weight": 6,
+      "countries": [
+        "RO",
+        "AD",
+        "MD",
+        "TD"
+      ]
+    },
+    {
+      "name": "au_nz",
+      "weight": 9,
+      "countries": [
+        "AU",
+        "NZ"
+      ]
+    },
+    {
+      "name": "flags_with_horizontal_blue_white_red_without_crest",
+      "weight": 6,
+      "countries": [
+        "RU",
+        "NL",
+        "LU"
+      ]
+    },
+    {
+      "name": "flags_with_horizontal_black_white_red",
+      "weight": 5,
+      "countries": [
+        "EG",
+        "SY",
+        "YE",
+        "IQ"
+      ]
+    },
+    {
+      "name": "caribbean_flags",
+      "weight": 6,
+      "countries": [
+        "BS",
+        "BB",
+        "CU",
+        "DO",
+        "HT",
+        "JM",
+        "TT",
+        "LC",
+        "VC",
+        "GD",
+        "AG",
+        "DM",
+        "KN"
+      ]
+    },
+    {
+      "name": "baltic_flags",
+      "weight": 7,
+      "countries": [
+        "EE",
+        "LV",
+        "LT"
+      ]
+    },
+    {
+      "name": "small_island_flags",
+      "weight": 7,
+      "countries": [
+        "MV",
+        "SC",
+        "MU",
+        "KM",
+        "ST",
+        "CV",
+        "SB",
+        "FM",
+        "WS",
+        "TO",
+        "VU",
+        "NR",
+        "KI",
+        "TV",
+        "MH",
+        "VC"
+      ]
+    },
+    {
+      "name": "red_and_white",
+      "weight": 2,
+      "countries": [
+        "TN",
+        "BH",
+        "GE",
+        "ID",
+        "JP",
+        "LB",
+        "SG",
+        "TR",
+        "AT",
+        "DK",
+        "LV",
+        "MT",
+        "MC",
+        "PL",
+        "CH",
+        "CA",
+        "TO",
+        "PE"
+      ]
+    },
+    {
+      "name": "central_american_flags",
+      "weight": 8,
+      "countries": [
+        "AG",
+        "BS",
+        "BB",
+        "BZ",
+        "CR",
+        "CU",
+        "DM",
+        "DO",
+        "SV",
+        "GD",
+        "GT",
+        "HT",
+        "HN",
+        "JM",
+        "NI",
+        "PA",
+        "KN",
+        "LC",
+        "VC",
+        "TT"
+      ]
+    },
+    {
+      "name": "stan_countries",
+      "weight": 8,
+      "countries": [
+        "KZ",
+        "KG",
+        "TJ",
+        "TM",
+        "UZ",
+        "PK",
+        "AF"
+      ]
+    },
+    {
+      "name": "arabic_countries",
+      "weight": 5,
+      "countries": [
+        "EG",
+        "LY",
+        "SD",
+        "AF",
+        "IR",
+        "IQ",
+        "JO",
+        "KW"
+      ]
+    },
+    {
+      "name": "sk_si",
+      "weight": 9,
+      "countries": [
+        "SK",
+        "SI"
+      ]
+    },
+    {
+      "name": "left_side_triangle",
+      "weight": 6,
+      "countries": [
+        "KM",
+        "GQ",
+        "MZ",
+        "ST",
+        "ZA",
+        "SS",
+        "SD",
+        "ZW",
+        "JO",
+        "PH",
+        "CZ",
+        "BS",
+        "CU",
+        "VU",
+        "GY"
+      ]
+    },
+    {
+      "name": "bh_qa",
+      "weight": 9,
+      "countries": [
+        "BH",
+        "QA"
+      ]
+    },
+    {
+      "name": "red_blue_white_slavic",
+      "weight": 7,
+      "countries": [
+        "RU",
+        "HR",
+        "RS",
+        "SK",
+        "SI"
+      ]
+    },
+    {
+      "name": "horizonal_stripe_with_single_stripe_on_leftside",
+      "weight": 8,
+      "countries": [
+        "BJ",
+        "GW",
+        "MG",
+        "AE"
+      ]
+    },
+    {
+      "name": "scattered_stars",
+      "weight": 6,
+      "countries": [
+        "AU",
+        "FM",
+        "PG",
+        "WS",
+        "SB",
+        "TV"
+      ]
+    },
+    {
+      "name": "red_white_green",
+      "weight": 6,
+      "countries": [
+        "NE",
+        "CI",
+        "BG",
+        "HU",
+        "IE",
+        "IT"
+      ]
+    },
+    {
+      "name": "blue_yellow",
+      "weight": 2,
+      "countries": [
+        "BA",
+        "SE",
+        "UA",
+        "BB",
+        "PW"
+      ]
+    },
+    {
+      "name": "not_well_known",
+      "weight": 2,
+      "countries": [
+        "IR",
+        "IQ",
+        "JO",
+        "KZ",
+        "KW",
+        "KG",
+        "AG",
+        "BB",
+        "BZ",
+        "DM",
+        "DO",
+        "GD",
+        "LC",
+        "VC",
+        "TT",
+        "KI",
+        "PW",
+        "WS",
+        "SB",
+        "TO",
+        "TV",
+        "VU",
+        "GY",
+        "SR"
+      ]
+    },
+    {
+      "name": "stars_and_stripes",
+      "weight": 3,
+      "countries": [
+        "LR",
+        "MY",
+        "US",
+        "UY"
+      ]
+    },
+    {
+      "name": "red_green",
+      "weight": 3,
+      "countries": [
+        "BF",
+        "LY",
+        "MR",
+        "BY",
+        "PT",
+        "KN",
+        "SR"
+      ]
+    },
+    {
+      "name": "only_blue_red",
+      "weight": 3,
+      "countries": [
+        "KH",
+        "LA",
+        "NP",
+        "TW",
+        "LI",
+        "BZ",
+        "HT",
+        "WS"
+      ]
+    },
+    {
+      "name": "slavic",
+      "weight": 4,
+      "countries": [
+        "BA",
+        "BG",
+        "HR",
+        "CZ",
+        "MD",
+        "ME",
+        "MK",
+        "RO",
+        "RS",
+        "SK",
+        "SI"
+      ]
+    },
+    {
+      "name": "blue_white_red",
+      "weight": 2,
+      "countries": [
+        "CV",
+        "LR",
+        "KH",
+        "LA",
+        "MY",
+        "NP",
+        "RU",
+        "PH",
+        "TW",
+        "TH",
+        "HR",
+        "CZ",
+        "FR",
+        "IS",
+        "LU",
+        "NL",
+        "RS",
+        "SK",
+        "SI",
+        "GB",
+        "BZ",
+        "DO",
+        "HT",
+        "PA",
+        "US",
+        "AU",
+        "NZ",
+        "CL",
+        "PY"
+      ]
+    },
+    {
+      "name": "yellow_white",
+      "weight": 7,
+      "countries": [
+        "BT",
+        "BN",
+        "VA"
+      ]
+    },
+    {
+      "name": "africa",
+      "weight": 2,
+      "countries": [
+        "DZ",
+        "AO",
+        "BJ",
+        "BW",
+        "BF",
+        "BI",
+        "CM",
+        "CV",
+        "CF",
+        "TD",
+        "KM",
+        "CG",
+        "CD",
+        "DJ",
+        "EG",
+        "GQ",
+        "ER",
+        "SZ",
+        "ET",
+        "GA",
+        "GM",
+        "GH",
+        "GN",
+        "GW",
+        "KE",
+        "LS",
+        "LR",
+        "LY",
+        "MG",
+        "MW",
+        "ML",
+        "MR",
+        "MU",
+        "MA",
+        "MZ",
+        "NA",
+        "NE",
+        "NG",
+        "RW",
+        "ST",
+        "SN",
+        "SC",
+        "SL",
+        "SO",
+        "ZA",
+        "SS",
+        "SD",
+        "TZ",
+        "TG",
+        "TN",
+        "UG",
+        "ZM",
+        "ZW",
+        "CI"
+      ]
+    },
+    {
+      "name": "asia",
+      "weight": 2,
+      "countries": [
+        "AF",
+        "AM",
+        "AZ",
+        "BH",
+        "BD",
+        "BT",
+        "BN",
+        "MM",
+        "KH",
+        "CN",
+        "CY",
+        "GE",
+        "IN",
+        "ID",
+        "IR",
+        "IQ",
+        "IL",
+        "JP",
+        "JO",
+        "KZ",
+        "KW",
+        "KG",
+        "LA",
+        "LB",
+        "MY",
+        "MV",
+        "MN",
+        "NP",
+        "RU",
+        "OM",
+        "PK",
+        "PH",
+        "QA",
+        "SA",
+        "SG",
+        "KR",
+        "LK",
+        "SY",
+        "TW",
+        "TJ",
+        "TH",
+        "TL",
+        "TR",
+        "TM",
+        "AE",
+        "UZ",
+        "VN",
+        "YE"
+      ]
+    },
+    {
+      "name": "Europe",
+      "weight": 5,
+      "countries": [
+        "AL",
+        "AD",
+        "AT",
+        "BY",
+        "BE",
+        "BA",
+        "BG",
+        "HR",
+        "CZ",
+        "DK",
+        "EE",
+        "FI",
+        "FR",
+        "DE",
+        "GR",
+        "HU",
+        "IS",
+        "IE",
+        "IT",
+        "LV",
+        "LI",
+        "LT",
+        "LU",
+        "MT",
+        "MD",
+        "MC",
+        "ME",
+        "NL",
+        "MK",
+        "NO",
+        "PL",
+        "PT",
+        "RO",
+        "SM",
+        "RS",
+        "SK",
+        "SI",
+        "ES",
+        "SE",
+        "CH",
+        "UA",
+        "GB",
+        "VA"
+      ]
+    },
+    {
+      "name": "middle_america",
+      "weight": 5,
+      "countries": [
+        "AG",
+        "BS",
+        "BB",
+        "BZ",
+        "CR",
+        "CU",
+        "DM",
+        "DO",
+        "SV",
+        "GD",
+        "GT",
+        "HT",
+        "HN",
+        "JM",
+        "MX",
+        "NI",
+        "PA",
+        "KN",
+        "LC",
+        "VC",
+        "TT",
+        "AU",
+        "FJ",
+        "KI",
+        "MH",
+        "FM",
+        "NR",
+        "NZ",
+        "PW",
+        "PG",
+        "WS",
+        "SB",
+        "TO",
+        "TV",
+        "VU"
+      ]
+    },
+    {
+      "name": "south_america",
+      "weight": 5,
+      "countries": [
+        "AR",
+        "BO",
+        "BR",
+        "CL",
+        "CO",
+        "EC",
+        "GY",
+        "PY",
+        "PE",
+        "SR",
+        "UY",
+        "VE"
+      ]
+    }
+  ]
+}
