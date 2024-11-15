@@ -35,6 +35,7 @@ export const TypeMode: React.FC = observer(() => {
       // Prevent keyboard from closing on Enter
       if (keyEvent.key === 'Enter') {
         e.preventDefault();
+        handleSubmit(e as any);
       }
       
       // Existing tab completion logic
