@@ -106,7 +106,7 @@
   padding: 10px 26px;
   font-size: 0.9rem;
   border: 2px solid var(--color-border);
-  border-radius: 8px;
+  border-radius: 25px;
   background: var(--color-surface);
   color: var(--color-text);
   cursor: pointer;

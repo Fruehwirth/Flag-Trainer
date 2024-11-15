@@ -10,14 +10,9 @@ const DifficultyButton: React.FC<{
   difficulty: Difficulty;
   selected: boolean;
   onClick: () => void;
-  gameMode: GameMode;
-}> = ({ difficulty, selected, onClick, gameMode }) => {
+}> = ({ difficulty, selected, onClick }) => {
   const { settingsStore } = useStores();
   const text = useTranslation(difficulty, settingsStore.language, true);
-  
-  if (gameMode === 'type' && difficulty === 'easy') {
-    return null;
-  }
   
   return (
     <button
@@ -100,7 +95,6 @@ export const StartScreen: React.FC<{
                 key={diff}
                 difficulty={diff}
                 selected={settingsStore.difficulty === diff}
-                gameMode={settingsStore.gameMode}
                 onClick={() => {
                   settingsStore.setDifficulty(diff);
                   gameStore.initializeGame();

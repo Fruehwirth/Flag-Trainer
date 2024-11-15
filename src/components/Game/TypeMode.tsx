@@ -31,17 +31,7 @@ export const TypeMode: React.FC = observer(() => {
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement> | React.TouchEvent<HTMLInputElement>) => {
     if (settingsStore.difficulty === 'hard') return;
 
-    // Handle space key press or touch event
-    if (
-      ((e.type === 'keydown' && (e as React.KeyboardEvent).key === ' ') ||
-      (e.type === 'touchend')) &&
-      suggestion &&
-      suggestion[answer.length] !== ' '
-    ) {
-      e.preventDefault();
-      setAnswer(suggestion);
-      setSuggestion('');
-    } else if (e.type === 'keydown' && (e as React.KeyboardEvent).key === 'Tab') {
+    if (e.type === 'keydown' && (e as React.KeyboardEvent).key === 'Tab') {
       e.preventDefault();
       if (suggestion) {
         setAnswer(suggestion);
@@ -54,18 +44,22 @@ export const TypeMode: React.FC = observer(() => {
     const value = e.target.value;
     setAnswer(value);
 
-    if (settingsStore.difficulty === 'hard') {
-      setSuggestion('');
-      return;
-    }
-
     if (!value.trim()) {
       setSuggestion('');
       return;
     }
 
     // Get all available flags for suggestions
-    const availableFlags = gameStore.remainingFlags;
+    let availableFlags = gameStore.remainingFlags;
+    if (settingsStore.difficulty === 'easy') {
+      availableFlags = gameStore.remainingFlags;
+    } else if (settingsStore.difficulty === 'medium') {
+      availableFlags = gameStore.allFlags;
+    } else if (settingsStore.difficulty === 'hard') {
+      setSuggestion('');
+      return;
+    }
+
     const options = await Promise.all(
       availableFlags.map(async (flag) => {
         const translation = await TranslationService.getTranslation(
