@@ -70,3 +70,31 @@
     transform: translateY(15px);
   }
 }
+
+.input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.suggestion {
+  position: absolute;
+  top: 0;
+  left: 15px;
+  right: 0;
+  bottom: 10px;
+  pointer-events: none;
+  white-space: pre;
+  color: var(--color-text);
+  font-size: 18px;
+  font-family: var(--font-family-base);
+  display: flex;
+  align-items: center;
+}
+
+.suggestion-entered {
+  opacity: 0;
+}
+
+.suggestion-completion {
+  opacity: 0.4;
+}

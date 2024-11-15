@@ -2,6 +2,7 @@ import React from 'react';
 import { observer } from 'mobx-react-lite';
 import { useStores } from '../../hooks/useStores';
 import { TranslationService } from '../../services/TranslationService';
+import Fuse from 'fuse.js';
 import './TypeMode.css';
 import { useTranslation } from '../../hooks/useTranslation';
 
@@ -12,6 +13,7 @@ interface TypeModeProps {
 export const TypeMode: React.FC<TypeModeProps> = observer(({ shouldAutoFocus = false }) => {
   const { gameStore, settingsStore } = useStores();
   const [answer, setAnswer] = React.useState('');
+  const [suggestion, setSuggestion] = React.useState('');
   const [feedback, setFeedback] = React.useState<'correct' | 'incorrect' | null>(null);
   const [correctAnswer, setCorrectAnswer] = React.useState<string>('');
   const [isProcessing, setIsProcessing] = React.useState(false);
@@ -31,11 +33,67 @@ export const TypeMode: React.FC<TypeModeProps> = observer(({ shouldAutoFocus = f
     }
   }, [isProcessing, shouldAutoFocus]);
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Tab') {
+      e.preventDefault();
+      if (suggestion) {
+        setAnswer(suggestion);
+        setSuggestion('');
+      }
+    } else if (e.key === ' ' && suggestion && suggestion[answer.length] !== ' ') {
+      e.preventDefault();
+      setAnswer(suggestion);
+      setSuggestion('');
+    }
+  };
+
+  const handleInputChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setAnswer(value);
+
+    if (!value.trim()) {
+      setSuggestion('');
+      return;
+    }
+
+    // Get all available flags for suggestions
+    const availableFlags = gameStore.remainingFlags;
+    const options = await Promise.all(
+      availableFlags.map(async (flag) => {
+        const translation = await TranslationService.getTranslation(
+          settingsStore.language,
+          flag.country
+        );
+        return translation;
+      })
+    );
+
+    // Configure Fuse for fuzzy search
+    const fuse = new Fuse(options, {
+      threshold: 0.3,
+      ignoreLocation: true,
+      findAllMatches: true,
+    });
+
+    const results = fuse.search(value);
+    if (results.length > 0) {
+      const bestMatch = results[0].item;
+      if (bestMatch.toLowerCase().startsWith(value.toLowerCase())) {
+        setSuggestion(bestMatch);
+      } else {
+        setSuggestion('');
+      }
+    } else {
+      setSuggestion('');
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!answer.trim() || isProcessing) return;
 
     setIsProcessing(true);
+    setSuggestion('');
     const normalizedAnswer = answer.trim().toLowerCase();
     const currentCountry = gameStore.currentFlag?.country;
     if (!currentCountry) return;
@@ -67,6 +125,7 @@ export const TypeMode: React.FC<TypeModeProps> = observer(({ shouldAutoFocus = f
     await gameStore.handleAnswer(normalizedAnswer, isCorrect);
     
     setAnswer('');
+    setSuggestion('');
     setFeedback(null);
     setCorrectAnswer('');
     setIsProcessing(false);
@@ -74,15 +133,24 @@ export const TypeMode: React.FC<TypeModeProps> = observer(({ shouldAutoFocus = f
 
   return (
     <form onSubmit={handleSubmit} className="type-input-container">
-      <input
-        ref={inputRef}
-        type="text"
-        value={answer}
-        onChange={(e) => setAnswer(e.target.value)}
-        className={`answer-input ${feedback || ''}`}
-        placeholder={placeholderText}
-        disabled={isProcessing}
-      />
+      <div className="input-wrapper">
+        <input
+          ref={inputRef}
+          type="text"
+          value={answer}
+          onChange={handleInputChange}
+          onKeyDown={handleKeyDown}
+          className={`answer-input ${feedback || ''}`}
+          placeholder={placeholderText}
+          disabled={isProcessing}
+        />
+        {suggestion && (
+          <div className="suggestion">
+            <span className="suggestion-entered">{answer}</span>
+            <span className="suggestion-completion">{suggestion.slice(answer.length)}</span>
+          </div>
+        )}
+      </div>
       {feedback === 'incorrect' && correctAnswer && (
         <div className={`correct-answer ${isExiting ? 'exiting' : ''}`}>
           {correctAnswer}

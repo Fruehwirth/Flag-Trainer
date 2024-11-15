@@ -35,6 +35,10 @@ export const StartScreen: React.FC<{
   const startNewRoundText = useTranslation('startNewRound', settingsStore.language, true);
   const difficultyText = useTranslation('difficulty', settingsStore.language, true);
 
+  React.useEffect(() => {
+    settingsStore.setGameMode('type');
+  }, []);
+
   const handleGameModeChange = (mode: GameMode) => {
     settingsStore.setGameMode(mode);
   };
