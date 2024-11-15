@@ -15,6 +15,7 @@ export const TypeMode: React.FC<TypeModeProps> = observer(({ shouldAutoFocus = f
   const [feedback, setFeedback] = React.useState<'correct' | 'incorrect' | null>(null);
   const [correctAnswer, setCorrectAnswer] = React.useState<string>('');
   const [isProcessing, setIsProcessing] = React.useState(false);
+  const [isExiting, setIsExiting] = React.useState(false);
   const inputRef = React.useRef<HTMLInputElement>(null);
   const placeholderText = useTranslation('typeCountryName', settingsStore.language, true);
 
@@ -52,6 +53,14 @@ export const TypeMode: React.FC<TypeModeProps> = observer(({ shouldAutoFocus = f
     
     if (!isCorrect) {
       setCorrectAnswer(translation);
+      setTimeout(() => {
+        setIsExiting(true);
+        setTimeout(() => {
+          setFeedback(null);
+          setCorrectAnswer('');
+          setIsExiting(false);
+        }, 300);
+      }, 700);
     }
 
     await new Promise(resolve => setTimeout(resolve, 1000));
@@ -75,7 +84,7 @@ export const TypeMode: React.FC<TypeModeProps> = observer(({ shouldAutoFocus = f
         disabled={isProcessing}
       />
       {feedback === 'incorrect' && correctAnswer && (
-        <div className="correct-answer">
+        <div className={`correct-answer ${isExiting ? 'exiting' : ''}`}>
           {correctAnswer}
         </div>
       )}
