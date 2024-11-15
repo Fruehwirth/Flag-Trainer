@@ -165,6 +165,11 @@ export const TypeMode: React.FC = observer(() => {
           className={`answer-input ${feedback || ''}`}
           placeholder={placeholderText}
           autoComplete="off"
+          autoCorrect="off"
+          autoCapitalize="off"
+          spellCheck="false"
+          data-form-type="other"
+          data-lpignore="true"
         />
         {suggestion && (
           <div className="suggestion">
