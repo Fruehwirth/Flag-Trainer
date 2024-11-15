@@ -75,7 +75,7 @@ export const App: React.FC = observer(() => {
           {settingsStore.gameMode === 'quiz' ? (
             <QuizMode />
           ) : (
-            <TypeMode shouldAutoFocus={!showStartScreen} />
+            <TypeMode shouldAutoFocus={!showStartScreen && !gameStore.isGameOver} />
           )}
         </main>
         {gameStore.isGameOver && (

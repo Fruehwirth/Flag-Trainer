@@ -22,16 +22,18 @@ export const TypeMode: React.FC<TypeModeProps> = observer(({ shouldAutoFocus = f
   const placeholderText = useTranslation('typeCountryName', settingsStore.language, true);
 
   React.useEffect(() => {
-    if (shouldAutoFocus && inputRef.current) {
+    if (shouldAutoFocus && inputRef.current && gameStore.currentFlag) {
       inputRef.current.focus();
+    } else if (!gameStore.currentFlag && inputRef.current) {
+      inputRef.current.blur();
     }
   }, [gameStore.currentFlag, shouldAutoFocus]);
 
   React.useEffect(() => {
-    if (shouldAutoFocus && !isProcessing && inputRef.current) {
+    if (shouldAutoFocus && !isProcessing && inputRef.current && gameStore.currentFlag) {
       inputRef.current.focus();
     }
-  }, [isProcessing, shouldAutoFocus]);
+  }, [isProcessing, shouldAutoFocus, gameStore.currentFlag]);
 
   React.useEffect(() => {
     if (!gameStore.currentFlag) {
@@ -41,6 +43,9 @@ export const TypeMode: React.FC<TypeModeProps> = observer(({ shouldAutoFocus = f
       setCorrectAnswer('');
       setIsProcessing(false);
       setIsExiting(false);
+      if (inputRef.current) {
+        inputRef.current.blur();
+      }
     }
   }, [gameStore.currentFlag]);
 
@@ -141,6 +146,9 @@ export const TypeMode: React.FC<TypeModeProps> = observer(({ shouldAutoFocus = f
           setFeedback(null);
           setCorrectAnswer('');
           setIsExiting(false);
+          if (inputRef.current) {
+            inputRef.current.focus();
+          }
         }, 300);
       }, 700);
     }
@@ -152,6 +160,9 @@ export const TypeMode: React.FC<TypeModeProps> = observer(({ shouldAutoFocus = f
     setFeedback(null);
     setCorrectAnswer('');
     setIsProcessing(false);
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
   };
 
   return (
@@ -166,7 +177,7 @@ export const TypeMode: React.FC<TypeModeProps> = observer(({ shouldAutoFocus = f
           onTouchEnd={handleKeyDown}
           className={`answer-input ${feedback || ''}`}
           placeholder={placeholderText}
-          disabled={isProcessing}
+          readOnly={isProcessing}
         />
         {suggestion && (
           <div className="suggestion">
