@@ -39,3 +39,12 @@
   background-color: rgba(255, 0, 0, 0.371) !important;
   border: 2px solid rgba(255, 0, 0, 0.715) !important;
 }
+
+.option-text {
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.option-text.changing {
+  transform: scale(0.99);
+  opacity: 0;
+}

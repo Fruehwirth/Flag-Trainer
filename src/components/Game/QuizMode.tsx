@@ -11,6 +11,7 @@ export const QuizMode: React.FC = observer(() => {
   const [translatedOptions, setTranslatedOptions] = React.useState<string[]>([]);
   const [isAnswered, setIsAnswered] = React.useState(false);
   const [selectedAnswer, setSelectedAnswer] = React.useState<string | null>(null);
+  const [isChangingText, setIsChangingText] = React.useState(false);
 
   const updateTranslations = React.useCallback(async () => {
     if (options.length > 0) {
@@ -74,6 +75,16 @@ export const QuizMode: React.FC = observer(() => {
     loadOptions();
   }, [gameStore.currentFlag]);
 
+  React.useEffect(() => {
+    if (gameStore.currentFlag) {
+      setIsChangingText(true);
+      const timer = setTimeout(() => {
+        setIsChangingText(false);
+      }, 150);
+      return () => clearTimeout(timer);
+    }
+  }, [gameStore.currentFlag]);
+
   const handleAnswer = async (answer: string, index: number) => {
     if (isAnswered) return;
     
@@ -111,7 +122,9 @@ export const QuizMode: React.FC = observer(() => {
           onClick={() => handleAnswer(options[index], index)}
           disabled={isAnswered}
         >
-          {translation}
+          <span className={`option-text ${isChangingText ? 'changing' : ''}`}>
+            {translation}
+          </span>
         </button>
       ))}
     </div>
