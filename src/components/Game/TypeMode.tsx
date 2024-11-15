@@ -132,6 +132,14 @@ export const TypeMode: React.FC = observer(() => {
     setIsProcessing(false);
   };
 
+  const handleTouchStart = (e: React.TouchEvent<HTMLInputElement>) => {
+    if (document.activeElement === e.currentTarget && suggestion) {
+      e.preventDefault();
+      setAnswer(suggestion);
+      setSuggestion('');
+    }
+  };
+
   return (
     <form onSubmit={handleSubmit} className="type-input-container">
       <div className="input-wrapper">
@@ -142,6 +150,7 @@ export const TypeMode: React.FC = observer(() => {
           onChange={handleInputChange}
           onKeyDown={handleKeyDown}
           onTouchEnd={handleKeyDown}
+          onTouchStart={handleTouchStart}
           className={`answer-input ${feedback || ''}`}
           placeholder={placeholderText}
           readOnly={isProcessing}
