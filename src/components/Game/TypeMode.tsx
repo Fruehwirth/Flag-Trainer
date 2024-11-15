@@ -70,6 +70,11 @@ export const TypeMode: React.FC<TypeModeProps> = observer(({ shouldAutoFocus = f
     const value = e.target.value;
     setAnswer(value);
 
+    if (settingsStore.difficulty === 'hard') {
+      setSuggestion('');
+      return;
+    }
+
     if (!value.trim()) {
       setSuggestion('');
       return;
