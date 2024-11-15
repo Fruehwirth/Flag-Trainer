@@ -7,6 +7,12 @@
     justify-content: center;
   }
   
+  @media (max-width: 550px) {
+    .flag-container {
+      height: 200px;
+    }
+  }
+  
   .flag-image {
     max-width: 100%;
     max-height: 100%;

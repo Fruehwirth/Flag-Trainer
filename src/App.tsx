@@ -19,6 +19,27 @@ export const App: React.FC = observer(() => {
     return !gameState || (gameState.allFlags.length === gameState.remainingFlags.length);
   });
   const [isGameContainerVisible, setIsGameContainerVisible] = React.useState(true);
+  const [viewportHeight, setViewportHeight] = React.useState(window.innerHeight);
+
+  React.useEffect(() => {
+    const handleResize = () => {
+      if (window.visualViewport) {
+        setViewportHeight(window.visualViewport.height);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', handleResize);
+    }
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      if (window.visualViewport) {
+        window.visualViewport.removeEventListener('resize', handleResize);
+      }
+    };
+  }, []);
 
   React.useEffect(() => {
     return () => {
@@ -41,7 +62,10 @@ export const App: React.FC = observer(() => {
   };
 
   return (
-    <div className={`app ${settingsStore.gameMode === 'type' ? 'type-mode' : ''}`}>
+    <div 
+      className={`app ${settingsStore.gameMode === 'type' ? 'type-mode' : ''}`}
+      style={{ height: viewportHeight }}
+    >
       <Header 
         onSettingsClick={() => setIsSettingsOpen(true)} 
         showControls={!showStartScreen}

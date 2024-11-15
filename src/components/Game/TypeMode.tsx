@@ -29,18 +29,29 @@ export const TypeMode: React.FC = observer(() => {
   }, [gameStore.currentFlag]);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement> | React.TouchEvent<HTMLInputElement>) => {
-    if (settingsStore.difficulty === 'hard') return;
-
-    if (e.type === 'keydown' && (e as React.KeyboardEvent).key === 'Tab') {
-      e.preventDefault();
-      if (suggestion) {
-        setAnswer(suggestion);
-        setSuggestion('');
+    if (e.type === 'keydown') {
+      const keyEvent = e as React.KeyboardEvent;
+      
+      // Prevent keyboard from closing on Enter
+      if (keyEvent.key === 'Enter') {
+        e.preventDefault();
+        handleSubmit(e as any);
+      }
+      
+      // Existing tab completion logic
+      if (settingsStore.difficulty === 'hard') return;
+      if (keyEvent.key === 'Tab') {
+        e.preventDefault();
+        if (suggestion) {
+          setAnswer(suggestion);
+          setSuggestion('');
+        }
       }
     }
   };
 
   const handleInputChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (isProcessing) return;
     const value = e.target.value;
     setAnswer(value);
 
@@ -153,7 +164,7 @@ export const TypeMode: React.FC = observer(() => {
           onTouchStart={handleTouchStart}
           className={`answer-input ${feedback || ''}`}
           placeholder={placeholderText}
-          readOnly={isProcessing}
+          autoComplete="off"
         />
         {suggestion && (
           <div className="suggestion">
