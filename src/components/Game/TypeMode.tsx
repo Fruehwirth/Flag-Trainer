@@ -33,30 +33,31 @@ export const TypeMode: React.FC<TypeModeProps> = observer(({ shouldAutoFocus = f
     }
   }, [isProcessing, shouldAutoFocus]);
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement> | React.TouchEvent<HTMLInputElement>) => {
     if (settingsStore.difficulty === 'hard') return;
 
-    if (e.key === 'Tab') {
+    // Handle space key press or touch event
+    if (
+      (e.type === 'keydown' && (e as React.KeyboardEvent).key === ' ') ||
+      (e.type === 'touchend' && suggestion && suggestion[answer.length] !== ' ')
+    ) {
       e.preventDefault();
       if (suggestion) {
         setAnswer(suggestion);
         setSuggestion('');
       }
-    } else if (e.key === ' ' && suggestion && suggestion[answer.length] !== ' ') {
+    } else if (e.type === 'keydown' && (e as React.KeyboardEvent).key === 'Tab') {
       e.preventDefault();
-      setAnswer(suggestion);
-      setSuggestion('');
+      if (suggestion) {
+        setAnswer(suggestion);
+        setSuggestion('');
+      }
     }
   };
 
   const handleInputChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setAnswer(value);
-
-    if (settingsStore.difficulty === 'hard') {
-      setSuggestion('');
-      return;
-    }
 
     if (!value.trim()) {
       setSuggestion('');
@@ -100,7 +101,6 @@ export const TypeMode: React.FC<TypeModeProps> = observer(({ shouldAutoFocus = f
     if (!answer.trim() || isProcessing) return;
 
     setIsProcessing(true);
-    setSuggestion('');
     const normalizedAnswer = answer.trim().toLowerCase();
     const currentCountry = gameStore.currentFlag?.country;
     if (!currentCountry) return;
@@ -128,13 +128,10 @@ export const TypeMode: React.FC<TypeModeProps> = observer(({ shouldAutoFocus = f
       }, 700);
     }
 
-    // Match QuizMode timing: 400ms for correct, 1000ms for incorrect
-    await new Promise(resolve => setTimeout(resolve, isCorrect ? 400 : 1000));
-    
-    await gameStore.handleAnswer(currentCountry, isCorrect);
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    await gameStore.handleAnswer(normalizedAnswer, isCorrect);
     
     setAnswer('');
-    setSuggestion('');
     setFeedback(null);
     setCorrectAnswer('');
     setIsProcessing(false);
@@ -149,6 +146,7 @@ export const TypeMode: React.FC<TypeModeProps> = observer(({ shouldAutoFocus = f
           value={answer}
           onChange={handleInputChange}
           onKeyDown={handleKeyDown}
+          onTouchEnd={handleKeyDown}
           className={`answer-input ${feedback || ''}`}
           placeholder={placeholderText}
           disabled={isProcessing}
