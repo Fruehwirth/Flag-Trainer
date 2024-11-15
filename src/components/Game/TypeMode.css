@@ -2,21 +2,30 @@
     width: 100%;
     max-width: 500px;
     position: relative;
+    display: flex;
+    justify-content: center;
+}
+
+.input-wrapper {
+    position: relative;
+    width: 70%;
+    display: flex;
+    justify-content: center;
 }
 
 .answer-input {
-  position: relative;
-  width: 100%;
-  padding: 14px;
-  font-size: 18px;
-  margin-bottom: 10px;
-  box-sizing: border-box;
-  text-align: left;
-  border: 1px solid var(--color-border);
-  border-radius: 8px;
-  background-color: var(--color-input-background);
-  color: var(--color-text);
-  font-family: var(--font-family-base);
+    position: relative;
+    width: 100%;
+    padding: 14px;
+    font-size: 18px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+    text-align: left;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    background-color: var(--color-input-background);
+    color: var(--color-text);
+    font-family: var(--font-family-base);
 }
 
 .answer-input:focus {
@@ -37,7 +46,7 @@
 .correct-answer {
   position: absolute;
   bottom: 100%;
-  left: 15px;
+  left: 90px;
   text-align: left;
   color: var(--color-text);
   margin-bottom: 8px;
@@ -69,11 +78,6 @@
     opacity: 0;
     transform: translateY(15px);
   }
-}
-
-.input-wrapper {
-  position: relative;
-  width: 100%;
 }
 
 .suggestion {

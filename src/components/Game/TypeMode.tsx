@@ -34,6 +34,8 @@ export const TypeMode: React.FC<TypeModeProps> = observer(({ shouldAutoFocus = f
   }, [isProcessing, shouldAutoFocus]);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (settingsStore.difficulty === 'hard') return;
+
     if (e.key === 'Tab') {
       e.preventDefault();
       if (suggestion) {
@@ -50,6 +52,11 @@ export const TypeMode: React.FC<TypeModeProps> = observer(({ shouldAutoFocus = f
   const handleInputChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setAnswer(value);
+
+    if (settingsStore.difficulty === 'hard') {
+      setSuggestion('');
+      return;
+    }
 
     if (!value.trim()) {
       setSuggestion('');
@@ -121,8 +128,10 @@ export const TypeMode: React.FC<TypeModeProps> = observer(({ shouldAutoFocus = f
       }, 700);
     }
 
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    await gameStore.handleAnswer(normalizedAnswer, isCorrect);
+    // Match QuizMode timing: 400ms for correct, 1000ms for incorrect
+    await new Promise(resolve => setTimeout(resolve, isCorrect ? 400 : 1000));
+    
+    await gameStore.handleAnswer(currentCountry, isCorrect);
     
     setAnswer('');
     setSuggestion('');
