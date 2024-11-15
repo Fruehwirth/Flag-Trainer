@@ -33,19 +33,30 @@ export const TypeMode: React.FC<TypeModeProps> = observer(({ shouldAutoFocus = f
     }
   }, [isProcessing, shouldAutoFocus]);
 
+  React.useEffect(() => {
+    if (!gameStore.currentFlag) {
+      setAnswer('');
+      setSuggestion('');
+      setFeedback(null);
+      setCorrectAnswer('');
+      setIsProcessing(false);
+      setIsExiting(false);
+    }
+  }, [gameStore.currentFlag]);
+
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement> | React.TouchEvent<HTMLInputElement>) => {
     if (settingsStore.difficulty === 'hard') return;
 
     // Handle space key press or touch event
     if (
-      (e.type === 'keydown' && (e as React.KeyboardEvent).key === ' ') ||
-      (e.type === 'touchend' && suggestion && suggestion[answer.length] !== ' ')
+      ((e.type === 'keydown' && (e as React.KeyboardEvent).key === ' ') ||
+      (e.type === 'touchend')) &&
+      suggestion &&
+      suggestion[answer.length] !== ' '
     ) {
       e.preventDefault();
-      if (suggestion) {
-        setAnswer(suggestion);
-        setSuggestion('');
-      }
+      setAnswer(suggestion);
+      setSuggestion('');
     } else if (e.type === 'keydown' && (e as React.KeyboardEvent).key === 'Tab') {
       e.preventDefault();
       if (suggestion) {
@@ -101,6 +112,7 @@ export const TypeMode: React.FC<TypeModeProps> = observer(({ shouldAutoFocus = f
     if (!answer.trim() || isProcessing) return;
 
     setIsProcessing(true);
+    setSuggestion('');
     const normalizedAnswer = answer.trim().toLowerCase();
     const currentCountry = gameStore.currentFlag?.country;
     if (!currentCountry) return;
