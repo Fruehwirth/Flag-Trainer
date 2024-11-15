@@ -6,11 +6,7 @@ import Fuse from 'fuse.js';
 import './TypeMode.css';
 import { useTranslation } from '../../hooks/useTranslation';
 
-interface TypeModeProps {
-  shouldAutoFocus?: boolean;
-}
-
-export const TypeMode: React.FC<TypeModeProps> = observer(({ shouldAutoFocus = false }) => {
+export const TypeMode: React.FC = observer(() => {
   const { gameStore, settingsStore } = useStores();
   const [answer, setAnswer] = React.useState('');
   const [suggestion, setSuggestion] = React.useState('');
@@ -22,20 +18,6 @@ export const TypeMode: React.FC<TypeModeProps> = observer(({ shouldAutoFocus = f
   const placeholderText = useTranslation('typeCountryName', settingsStore.language, true);
 
   React.useEffect(() => {
-    if (shouldAutoFocus && inputRef.current && gameStore.currentFlag) {
-      inputRef.current.focus();
-    } else if (!gameStore.currentFlag && inputRef.current) {
-      inputRef.current.blur();
-    }
-  }, [gameStore.currentFlag, shouldAutoFocus]);
-
-  React.useEffect(() => {
-    if (shouldAutoFocus && !isProcessing && inputRef.current && gameStore.currentFlag) {
-      inputRef.current.focus();
-    }
-  }, [isProcessing, shouldAutoFocus, gameStore.currentFlag]);
-
-  React.useEffect(() => {
     if (!gameStore.currentFlag) {
       setAnswer('');
       setSuggestion('');
@@ -43,9 +25,6 @@ export const TypeMode: React.FC<TypeModeProps> = observer(({ shouldAutoFocus = f
       setCorrectAnswer('');
       setIsProcessing(false);
       setIsExiting(false);
-      if (inputRef.current) {
-        inputRef.current.blur();
-      }
     }
   }, [gameStore.currentFlag]);
 
@@ -146,9 +125,6 @@ export const TypeMode: React.FC<TypeModeProps> = observer(({ shouldAutoFocus = f
           setFeedback(null);
           setCorrectAnswer('');
           setIsExiting(false);
-          if (inputRef.current) {
-            inputRef.current.focus();
-          }
         }, 300);
       }, 700);
     }
@@ -160,9 +136,6 @@ export const TypeMode: React.FC<TypeModeProps> = observer(({ shouldAutoFocus = f
     setFeedback(null);
     setCorrectAnswer('');
     setIsProcessing(false);
-    if (inputRef.current) {
-      inputRef.current.focus();
-    }
   };
 
   return (
