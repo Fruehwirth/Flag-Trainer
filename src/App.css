@@ -44,12 +44,12 @@ html, body {
 
 @media (max-width: 550px) {
   .type-mode .game-container {
-    position: fixed;
+    position: absolute;
     top: 76px;
-    transform: none;
-    left: 0;
-    padding: 20px;
-    height: calc(100vh - 76px);
-    max-height: calc(100vh - 76px);
+    height: auto;
+    min-height: calc(100% - 76px);
+    transform: translateX(-50%);
+    padding-top: 20px;
+    justify-content: flex-start;
   }
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { observer } from 'mobx-react-lite';
 import { useStores } from '../../hooks/useStores';
 import { TranslationService } from '../../services/TranslationService';
@@ -16,7 +16,6 @@ export const TypeMode: React.FC = observer(() => {
   const [isExiting, setIsExiting] = React.useState(false);
   const inputRef = React.useRef<HTMLInputElement>(null);
   const placeholderText = useTranslation('typeCountryName', settingsStore.language, true);
-  const [virtualKeyboardHeight, setVirtualKeyboardHeight] = useState<number>(0);
 
   React.useEffect(() => {
     if (!gameStore.currentFlag) {
@@ -28,29 +27,6 @@ export const TypeMode: React.FC = observer(() => {
       setIsExiting(false);
     }
   }, [gameStore.currentFlag]);
-
-  useEffect(() => {
-    const handleResize = () => {
-      const viewportHeight = window.visualViewport?.height || window.innerHeight;
-      const windowHeight = window.innerHeight;
-      const keyboardHeight = Math.max(0, windowHeight - viewportHeight);
-      setVirtualKeyboardHeight(keyboardHeight);
-    };
-
-    if (window.visualViewport) {
-      window.visualViewport.addEventListener('resize', handleResize);
-    } else {
-      window.addEventListener('resize', handleResize);
-    }
-
-    return () => {
-      if (window.visualViewport) {
-        window.visualViewport.removeEventListener('resize', handleResize);
-      } else {
-        window.removeEventListener('resize', handleResize);
-      }
-    };
-  }, []);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement> | React.TouchEvent<HTMLInputElement>) => {
     if (settingsStore.difficulty === 'hard') return;
@@ -165,7 +141,7 @@ export const TypeMode: React.FC = observer(() => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className={`type-input-container ${virtualKeyboardHeight > 0 ? 'keyboard-open' : ''}`}>
+    <form onSubmit={handleSubmit} className="type-input-container">
       <div className="input-wrapper">
         <input
           ref={inputRef}
