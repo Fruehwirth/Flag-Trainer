@@ -164,6 +164,7 @@ export const TypeMode: React.FC = observer(() => {
           onTouchStart={handleTouchStart}
           className={`answer-input ${feedback || ''}`}
           placeholder={placeholderText}
+          autoComplete="off"
         />
         {suggestion && (
           <div className="suggestion">
