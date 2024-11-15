@@ -41,7 +41,11 @@
 }
 
 .option-text {
+  display: inline-block;
+  width: 100%;
   transition: transform 0.15s ease, opacity 0.15s ease;
+  opacity: 1;
+  transform: scale(1);
 }
 
 .option-text.changing {
