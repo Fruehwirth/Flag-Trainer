@@ -46,7 +46,7 @@
 .correct-answer {
   position: absolute;
   bottom: 100%;
-  left: 90px;
+  left: 15px;
   text-align: left;
   color: var(--color-text);
   margin-bottom: 8px;
