@@ -46,5 +46,6 @@
     {"country": "AE", "url": "https://flagcdn.com/ae.svg"},
     {"country": "UZ", "url": "https://flagcdn.com/uz.svg"},
     {"country": "VN", "url": "https://flagcdn.com/vn.svg"},
-    {"country": "YE", "url": "https://flagcdn.com/ye.svg"}
+    {"country": "YE", "url": "https://flagcdn.com/ye.svg"},
+    {"country": "KP", "url": "https://flagcdn.com/kp.svg"}
 ]
