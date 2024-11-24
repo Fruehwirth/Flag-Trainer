@@ -1,6 +1,6 @@
 const VERSION = '1.1.1';
 const CACHE_NAME = `flag-trainer-v${VERSION}`;
-const BASE_PATH = location.hostname === 'localhost' ? '' : '/flag-trainer';
+const BASE_PATH = '/';
 
 // Add theme colors
 const THEME_COLORS = {
