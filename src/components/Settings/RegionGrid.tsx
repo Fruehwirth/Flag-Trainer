@@ -6,7 +6,6 @@ import './RegionGrid.css';
 
 export const RegionGrid: React.FC = observer(() => {
   const { settingsStore, gameStore } = useStores();
-  const basePath = import.meta.env.DEV ? '' : '/flag-trainer';
   const [deselectingRegion, setDeselectingRegion] = useState<Region | null>(null);
 
   const handleRegionToggle = async (region: Region) => {
@@ -31,7 +30,7 @@ export const RegionGrid: React.FC = observer(() => {
           disabled={settingsStore.selectedRegions.length === 1 && settingsStore.selectedRegions.includes(region as Region)}
         >
           <img
-            src={`${basePath}/data/images/${region}.svg`}
+            src={`/data/images/${region}.svg`}
             alt={region.replace('_', ' ')}
             className="region-image"
           />

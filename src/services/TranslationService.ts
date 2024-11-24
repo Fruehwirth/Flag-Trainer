@@ -49,8 +49,7 @@ export class TranslationService {
 
   private static async fetchTranslations(language: Language, path: string): Promise<Record<string, string>> {
     try {
-      const basePath = import.meta.env.DEV ? '' : '/flag-trainer';
-      const response = await fetch(`${basePath}/assets/${path}/${language}.json`);
+      const response = await fetch(`/assets/${path}/${language}.json`);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
