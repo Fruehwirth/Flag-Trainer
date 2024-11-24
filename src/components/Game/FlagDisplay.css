@@ -1,14 +1,13 @@
 .flag-container {
     width: 100%;
-    max-width: 500px;
     height: 300px;
     display: flex;
     align-items: center;
     justify-content: center;
   }
-  
+
   @media (max-width: 550px) {
-    .flag-container {
+    .type-mode .flag-container {
       height: 40vh;
     }
   }

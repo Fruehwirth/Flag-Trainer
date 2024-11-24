@@ -17,13 +17,15 @@
   border: 2px solid var(--color-button);
   border-radius: 20px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
   word-break: break-word;
   font-family: var(--font-family-base);
+  position: relative;
+  transform-origin: center;
 }
 
 .option:hover:not(:disabled) {

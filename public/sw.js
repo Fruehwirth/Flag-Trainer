@@ -62,11 +62,8 @@ self.addEventListener('activate', (event) => {
           })
         );
       }),
-      // Force all clients to reload
-      self.clients.claim(),
-      self.clients.matchAll().then(clients => {
-        clients.forEach(client => client.navigate(client.url));
-      })
+      // Claim clients but don't force reload
+      self.clients.claim()
     ])
   );
 }); 
