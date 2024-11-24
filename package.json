@@ -30,5 +30,5 @@
         "preview": "vite preview",
         "serve-webui": "cd flag-difficulty-webui && python -m http.server 8080"
     },
-    "homepage": "https://fruehwirth.github.io/flag-trainer/"
+    "homepage": "https://flagtrainer.net"
 }
