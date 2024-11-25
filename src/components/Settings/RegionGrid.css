@@ -1,9 +1,7 @@
 .region-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  width: 345px;
   gap: 8px;
-  margin: 0 auto;
 }
 
 @media (max-height: 820px) {
