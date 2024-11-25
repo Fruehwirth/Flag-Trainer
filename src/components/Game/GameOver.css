@@ -33,9 +33,21 @@
   justify-content: center;
 }
 
+.game-over-buttons.single-button {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.game-over-buttons.single-button .restart-button {
+  width: 70%;
+  justify-content: center;
+}
+
 .restart-button, .replay-incorrect-button {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
   padding: 1rem 1.5rem;
   border-radius: 8px;
@@ -111,5 +123,12 @@
   to {
     opacity: 1;
     transform: translate(-50%, -50%);
+  }
+}
+
+@media (max-width: 550px) {
+  .game-over {
+    background-color: var(--color-background);
+    box-shadow: none;
   }
 } 

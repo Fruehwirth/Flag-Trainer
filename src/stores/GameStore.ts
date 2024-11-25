@@ -125,6 +125,7 @@ export class GameStore {
       if (this.remainingFlags.length === 1) {
         this.isGameOver = true;
         this.stopTimer();
+        this.quizState = null;
         
         if (this.incorrectFlags.length > 0) {
           setTimeout(() => {
@@ -157,6 +158,7 @@ export class GameStore {
       this.incorrectFlags = [];
       this.isGameOver = false;
       this.elapsedTime = 0;
+      this.quizState = null;
       this.startTimer();
       this.preparedReplayFlags = [];
       this.saveToStorage();

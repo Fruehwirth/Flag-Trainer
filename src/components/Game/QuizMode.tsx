@@ -35,7 +35,7 @@ export const QuizMode: React.FC = observer(() => {
       setIsAnswered(false);
       setSelectedAnswer(null);
 
-      if (gameStore.currentFlag) {
+      if (gameStore.currentFlag && !gameStore.isGameOver) {
         const savedState = gameStore.getQuizState();
         if (savedState) {
           setOptions(savedState.options);
@@ -73,7 +73,7 @@ export const QuizMode: React.FC = observer(() => {
     };
 
     loadOptions();
-  }, [gameStore.currentFlag]);
+  }, [gameStore.currentFlag, gameStore.isGameOver]);
 
   React.useEffect(() => {
     if (gameStore.currentFlag) {
@@ -107,26 +107,32 @@ export const QuizMode: React.FC = observer(() => {
 
   return (
     <div className="quiz-options">
-      {translatedOptions.map((translation, index) => (
-        <button
-          key={`${options[index]}-${index}`}
-          className={`option ${
-            isAnswered
-              ? options[index] === gameStore.currentFlag?.country
-                ? 'correct'
-                : options[index] === selectedAnswer
-                ? 'incorrect'
+      {translatedOptions.map((translation, index) => {
+        const optionCountry = options[index];
+        const isCorrectOption = optionCountry === gameStore.currentFlag?.country;
+        const isSelectedOption = optionCountry === selectedAnswer;
+        
+        return (
+          <button
+            key={`${optionCountry}-${index}-${gameStore.currentFlag?.country}`}
+            className={`option ${
+              isAnswered
+                ? isCorrectOption
+                  ? 'correct'
+                  : isSelectedOption
+                  ? 'incorrect'
+                  : ''
                 : ''
-              : ''
-          }`}
-          onClick={() => handleAnswer(options[index], index)}
-          disabled={isAnswered}
-        >
-          <span className={`option-text ${isChangingText ? 'changing' : ''}`}>
-            {translation}
-          </span>
-        </button>
-      ))}
+            }`}
+            onClick={() => handleAnswer(optionCountry, index)}
+            disabled={isAnswered}
+          >
+            <span className={`option-text ${isChangingText ? 'changing' : ''}`}>
+              {translation}
+            </span>
+          </button>
+        );
+      })}
     </div>
   );
 });

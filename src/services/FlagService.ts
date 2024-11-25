@@ -74,19 +74,10 @@ export class FlagService {
     const options = [correctFlag];
     const availableFlags = (sourceFlags || flags).filter(f => f.country !== correctFlag.country);
     
-    // Calculate similar flags percentage based on difficulty
     const similarPercentage = difficulty === 'easy' ? 0.1 : 
                             difficulty === 'medium' ? 0.5 : 0.9;
     
     const similarCount = Math.round(count * similarPercentage);
-
-    // Log current flag info
-    // const translation = await TranslationService.getTranslation('en', correctFlag.country);
-    // console.log(`Current Flag: ${translation} | ${correctFlag.country}`);
-    // console.log('Member of Groups:');
-    // correctGroups.forEach(group => {
-    //   console.log(`\t${group.name} [${group.weight}]`);
-    // });
 
     // Get similar flags
     if (similarCount > 0) {
@@ -97,6 +88,7 @@ export class FlagService {
             .filter(group => correctGroups.some(g => g.name === group.name))
         }))
         .filter(({ commonGroups }) => commonGroups.length > 0)
+        .filter(({ flag }) => !options.some(existingFlag => existingFlag.country === flag.country))
         .sort((a, b) => {
           const aMaxWeight = Math.max(...a.commonGroups.map(g => g.weight));
           const bMaxWeight = Math.max(...b.commonGroups.map(g => g.weight));
@@ -111,25 +103,17 @@ export class FlagService {
     }
 
     // Fill remaining with random flags
-    while (options.length < count + 1 && availableFlags.length > 0) {
-      const randomIndex = Math.floor(Math.random() * availableFlags.length);
-      options.push(availableFlags[randomIndex]);
-      availableFlags.splice(randomIndex, 1);
+    const remainingFlags = availableFlags.filter(flag => 
+      !options.some(existingFlag => existingFlag.country === flag.country)
+    );
+    
+    while (options.length < count + 1 && remainingFlags.length > 0) {
+      const randomIndex = Math.floor(Math.random() * remainingFlags.length);
+      options.push(remainingFlags[randomIndex]);
+      remainingFlags.splice(randomIndex, 1);
     }
 
-    const shuffledOptions = shuffle(options);
-
-    // Log options info
-    // console.log('Shown Options:');
-    // for (const option of shuffledOptions) {
-    //   const optionTranslation = await TranslationService.getTranslation('en', option.country);
-    //   const commonGroups = this.getGroupsForCountry(option.country)
-    //     .filter(group => correctGroups.some(g => g.name === group.name))
-    //     .map(g => g.name);
-    //   console.log(`${optionTranslation} | ${option.country}: ${commonGroups.join(', ') || 'No common groups'}`);
-    // }
-
-    return shuffledOptions;
+    return shuffle(options);
   }
 
   static preloadImage(url: string): Promise<void> {

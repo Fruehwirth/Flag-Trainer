@@ -19,6 +19,8 @@ export const GameOver: React.FC<{
     gameStore.replayIncorrect();
   };
 
+  const hasIncorrectFlags = gameStore.incorrectFlags.length > 0;
+
   return (
     <div className="game-over">
       <h2>{roundCompleteText}</h2>
@@ -36,19 +38,20 @@ export const GameOver: React.FC<{
           <span>{gameStore.formatTime()}</span>
         </div>
       </div>
-      <div className="game-over-buttons">
+      <div className={`game-over-buttons ${!hasIncorrectFlags ? 'single-button' : ''}`}>
         <button className="restart-button" onClick={onRestart}>
           <span className="material-symbols-outlined">play_arrow</span>
           {startNewRoundText}
         </button>
-        <button 
-          className="replay-incorrect-button" 
-          onClick={handleReplayIncorrect}
-          disabled={gameStore.incorrectFlags.length === 0}
-        >
-          <span className="material-symbols-outlined">replay</span>
-          {replayIncorrectText}
-        </button>
+        {hasIncorrectFlags && (
+          <button 
+            className="replay-incorrect-button" 
+            onClick={handleReplayIncorrect}
+          >
+            <span className="material-symbols-outlined">replay</span>
+            {replayIncorrectText}
+          </button>
+        )}
       </div>
     </div>
   );
