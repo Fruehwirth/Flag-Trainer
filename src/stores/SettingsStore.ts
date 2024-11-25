@@ -10,7 +10,16 @@ const getBrowserLanguage = (): Language => {
     return storedLanguage as Language;
   }
   const browserLang = navigator.language.toLowerCase();
-  const language = browserLang.startsWith('de') ? 'de' : 'en';
+  let language: Language = 'en';
+  
+  if (browserLang.startsWith('de')) {
+    language = 'de';
+  } else if (browserLang.startsWith('es')) {
+    language = 'es';
+  } else if (browserLang.startsWith('ru')) {
+    language = 'ru';
+  }
+  
   updateDocumentLanguage(language);
   return language;
 };

@@ -3,22 +3,30 @@ import { Language } from '../types/Settings';
 export class TranslationService {
   private static cache: Record<Language, Record<string, string>> = {
     en: {},
-    de: {}
+    de: {},
+    es: {},
+    ru: {}
   };
 
   private static uiCache: Record<Language, Record<string, string>> = {
     en: {},
-    de: {}
+    de: {},
+    es: {},
+    ru: {}
   };
 
   private static loadingPromises: Record<Language, Promise<Record<string, string>> | null> = {
     en: null,
-    de: null
+    de: null,
+    es: null,
+    ru: null
   };
 
   private static uiLoadingPromises: Record<Language, Promise<Record<string, string>> | null> = {
     en: null,
-    de: null
+    de: null,
+    es: null,
+    ru: null
   };
 
   static async loadTranslations(language: Language): Promise<Record<string, string>> {

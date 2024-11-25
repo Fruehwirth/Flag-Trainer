@@ -27,8 +27,12 @@ self.addEventListener('message', (event) => {
 const urlsToCache = [
   `${BASE_PATH}/assets/translations/en.json`,
   `${BASE_PATH}/assets/translations/de.json`,
+  `${BASE_PATH}/assets/translations/es.json`,
+  `${BASE_PATH}/assets/translations/ru.json`,
   `${BASE_PATH}/assets/translations/ui/en.json`,
-  `${BASE_PATH}/assets/translations/ui/de.json`
+  `${BASE_PATH}/assets/translations/ui/de.json`,
+  `${BASE_PATH}/assets/translations/ui/es.json`,
+  `${BASE_PATH}/assets/translations/ui/ru.json`
 ];
 
 self.addEventListener('install', (event) => {

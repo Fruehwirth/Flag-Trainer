@@ -151,6 +151,8 @@ export const SettingsPanel: React.FC<{
           >
             <option value="en">English</option>
             <option value="de">Deutsch</option>
+            <option value="es">Español</option>
+            <option value="ru">Русский</option>
           </select>
         </div>
       </section>
