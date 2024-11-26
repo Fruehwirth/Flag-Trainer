@@ -61,7 +61,9 @@ export const StartScreen: React.FC<{
               />
               <label htmlFor="quiz" className="game-mode-label">
                 <span className="game-mode-icon material-symbols-outlined">quiz</span>
-                {quizText}
+                {settingsStore.gameMode === 'quiz' && (
+                  <span className="game-mode-text">{quizText}</span>
+                )}
               </label>
             </div>
             <div className="game-mode-option">
@@ -74,7 +76,9 @@ export const StartScreen: React.FC<{
               />
               <label htmlFor="type" className="game-mode-label">
                 <span className="game-mode-icon material-symbols-outlined">keyboard</span>
-                {typeText}
+                {settingsStore.gameMode === 'type' && (
+                  <span className="game-mode-text">{typeText}</span>
+                )}
               </label>
             </div>
             <div className="game-mode-option">
@@ -87,7 +91,9 @@ export const StartScreen: React.FC<{
               />
               <label htmlFor="picker" className="game-mode-label">
                 <span className="game-mode-icon material-symbols-outlined">flag</span>
-                {pickerText}
+                {settingsStore.gameMode === 'picker' && (
+                  <span className="game-mode-text">{pickerText}</span>
+                )}
               </label>
             </div>
           </div>

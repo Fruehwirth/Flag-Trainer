@@ -4,6 +4,7 @@ import { useStores } from '../../hooks/useStores';
 import { TranslationService } from '../../services/TranslationService';
 import { FlagService } from '../../services/FlagService';
 import './PickerMode.css';
+import { CORRECT_ANSWER_DELAY, INCORRECT_ANSWER_DELAY } from '../../constants/timing';
 
 export const PickerMode: React.FC = observer(() => {
   const { gameStore, settingsStore } = useStores();
@@ -93,7 +94,7 @@ export const PickerMode: React.FC = observer(() => {
       });
     });
 
-    await new Promise(resolve => setTimeout(resolve, isCorrect ? 400 : 1000));
+    await new Promise(resolve => setTimeout(resolve, isCorrect ? CORRECT_ANSWER_DELAY : INCORRECT_ANSWER_DELAY));
     await gameStore.handleAnswer(options[index]);
     
     // Reset state after handling answer

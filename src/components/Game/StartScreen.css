@@ -149,4 +149,51 @@
   text-align: center;
   font-size: 1.3rem;
   margin-bottom: 20px;
+}
+
+.game-mode-option {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.game-mode-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  width: 60px;  /* Width when only icon is showing */
+  height: 60px;  /* Fixed height for consistent sizing */
+  padding: 0;    /* Remove padding to ensure proper centering */
+}
+
+input:checked + .game-mode-label {
+  width: 140px;  /* Width when label is showing */
+  padding: 0 16px;  /* Add padding back when expanded */
+}
+
+.game-mode-icon {
+  flex-shrink: 0;
+  margin: 0 auto;  /* Center icon when text is hidden */
+  transition: margin 0.3s ease;
+}
+
+input:checked + .game-mode-label .game-mode-icon {
+  margin: 0;  /* Remove margin when text is shown */
+}
+
+.game-mode-text {
+  display: none;  /* Hide by default */
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: all 0.3s ease;
+}
+
+input:checked + .game-mode-label .game-mode-text {
+  display: block;  /* Show only when selected */
+  opacity: 1;
+  transform: translateX(0);
 } 

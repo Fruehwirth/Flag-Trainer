@@ -5,6 +5,7 @@ import { TranslationService } from '../../services/TranslationService';
 import Fuse from 'fuse.js';
 import './TypeMode.css';
 import { useTranslation } from '../../hooks/useTranslation';
+import { CORRECT_ANSWER_DELAY, INCORRECT_ANSWER_DELAY } from '../../constants/timing';
 
 export const TypeMode: React.FC = observer(() => {
   const { gameStore, settingsStore } = useStores();
@@ -134,7 +135,7 @@ export const TypeMode: React.FC = observer(() => {
       }, 700);
     }
 
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise(resolve => setTimeout(resolve, isCorrect ? CORRECT_ANSWER_DELAY : INCORRECT_ANSWER_DELAY));
     await gameStore.handleAnswer(normalizedAnswer, isCorrect);
     
     setAnswer('');

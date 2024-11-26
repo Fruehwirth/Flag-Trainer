@@ -119,8 +119,6 @@ select, option {
     align-items: center;
     justify-content: center;
     gap: 8px;
-    padding: 16px;
-    height: 30px;
     background-color: var(--color-surface);
     border: 2px solid var(--color-border);
     border-radius: 12px;

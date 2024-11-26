@@ -4,6 +4,7 @@ import { useStores } from '../../hooks/useStores';
 import { TranslationService } from '../../services/TranslationService';
 import { FlagService } from '../../services/FlagService';
 import './QuizMode.css';
+import { CORRECT_ANSWER_DELAY, INCORRECT_ANSWER_DELAY } from '../../constants/timing';
 
 export const QuizMode: React.FC = observer(() => {
   const { gameStore, settingsStore } = useStores();
@@ -101,7 +102,7 @@ export const QuizMode: React.FC = observer(() => {
       });
     });
 
-    await new Promise(resolve => setTimeout(resolve, isCorrect ? 400 : 1000));
+    await new Promise(resolve => setTimeout(resolve, isCorrect ? CORRECT_ANSWER_DELAY : INCORRECT_ANSWER_DELAY));
     await gameStore.handleAnswer(options[index]);
   };
 
