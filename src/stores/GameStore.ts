@@ -43,6 +43,8 @@ export class GameStore {
     selectedAnswer: string | null;
   } | null = null;
 
+  private _isNewHighscore: boolean = false;
+
   constructor(private settingsStore: SettingsStore) {
     makeAutoObservable(this);
     this.loadFromStorage();
@@ -141,6 +143,7 @@ export class GameStore {
         this.quizState = null;
         this.typeState = null;
         this.pickerState = null;
+        this.checkAndUpdateHighscore();
         
         if (this.incorrectFlags.length > 0) {
           setTimeout(() => {
@@ -197,11 +200,9 @@ export class GameStore {
   }
 
   get scorePercentage(): string {
-    let totalCount = this._isReplayMode ? 
-      this.allFlags.length : 
-      this.allFlags.length - this.remainingFlags.length;
-    if (totalCount === 0) return '0';
-    return ((this.correctCount / totalCount) * 100).toFixed(0);
+    let answeredFlags = this.allFlags.length - this.remainingFlags.length;
+    if (answeredFlags === 0) return '0';
+    return ((this.correctCount / answeredFlags) * 100).toFixed(0);
   }
 
   getQuizState() {
@@ -269,6 +270,36 @@ export class GameStore {
 
   get isReplayMode(): boolean {
     return this._isReplayMode;
+  }
+
+  get isNewHighscore(): boolean {
+    return this._isNewHighscore;
+  }
+
+  private checkAndUpdateHighscore(): void {
+    if (this._isReplayMode) {
+      this._isNewHighscore = false;
+      return;
+    }
+    
+    const currentScore = parseInt(this.scorePercentage);
+    const currentHighscore = StorageService.getHighscore(
+      this.settingsStore.selectedRegions,
+      this.settingsStore.gameMode,
+      this.settingsStore.difficulty
+    );
+
+    if (currentHighscore === null || currentScore > currentHighscore) {
+      StorageService.setHighscore(
+        this.settingsStore.selectedRegions,
+        this.settingsStore.gameMode,
+        this.settingsStore.difficulty,
+        currentScore
+      );
+      this._isNewHighscore = currentHighscore !== null;
+    } else {
+      this._isNewHighscore = false;
+    }
   }
 
 }

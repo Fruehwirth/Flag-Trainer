@@ -71,7 +71,7 @@ export const Header: React.FC<HeaderProps> = observer(({ onSettingsClick, showCo
         settings
       </button>
       
-      <h1>Test Update</h1>
+      <h1>Flag Trainer</h1>
       
       {isVisible && shouldShowScore && (
         <div className={`score-container ${!showControls ? 'hidden' : ''}`}>

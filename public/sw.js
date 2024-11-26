@@ -1,4 +1,4 @@
-const VERSION = '1.1.5';
+const VERSION = '1.2.5';
 const CACHE_NAME = `flag-trainer-v${VERSION}`;
 const BASE_PATH = '/';
 
@@ -113,7 +113,8 @@ self.addEventListener('activate', (event) => {
           clients.forEach(client => {
             client.postMessage({
               type: 'APP_UPDATED',
-              version: VERSION
+              version: VERSION,
+              forceReload: true
             });
           });
         });

@@ -36,6 +36,7 @@ interface SettingsState {
 export class StorageService {
   private static GAME_STATE_KEY = 'flagTrainer_gameState';
   private static SETTINGS_STATE_KEY = 'flagTrainer_settingsState';
+  private static HIGHSCORES_KEY = 'flagTrainer_highscores';
 
   static saveGameState(state: GameState): void {
     localStorage.setItem(this.GAME_STATE_KEY, JSON.stringify(state));
@@ -62,5 +63,28 @@ export class StorageService {
 
   static clearGameState(): void {
     localStorage.removeItem(this.GAME_STATE_KEY);
+  }
+
+  static getHighscore(regions: Region[], gameMode: GameMode, difficulty: Difficulty): number | null {
+    const highscores = this.getHighscores();
+    const key = this.createHighscoreKey(regions, gameMode, difficulty);
+    return highscores[key] || null;
+  }
+
+  static setHighscore(regions: Region[], gameMode: GameMode, difficulty: Difficulty, score: number): void {
+    const highscores = this.getHighscores();
+    const key = this.createHighscoreKey(regions, gameMode, difficulty);
+    highscores[key] = score;
+    localStorage.setItem(this.HIGHSCORES_KEY, JSON.stringify(highscores));
+  }
+
+  private static getHighscores(): Record<string, number> {
+    const stored = localStorage.getItem(this.HIGHSCORES_KEY);
+    return stored ? JSON.parse(stored) : {};
+  }
+
+  private static createHighscoreKey(regions: Region[], gameMode: GameMode, difficulty: Difficulty): string {
+    const sortedRegions = [...regions].sort().join(',');
+    return `${sortedRegions}|${gameMode}|${difficulty}`;
   }
 } 

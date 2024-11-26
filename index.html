@@ -51,14 +51,25 @@
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', async () => {
           try {
-            // Unregister any existing service workers first
-            const registrations = await navigator.serviceWorker.getRegistrations();
-            for (let registration of registrations) {
-              await registration.unregister();
-            }
-            
             const registration = await navigator.serviceWorker.register('/sw.js');
-            console.log('ServiceWorker registration successful');
+            
+            // Add message listener for updates
+            navigator.serviceWorker.addEventListener('message', (event) => {
+              if (event.data && event.data.type === 'APP_UPDATED' && event.data.forceReload) {
+                // Clear cache and reload
+                caches.keys().then((keyList) => {
+                  return Promise.all(keyList.map((key) => caches.delete(key)));
+                }).then(() => {
+                  window.location.reload(true);
+                });
+              }
+            });
+
+            // Check for updates every 30 minutes
+            setInterval(() => {
+              registration.update();
+            }, 1800000);
+
           } catch (err) {
             console.log('ServiceWorker registration failed: ', err);
           }
