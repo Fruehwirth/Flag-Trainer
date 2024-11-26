@@ -36,6 +36,7 @@ export const StartScreen: React.FC<{
   const difficultyText = useTranslation('difficulty', settingsStore.language, true);
   const pickerText = useTranslation('picker', settingsStore.language, true);
 
+
   const handleGameModeChange = (mode: GameMode) => {
     settingsStore.setGameMode(mode);
   };

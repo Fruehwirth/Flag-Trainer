@@ -30,7 +30,7 @@ export class GameStore {
     isProcessing: boolean;
   } | null = null;
 
-  private isReplayMode: boolean = false;
+  private _isReplayMode = false;
   private timerInterval: NodeJS.Timer | null = null;
 
   // Add new property to track prepared replay data
@@ -59,7 +59,7 @@ export class GameStore {
       this.incorrectFlags = stored.incorrectFlags;
       this.isLoading = false;
       this.isGameOver = stored.isGameOver;
-      this.isReplayMode = stored.isReplayMode;
+      this._isReplayMode = stored.isReplayMode;
       this.quizState = stored.quizState;
       this.typeState = stored.typeState;
       this.elapsedTime = stored.elapsedTime;
@@ -79,7 +79,7 @@ export class GameStore {
       incorrectFlags: this.incorrectFlags,
       isLoading: this.isLoading,
       isGameOver: this.isGameOver,
-      isReplayMode: this.isReplayMode,
+      isReplayMode: this._isReplayMode,
       quizState: this.quizState,
       typeState: this.typeState,
       elapsedTime: this.elapsedTime
@@ -88,7 +88,14 @@ export class GameStore {
 
   async initializeGame(): Promise<void> {
     this.isLoading = true;
+    this.correctCount = 0;
+    this.incorrectFlags = [];
+    this.isGameOver = false;
     this.elapsedTime = 0;
+    this.quizState = null;
+    this.typeState = null;
+    this.pickerState = null;
+
     try {
       const flags = await FlagService.getFlagsForRegions(this.settingsStore.selectedRegions);
       runInAction(() => {
@@ -102,7 +109,7 @@ export class GameStore {
         this.isLoading = false;
         this.quizState = null;
         this.typeState = null;
-        this.isReplayMode = false;
+        this._isReplayMode = false;
         this.preparedReplayFlags = [];
         this.startTimer();
         this.saveToStorage();
@@ -162,7 +169,7 @@ export class GameStore {
   
   async replayIncorrect(): Promise<void> {
     runInAction(() => {
-      this.isReplayMode = true;
+      this._isReplayMode = true;
       this.allFlags = [...this.incorrectFlags];
       this.remainingFlags = this.preparedReplayFlags;
       this.correctCount = 0;
@@ -170,6 +177,7 @@ export class GameStore {
       this.isGameOver = false;
       this.elapsedTime = 0;
       this.quizState = null;
+      this.pickerState = null;
       this.startTimer();
       this.preparedReplayFlags = [];
       this.saveToStorage();
@@ -177,7 +185,7 @@ export class GameStore {
   }
   
   async restartGame(): Promise<void> {
-    this.isReplayMode = false;
+    this._isReplayMode = false;
     StorageService.clearStorage();
     await this.initializeGame();
   }
@@ -190,7 +198,7 @@ export class GameStore {
   }
 
   get scorePercentage(): string {
-    let totalCount = this.isReplayMode ? 
+    let totalCount = this._isReplayMode ? 
       this.allFlags.length : 
       this.allFlags.length - this.remainingFlags.length;
     if (totalCount === 0) return '0';
@@ -216,7 +224,7 @@ export class GameStore {
       this.incorrectFlags = [];
       this.isLoading = false;
       this.isGameOver = false;
-      this.isReplayMode = false;
+      this._isReplayMode = false;
       this.quizState = null;
       this.typeState = null;
       StorageService.clearGameState();
@@ -258,6 +266,10 @@ export class GameStore {
     selectedAnswer: string | null;
   }) {
     this.pickerState = state;
+  }
+
+  get isReplayMode(): boolean {
+    return this._isReplayMode;
   }
 
 }

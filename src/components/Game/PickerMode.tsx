@@ -40,7 +40,7 @@ export const PickerMode: React.FC = observer(() => {
           gameStore.allFlags,
           gameStore.currentFlag,
           3,
-          gameStore.allFlags,
+          gameStore.isReplayMode ? gameStore.originalFlags : gameStore.allFlags,
           settingsStore.difficulty
         );
         
