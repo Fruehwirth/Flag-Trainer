@@ -303,4 +303,13 @@ export class GameStore {
     }
   }
 
+  get currentHighscore(): number | null {
+    if (this._isReplayMode) return null;
+    return StorageService.getHighscore(
+      this.settingsStore.selectedRegions,
+      this.settingsStore.gameMode,
+      this.settingsStore.difficulty
+    );
+  }
+
 }

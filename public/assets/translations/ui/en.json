@@ -23,5 +23,6 @@
   "easy": "Easy",
   "medium": "Random",
   "hard": "Hard",
-  "installApp": "Install App"
+  "installApp": "Install App",
+  "highscore": "Highscore"
 }

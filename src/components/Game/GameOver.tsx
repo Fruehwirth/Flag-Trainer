@@ -18,6 +18,7 @@ export const GameOver: React.FC<{
   const difficultyText = useTranslation('difficulty', settingsStore.language, true);
   const difficultyLevelText = useTranslation(settingsStore.difficulty, settingsStore.language, true);
   const gameModeText = useTranslation('gameMode', settingsStore.language, true);
+  const highscoreText = useTranslation('highscore', settingsStore.language, true);
 
   const handleReplayIncorrect = () => {
     gameStore.replayIncorrect();
@@ -55,6 +56,12 @@ export const GameOver: React.FC<{
             {useTranslation(settingsStore.gameMode, settingsStore.language, true)}
           </span>
         </div>
+        {!gameStore.isReplayMode && gameStore.currentHighscore !== null && !gameStore.isNewHighscore && (
+          <div className="stat-item">
+            <label>{highscoreText}:</label>
+            <span>{gameStore.currentHighscore}%</span>
+          </div>
+        )}
       </div>
       <div className={`game-over-buttons ${!hasIncorrectFlags ? 'single-button' : ''}`}>
         <button className="restart-button" onClick={onRestart}>

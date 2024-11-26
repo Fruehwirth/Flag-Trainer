@@ -1,4 +1,4 @@
-const VERSION = '1.2.6';
+const VERSION = '1.2.7';
 const CACHE_NAME = `flag-trainer-v${VERSION}`;
 const BASE_PATH = '/';
 

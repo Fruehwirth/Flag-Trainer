@@ -23,5 +23,6 @@
     "easy": "Fácil",
     "medium": "Aleatorio",
     "hard": "Difícil",
-    "installApp": "Instalar aplicación"
-  }
+    "installApp": "Instalar aplicación",
+    "highscore": "Récord"
+}
