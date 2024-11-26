@@ -14,6 +14,8 @@ export const GameOver: React.FC<{
   const timeText = useTranslation('time', settingsStore.language, true);
   const startNewRoundText = useTranslation('startNewRound', settingsStore.language, true);
   const replayIncorrectText = useTranslation('replayIncorrect', settingsStore.language, true);
+  const difficultyText = useTranslation('difficulty', settingsStore.language, true);
+  const difficultyLevelText = useTranslation(settingsStore.difficulty, settingsStore.language, true);
 
   const handleReplayIncorrect = () => {
     gameStore.replayIncorrect();
@@ -36,6 +38,10 @@ export const GameOver: React.FC<{
         <div className="stat-item">
           <label>{timeText}:</label>
           <span>{gameStore.formatTime()}</span>
+        </div>
+        <div className="stat-item">
+          <label>{difficultyText}:</label>
+          <span>{difficultyLevelText}</span>
         </div>
       </div>
       <div className={`game-over-buttons ${!hasIncorrectFlags ? 'single-button' : ''}`}>
