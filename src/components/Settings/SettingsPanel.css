@@ -150,9 +150,18 @@ select, option {
     font-size: 14px;
 }
 
+.author-section > div:first-child {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    justify-content: center;
+    min-height: 30px;
+}
+
 .author-section .links {
     display: flex;
     gap: 12px;
+    align-items: center;
 }
 
 .author-section a {
