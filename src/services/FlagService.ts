@@ -77,43 +77,42 @@ export class FlagService {
   static async getRandomOptions(flags: Flag[], correctFlag: Flag, count: number = 3, sourceFlags?: Flag[], difficulty: Difficulty = 'medium'): Promise<Flag[]> {
     await this.loadDifficultyGroups();
     
-    const correctGroups = this.getGroupsForCountry(correctFlag.country);
     const options = [correctFlag];
     const availableFlags = (sourceFlags || flags).filter(f => f.country !== correctFlag.country);
+    const correctGroups = this.getGroupsForCountry(correctFlag.country);
     
-    const similarPercentage = difficulty === 'easy' ? 0.1 : 
-                            difficulty === 'medium' ? 0.5 : 0.9;
-    
-    const similarCount = Math.round(count * similarPercentage);
+    // Calculate similarity scores for all available flags
+    const flagsWithScores = availableFlags.map(flag => {
+      const commonGroups = this.getGroupsForCountry(flag.country)
+        .filter(group => correctGroups.some(g => g.name === group.name));
+      
+      // Calculate similarity score based on common groups and their weights
+      const similarityScore = commonGroups.reduce((sum, group) => sum + group.weight, 0);
+      
+      return { flag, similarityScore };
+    });
 
-    // Get similar flags
-    if (similarCount > 0) {
-      const similarFlags = availableFlags
-        .map(flag => ({
-          flag,
-          commonGroups: this.getGroupsForCountry(flag.country)
-            .filter(group => correctGroups.some(g => g.name === group.name))
-        }))
-        .filter(({ commonGroups }) => commonGroups.length > 0)
-        .filter(({ flag }) => !options.some(existingFlag => existingFlag.country === flag.country))
-        .sort((a, b) => {
-          const aMaxWeight = Math.max(...a.commonGroups.map(g => g.weight));
-          const bMaxWeight = Math.max(...b.commonGroups.map(g => g.weight));
-          return difficulty === 'easy' ? aMaxWeight - bMaxWeight : bMaxWeight - aMaxWeight;
-        });
+    // Sort by similarity score (higher score = more similar)
+    flagsWithScores.sort((a, b) => b.similarityScore - a.similarityScore);
 
-      for (let i = 0; i < similarCount && similarFlags.length > 0; i++) {
-        const randomIndex = Math.floor(Math.random() * Math.min(3, similarFlags.length));
-        options.push(similarFlags[randomIndex].flag);
-        similarFlags.splice(randomIndex, 1);
-      }
+    // Select flags based on difficulty
+    const similarCount = difficulty === 'easy' ? Math.round(count * 0.3) : 
+                        difficulty === 'medium' ? Math.round(count * 0.7) : 
+                        Math.round(count * 0.9);
+
+    // Get similar flags from top portion
+    const topSimilar = flagsWithScores.slice(0, Math.ceil(flagsWithScores.length * 0.2));
+    for (let i = 0; i < similarCount && topSimilar.length > 0; i++) {
+      const randomIndex = Math.floor(Math.random() * topSimilar.length);
+      options.push(topSimilar[randomIndex].flag);
+      topSimilar.splice(randomIndex, 1);
     }
 
     // Fill remaining with random flags
-    const remainingFlags = availableFlags.filter(flag => 
-      !options.some(existingFlag => existingFlag.country === flag.country)
-    );
-    
+    const remainingFlags = flagsWithScores
+      .filter(({ flag }) => !options.some(opt => opt.country === flag.country))
+      .map(({ flag }) => flag);
+
     while (options.length < count + 1 && remainingFlags.length > 0) {
       const randomIndex = Math.floor(Math.random() * remainingFlags.length);
       options.push(remainingFlags[randomIndex]);
