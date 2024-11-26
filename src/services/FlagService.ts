@@ -77,48 +77,121 @@ export class FlagService {
   static async getRandomOptions(flags: Flag[], correctFlag: Flag, count: number = 3, sourceFlags?: Flag[], difficulty: Difficulty = 'medium'): Promise<Flag[]> {
     await this.loadDifficultyGroups();
     
-    const options = [correctFlag];
-    const availableFlags = (sourceFlags || flags).filter(f => f.country !== correctFlag.country);
+    console.log('=== New Flag Selection ===');
+    console.log('Correct flag:', correctFlag.country);
     const correctGroups = this.getGroupsForCountry(correctFlag.country);
+    console.log('Correct flag groups:', correctGroups.map(g => ({ name: g.name, weight: g.weight })));
     
-    // Calculate similarity scores for all available flags
-    const flagsWithScores = availableFlags.map(flag => {
-      const commonGroups = this.getGroupsForCountry(flag.country)
-        .filter(group => correctGroups.some(g => g.name === group.name));
+    const availableFlags = (sourceFlags || flags).filter(f => f.country !== correctFlag.country);
+    const options = [correctFlag];
+  
+    if (difficulty === 'easy') {
+      // Get flags with no common groups
+      const flagsWithNoCommonGroups = availableFlags.filter(flag => {
+        const flagGroups = this.getGroupsForCountry(flag.country);
+        const hasCommonGroup = flagGroups.some(group => 
+          correctGroups.some(correctGroup => correctGroup.name === group.name)
+        );
+        return !hasCommonGroup;
+      });
+  
+      console.log(`Found ${flagsWithNoCommonGroups.length} flags with no common groups`);
+  
+      // Randomly select from flags with no common groups
+      while (options.length < count + 1 && flagsWithNoCommonGroups.length > 0) {
+        const randomIndex = Math.floor(Math.random() * flagsWithNoCommonGroups.length);
+        const selectedFlag = flagsWithNoCommonGroups[randomIndex];
+        console.log(`Selected flag ${selectedFlag.country} (no common groups)`);
+        options.push(selectedFlag);
+        flagsWithNoCommonGroups.splice(randomIndex, 1);
+      }
+  
+    } else if (difficulty === 'hard') {
+      // Create weighted pool of flags based on group weights
+      const flagPool: { flag: Flag; weight: number }[] = [];
       
-      // Calculate similarity score based on common groups and their weights
-      const similarityScore = commonGroups.reduce((sum, group) => sum + group.weight, 0);
+      availableFlags.forEach(flag => {
+        const flagGroups = this.getGroupsForCountry(flag.country);
+        const commonGroups = flagGroups.filter(group => 
+          correctGroups.some(correctGroup => correctGroup.name === group.name)
+        );
+        
+        if (commonGroups.length > 0) {
+          // Much more extreme exponential weighting (4^weight instead of 2^weight)
+          const totalWeight = commonGroups.reduce((sum, group) => sum + Math.pow(4, group.weight), 0);
+          flagPool.push({ flag, weight: totalWeight });
+        }
+      });
+  
+      // Sort by weight descending for logging purposes
+      flagPool.sort((a, b) => b.weight - a.weight);
       
-      return { flag, similarityScore };
-    });
-
-    // Sort by similarity score (higher score = more similar)
-    flagsWithScores.sort((a, b) => b.similarityScore - a.similarityScore);
-
-    // Select flags based on difficulty
-    const similarCount = difficulty === 'easy' ? Math.round(count * 0.3) : 
-                        difficulty === 'medium' ? Math.round(count * 0.7) : 
-                        Math.round(count * 0.9);
-
-    // Get similar flags from top portion
-    const topSimilar = flagsWithScores.slice(0, Math.ceil(flagsWithScores.length * 0.2));
-    for (let i = 0; i < similarCount && topSimilar.length > 0; i++) {
-      const randomIndex = Math.floor(Math.random() * topSimilar.length);
-      options.push(topSimilar[randomIndex].flag);
-      topSimilar.splice(randomIndex, 1);
+      console.log('Weighted flag pool:', flagPool.map(({ flag, weight }) => ({
+        country: flag.country,
+        weight,
+        commonGroups: this.getGroupsForCountry(flag.country)
+          .filter(group => correctGroups.some(g => g.name === group.name))
+          .map(g => ({ name: g.name, weight: g.weight }))
+      })));
+  
+      // Select flags with probability based on weights
+      while (options.length < count + 1 && flagPool.length > 0) {
+        const totalWeight = flagPool.reduce((sum, item) => sum + item.weight, 0);
+        let random = Math.random() * totalWeight;
+        let selectedIndex = 0;
+  
+        for (let i = 0; i < flagPool.length; i++) {
+          random -= flagPool[i].weight;
+          if (random <= 0) {
+            selectedIndex = i;
+            break;
+          }
+        }
+  
+        const selectedFlag = flagPool[selectedIndex].flag;
+        const commonGroups = this.getGroupsForCountry(selectedFlag.country)
+          .filter(group => correctGroups.some(g => g.name === group.name));
+        
+        console.log(`Selected flag ${selectedFlag.country}:`, {
+          weight: flagPool[selectedIndex].weight,
+          commonGroups: commonGroups.map(g => ({ name: g.name, weight: g.weight })),
+          selectionProbability: (flagPool[selectedIndex].weight / totalWeight * 100).toFixed(2) + '%'
+        });
+        
+        options.push(selectedFlag);
+        flagPool.splice(selectedIndex, 1);
+      }
+  
+    } else {
+      // Medium difficulty - completely random selection
+      const remainingFlags = [...availableFlags];
+      while (options.length < count + 1 && remainingFlags.length > 0) {
+        const randomIndex = Math.floor(Math.random() * remainingFlags.length);
+        const selectedFlag = remainingFlags[randomIndex];
+        
+        const commonGroups = this.getGroupsForCountry(selectedFlag.country)
+          .filter(group => correctGroups.some(g => g.name === group.name));
+        
+        console.log(`Selected random flag ${selectedFlag.country}:`, {
+          commonGroups: commonGroups.map(g => ({ name: g.name, weight: g.weight }))
+        });
+        
+        options.push(selectedFlag);
+        remainingFlags.splice(randomIndex, 1);
+      }
     }
-
-    // Fill remaining with random flags
-    const remainingFlags = flagsWithScores
-      .filter(({ flag }) => !options.some(opt => opt.country === flag.country))
-      .map(({ flag }) => flag);
-
-    while (options.length < count + 1 && remainingFlags.length > 0) {
-      const randomIndex = Math.floor(Math.random() * remainingFlags.length);
-      options.push(remainingFlags[randomIndex]);
-      remainingFlags.splice(randomIndex, 1);
+  
+    // Fill remaining slots with random flags if needed
+    if (options.length < count + 1) {
+      console.log('Filling remaining slots with random flags');
+      const remainingFlags = availableFlags.filter(f => !options.includes(f));
+      while (options.length < count + 1 && remainingFlags.length > 0) {
+        const randomIndex = Math.floor(Math.random() * remainingFlags.length);
+        options.push(remainingFlags[randomIndex]);
+        remainingFlags.splice(randomIndex, 1);
+      }
     }
-
+  
     return shuffle(options);
   }
 }

@@ -88,7 +88,7 @@
     },
     {
       "name": "nordic_cross_flags",
-      "weight": 6,
+      "weight": 8,
       "countries": [
         "DK",
         "SE",
@@ -99,7 +99,7 @@
     },
     {
       "name": "crescent_and_star",
-      "weight": 3,
+      "weight": 5,
       "countries": [
         "TR",
         "PK",
@@ -112,7 +112,7 @@
     },
     {
       "name": "sun",
-      "weight": 1,
+      "weight": 2,
       "countries": [
         "JP",
         "MK",
@@ -124,7 +124,7 @@
     },
     {
       "name": "incl_union_jack",
-      "weight": 6,
+      "weight": 7,
       "countries": [
         "AU",
         "FJ",
@@ -168,7 +168,7 @@
     },
     {
       "name": "stripes_blue_yellow_red",
-      "weight": 7,
+      "weight": 8,
       "countries": [
         "RO",
         "TD",
@@ -181,7 +181,7 @@
     },
     {
       "name": "diagonal_stripes",
-      "weight": 6,
+      "weight": 7,
       "countries": [
         "BI",
         "CD",
@@ -198,7 +198,7 @@
     },
     {
       "name": "horizontal_red_white_stripes",
-      "weight": 8,
+      "weight": 9,
       "countries": [
         "AT",
         "LV"
@@ -227,7 +227,7 @@
     },
     {
       "name": "blue_white_red",
-      "weight": 3,
+      "weight": 4,
       "countries": [
         "LR",
         "RU",
@@ -260,8 +260,10 @@
       "name": "circle",
       "weight": 7,
       "countries": [
-        "JP",
         "BD",
+        "JP",
+        "LA",
+        "KR",
         "PW"
       ]
     },
@@ -288,7 +290,7 @@
     },
     {
       "name": "red_yellow_green",
-      "weight": 4,
+      "weight": 6,
       "countries": [
         "BJ",
         "CM",
@@ -307,7 +309,7 @@
     },
     {
       "name": "cross",
-      "weight": 5,
+      "weight": 3,
       "countries": [
         "CH",
         "GB",
@@ -322,7 +324,7 @@
     },
     {
       "name": "script",
-      "weight": 8,
+      "weight": 3,
       "countries": [
         "SA",
         "IR",
@@ -332,7 +334,7 @@
     },
     {
       "name": "horizontal_black_white_red",
-      "weight": 5,
+      "weight": 7,
       "countries": [
         "YE",
         "EG",
@@ -359,7 +361,7 @@
     },
     {
       "name": "flags_with_sun_and_star",
-      "weight": 7,
+      "weight": 3,
       "countries": [
         "PH",
         "AR",
@@ -395,7 +397,7 @@
     },
     {
       "name": "flags_with_vertical_blue_yellow_red",
-      "weight": 6,
+      "weight": 7,
       "countries": [
         "RO",
         "AD",
@@ -412,12 +414,16 @@
       ]
     },
     {
-      "name": "flags_with_horizontal_blue_white_red_without_crest",
+      "name": "flags_with_horizontal_blue_white_red",
       "weight": 6,
       "countries": [
         "RU",
+        "TH",
+        "LU",
         "NL",
-        "LU"
+        "SK",
+        "SI",
+        "PY"
       ]
     },
     {
@@ -482,7 +488,7 @@
     },
     {
       "name": "red_and_white",
-      "weight": 2,
+      "weight": 3,
       "countries": [
         "TN",
         "BH",
@@ -653,7 +659,7 @@
     },
     {
       "name": "not_well_known",
-      "weight": 2,
+      "weight": 6,
       "countries": [
         "IR",
         "IQ",
