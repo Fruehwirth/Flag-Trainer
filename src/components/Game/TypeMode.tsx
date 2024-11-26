@@ -7,7 +7,9 @@ import './TypeMode.css';
 import { useTranslation } from '../../hooks/useTranslation';
 import { CORRECT_ANSWER_DELAY, INCORRECT_ANSWER_DELAY } from '../../constants/timing';
 
-export const TypeMode: React.FC = observer(() => {
+export const TypeMode: React.FC<{
+  shouldFocus?: boolean;
+}> = observer(({ shouldFocus }) => {
   const { gameStore, settingsStore } = useStores();
   const [answer, setAnswer] = React.useState('');
   const [suggestion, setSuggestion] = React.useState('');
@@ -28,6 +30,18 @@ export const TypeMode: React.FC = observer(() => {
       setIsExiting(false);
     }
   }, [gameStore.currentFlag]);
+
+  React.useEffect(() => {
+    if (gameStore.isGameOver && inputRef.current) {
+      inputRef.current.blur();
+    }
+  }, [gameStore.isGameOver]);
+
+  React.useEffect(() => {
+    if (shouldFocus && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [shouldFocus]);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement> | React.TouchEvent<HTMLInputElement>) => {
     if (e.type === 'keydown') {

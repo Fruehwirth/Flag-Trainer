@@ -21,6 +21,7 @@ export const App: React.FC = observer(() => {
   });
   const [isGameContainerVisible, setIsGameContainerVisible] = React.useState(true);
   const [viewportHeight, setViewportHeight] = React.useState(window.innerHeight);
+  const [shouldFocusInput, setShouldFocusInput] = React.useState(false);
 
   React.useEffect(() => {
     const handleResize = () => {
@@ -50,6 +51,9 @@ export const App: React.FC = observer(() => {
 
   const handleGameStart = () => {
     setShowStartScreen(false);
+    if (settingsStore.gameMode === 'type') {
+      setShouldFocusInput(true);
+    }
   };
 
   const handleRestart = () => {
@@ -98,7 +102,12 @@ export const App: React.FC = observer(() => {
         <main className="game-container">
           {settingsStore.gameMode !== 'picker' && <FlagDisplay />}
           {settingsStore.gameMode === 'quiz' && <QuizMode />}
-          {settingsStore.gameMode === 'type' && <TypeMode />}
+          {settingsStore.gameMode === 'type' && (
+            <TypeMode 
+              key={gameStore.isGameOver ? 'game-over' : 'playing'} 
+              shouldFocus={shouldFocusInput}
+            />
+          )}
           {settingsStore.gameMode === 'picker' && <PickerMode />}
         </main>
         {gameStore.isGameOver && (
