@@ -103,7 +103,10 @@ export const QuizMode: React.FC = observer(() => {
     });
 
     await new Promise(resolve => setTimeout(resolve, isCorrect ? CORRECT_ANSWER_DELAY : INCORRECT_ANSWER_DELAY));
-    setIsChangingText(true);
+    
+    setIsAnswered(false);
+    setSelectedAnswer(null);
+    
     await gameStore.handleAnswer(options[index]);
   };
 
