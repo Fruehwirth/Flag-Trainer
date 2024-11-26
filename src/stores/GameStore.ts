@@ -63,7 +63,6 @@ export class GameStore {
       this.quizState = stored.quizState;
       this.typeState = stored.typeState;
       this.elapsedTime = stored.elapsedTime;
-      FlagService.preloadImage(this.currentFlag?.url || '');
     } else {
       this.initializeGame();
     }

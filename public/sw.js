@@ -14,16 +14,16 @@ const REGIONS = ['africa', 'asia', 'europe', 'north_america', 'south_america', '
 // URLs to cache during installation
 const urlsToCache = [
   `${BASE_PATH}`,
-  `${BASE_PATH}/index.html`,
-  `${BASE_PATH}/assets/translations/en.json`,
-  `${BASE_PATH}/assets/translations/de.json`,
-  `${BASE_PATH}/assets/translations/es.json`,
-  `${BASE_PATH}/assets/translations/ru.json`,
-  `${BASE_PATH}/assets/translations/ui/en.json`,
-  `${BASE_PATH}/assets/translations/ui/de.json`,
-  `${BASE_PATH}/assets/translations/ui/es.json`,
-  `${BASE_PATH}/assets/translations/ui/ru.json`,
-  ...REGIONS.map(region => `${BASE_PATH}/data/playsets/${region}.json`)
+  `${BASE_PATH}index.html`,
+  `${BASE_PATH}assets/translations/en.json`,
+  `${BASE_PATH}assets/translations/de.json`,
+  `${BASE_PATH}assets/translations/es.json`,
+  `${BASE_PATH}assets/translations/ru.json`,
+  `${BASE_PATH}assets/translations/ui/en.json`,
+  `${BASE_PATH}assets/translations/ui/de.json`,
+  `${BASE_PATH}assets/translations/ui/es.json`,
+  `${BASE_PATH}assets/translations/ui/ru.json`,
+  ...REGIONS.map(region => `${BASE_PATH}data/playsets/${region}.json`)
 ];
 
 // Cache all flag images during installation
@@ -33,20 +33,39 @@ async function cacheFlags() {
   
   // Fetch and cache flag data from each region
   for (const region of REGIONS) {
-    const response = await fetch(`${BASE_PATH}/data/playsets/${region}.json`);
-    const flags = await response.json();
-    flags.forEach(flag => flagUrls.push(flag.url));
+    try {
+      const response = await fetch(`${BASE_PATH}data/playsets/${region}.json`);
+      if (!response.ok) continue;
+      const flags = await response.json();
+      flags.forEach(flag => flagUrls.push(flag.url));
+    } catch (error) {
+      console.warn(`Failed to cache flags for ${region}:`, error);
+    }
   }
   
   // Cache all flag images
-  return Promise.all(flagUrls.map(url => cache.add(url)));
+  return Promise.allSettled(
+    flagUrls.map(url => 
+      fetch(url)
+        .then(response => cache.put(url, response))
+        .catch(err => console.warn(`Failed to cache flag: ${url}`, err))
+    )
+  );
 }
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    Promise.all([
+    Promise.allSettled([
       caches.open(CACHE_NAME)
-        .then((cache) => cache.addAll(urlsToCache)),
+        .then((cache) => 
+          Promise.allSettled(
+            urlsToCache.map(url => 
+              cache.add(url).catch(err => 
+                console.warn(`Failed to cache: ${url}`, err)
+              )
+            )
+          )
+        ),
       cacheFlags()
     ])
   );
