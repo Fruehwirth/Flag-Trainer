@@ -13,6 +13,7 @@ export const QuizMode: React.FC = observer(() => {
   const [isAnswered, setIsAnswered] = React.useState(false);
   const [selectedAnswer, setSelectedAnswer] = React.useState<string | null>(null);
   const [isChangingText, setIsChangingText] = React.useState(false);
+  const [currentFlagCountry, setCurrentFlagCountry] = React.useState<string | null>(null);
 
   const updateTranslations = React.useCallback(async () => {
     if (options.length > 0) {
@@ -90,6 +91,7 @@ export const QuizMode: React.FC = observer(() => {
     if (isAnswered) return;
     
     const isCorrect = options[index] === gameStore.currentFlag?.country;
+    setCurrentFlagCountry(gameStore.currentFlag?.country || null);
     
     React.startTransition(() => {
       setSelectedAnswer(answer);
@@ -104,8 +106,17 @@ export const QuizMode: React.FC = observer(() => {
 
     await new Promise(resolve => setTimeout(resolve, isCorrect ? CORRECT_ANSWER_DELAY : INCORRECT_ANSWER_DELAY));
     
-    setIsAnswered(false);
-    setSelectedAnswer(null);
+    React.startTransition(() => {
+      setIsAnswered(false);
+      setSelectedAnswer(null);
+      setCurrentFlagCountry(null);
+      gameStore.saveQuizState({
+        options,
+        translatedOptions,
+        isAnswered: false,
+        selectedAnswer: null
+      });
+    });
     
     await gameStore.handleAnswer(options[index]);
   };
@@ -114,12 +125,12 @@ export const QuizMode: React.FC = observer(() => {
     <div className="quiz-options">
       {translatedOptions.map((translation, index) => {
         const optionCountry = options[index];
-        const isCorrectOption = optionCountry === gameStore.currentFlag?.country;
+        const isCorrectOption = optionCountry === currentFlagCountry;
         const isSelectedOption = optionCountry === selectedAnswer;
         
         return (
           <button
-            key={`${optionCountry}-${index}-${gameStore.currentFlag?.country}`}
+            key={`${optionCountry}-${index}-${currentFlagCountry}`}
             className={`option ${
               isAnswered
                 ? isCorrectOption
