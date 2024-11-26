@@ -9,11 +9,13 @@
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   text-align: center;
-  min-height: 300px;
+  max-height: 90vh;
   width: 300px;
   max-width: 500px;
   animation: fadeIn 0.3s ease-out;
   z-index: 50;
+  overflow-y: auto;
+  overscroll-behavior: contain;
 }
 
 .game-over-overlay {
@@ -94,6 +96,7 @@
   flex-direction: column;
   gap: 1.5rem;
   margin-bottom: 3rem;
+  padding-right: 5px;
 }
 
 .stat-item {
@@ -131,4 +134,22 @@
     background-color: var(--color-background);
     box-shadow: none;
   }
+}
+
+.game-over::-webkit-scrollbar {
+  width: 8px;
+}
+
+.game-over::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.game-over::-webkit-scrollbar-thumb {
+  background-color: var(--color-border);
+  border-radius: 4px;
+}
+
+.game-over {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border) transparent;
 } 
