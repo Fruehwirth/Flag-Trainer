@@ -3,6 +3,7 @@
   "gameMode": "Spielmodus",
   "quiz": "Quiz",
   "type": "Eingabe",
+  "picker": "Flaggenwahl",
   "language": "Sprache",
   "regions": "Regionen",
   "loading": "Lädt...",

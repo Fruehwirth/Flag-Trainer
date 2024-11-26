@@ -53,6 +53,13 @@ export class FlagService {
       return flags;
     } catch (error) {
       console.error(`Error fetching ${region} flags:`, error);
+      // Try to get from cache if fetch fails
+      const cachedResponse = await caches.match(`./data/playsets/${region}.json`);
+      if (cachedResponse) {
+        const flags = await cachedResponse.json();
+        this.cache[region] = flags;
+        return flags;
+      }
       return [];
     }
   }

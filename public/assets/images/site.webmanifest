@@ -1,7 +1,7 @@
 {
     "name": "Flag Trainer",
     "short_name": "Flag Trainer",
-    "description": "Learn world flags through interactive quizzes",
+    "description": "Learn the world's flags through quizzes",
     "icons": [
         {
             "src": "./android-chrome-192x192.png",
@@ -24,5 +24,7 @@
     "theme_color": "#ffffff",
     "background_color": "#ffffff",
     "display": "standalone",
-    "orientation": "portrait"
+    "orientation": "portrait",
+    "categories": ["education", "games"],
+    "prefer_related_applications": false
 }

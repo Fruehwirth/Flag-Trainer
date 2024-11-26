@@ -1,0 +1,2 @@
+export const CORRECT_ANSWER_DELAY = 800;
+export const INCORRECT_ANSWER_DELAY = 1000;

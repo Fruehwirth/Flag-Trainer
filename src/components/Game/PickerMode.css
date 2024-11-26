@@ -1,0 +1,67 @@
+.picker-container {
+    width: 100%;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+  }
+  
+  .country-name {
+    font-size: 40px;
+    font-weight: 500;
+    text-align: center;
+    color: var(--color-text);
+    margin-bottom: 20px;
+  }
+  
+  .picker-options {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  
+  .picker-option {
+    width: 100%;
+    aspect-ratio: 3/2;
+    padding: 10px;
+    background: none;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .picker-option .flag-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .picker-option .flag-image {
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 20px;
+    object-fit: contain;
+    transition: transform 0.15s ease, opacity 0.15s ease, border 0.3s ease;
+    border: 10px solid transparent;
+  }
+  
+  .picker-option .flag-image.changing {
+    transform: scale(0.99);
+    opacity: 0;
+  }
+  
+  .picker-option.correct .flag-image {
+    border-color: rgba(0, 128, 0, 0.6);
+  }
+  
+  .picker-option.incorrect .flag-image {
+    border-color: rgba(255, 0, 0, 0.6);
+  }
