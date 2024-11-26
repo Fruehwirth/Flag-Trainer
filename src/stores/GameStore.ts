@@ -143,17 +143,18 @@ export class GameStore {
         this.quizState = null;
         this.typeState = null;
         this.pickerState = null;
-        this.checkAndUpdateHighscore();
         
         if (this.incorrectFlags.length > 0) {
           setTimeout(() => {
             this.preparedReplayFlags = shuffle([...this.incorrectFlags]);
             this.remainingFlags = [];
             this.currentFlag = this.preparedReplayFlags[0];
+            this.checkAndUpdateHighscore();
           }, 300);
         } else {
           this.remainingFlags = [];
           this.currentFlag = null;
+          this.checkAndUpdateHighscore();
         }
       } else {
         this.remainingFlags = this.remainingFlags.slice(1);
