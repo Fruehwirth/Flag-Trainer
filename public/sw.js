@@ -1,4 +1,4 @@
-const VERSION = '1.1.3';
+const VERSION = '1.1.4';
 const CACHE_NAME = `flag-trainer-v${VERSION}`;
 const BASE_PATH = '/';
 
@@ -106,8 +106,27 @@ self.addEventListener('activate', (event) => {
           })
         );
       }),
-      // Claim clients but don't force reload
-      self.clients.claim()
+      // Force claim all clients
+      self.clients.claim().then(() => {
+        // Notify all clients about the update
+        self.clients.matchAll().then(clients => {
+          clients.forEach(client => {
+            client.postMessage({
+              type: 'APP_UPDATED',
+              version: VERSION
+            });
+          });
+        });
+      })
     ])
   );
+});
+
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'CHECK_VERSION') {
+    event.ports[0].postMessage({
+      type: 'VERSION_INFO',
+      version: VERSION
+    });
+  }
 }); 
