@@ -36,6 +36,13 @@ export class GameStore {
   // Add new property to track prepared replay data
   private preparedReplayFlags: Flag[] = [];
 
+  private pickerState: {
+    options: string[];
+    flagUrls: string[];
+    isAnswered: boolean;
+    selectedAnswer: string | null;
+  } | null = null;
+
   constructor(private settingsStore: SettingsStore) {
     makeAutoObservable(this);
     this.loadFromStorage();
@@ -126,6 +133,8 @@ export class GameStore {
         this.isGameOver = true;
         this.stopTimer();
         this.quizState = null;
+        this.typeState = null;
+        this.pickerState = null;
         
         if (this.incorrectFlags.length > 0) {
           setTimeout(() => {
@@ -140,9 +149,11 @@ export class GameStore {
       } else {
         this.remainingFlags = this.remainingFlags.slice(1);
         this.currentFlag = this.remainingFlags[0] || null;
+        this.quizState = null;
+        this.typeState = null;
+        this.pickerState = null;
       }
       
-      this.quizState = null;
       this.saveToStorage();
     });
 
@@ -234,6 +245,19 @@ export class GameStore {
     const minutes = Math.floor(this.elapsedTime / 60);
     const seconds = this.elapsedTime % 60;
     return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  }
+
+  getPickerState() {
+    return this.pickerState;
+  }
+
+  savePickerState(state: {
+    options: string[];
+    flagUrls: string[];
+    isAnswered: boolean;
+    selectedAnswer: string | null;
+  }) {
+    this.pickerState = state;
   }
 
 }

@@ -34,6 +34,7 @@ export const StartScreen: React.FC<{
   const regionsText = useTranslation('regions', settingsStore.language, true);
   const startNewRoundText = useTranslation('startNewRound', settingsStore.language, true);
   const difficultyText = useTranslation('difficulty', settingsStore.language, true);
+  const pickerText = useTranslation('picker', settingsStore.language, true);
 
   const handleGameModeChange = (mode: GameMode) => {
     settingsStore.setGameMode(mode);
@@ -73,6 +74,19 @@ export const StartScreen: React.FC<{
               <label htmlFor="type" className="game-mode-label">
                 <span className="game-mode-icon material-symbols-outlined">keyboard</span>
                 {typeText}
+              </label>
+            </div>
+            <div className="game-mode-option">
+              <input
+                type="radio"
+                id="picker"
+                name="gameMode"
+                checked={settingsStore.gameMode === 'picker'}
+                onChange={() => handleGameModeChange('picker')}
+              />
+              <label htmlFor="picker" className="game-mode-label">
+                <span className="game-mode-icon material-symbols-outlined">flag</span>
+                {pickerText}
               </label>
             </div>
           </div>

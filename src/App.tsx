@@ -10,6 +10,7 @@ import { SettingsPanel } from './components/Settings/SettingsPanel';
 import { useStores } from './hooks/useStores';
 import './App.css';
 import { StorageService } from './services/StorageService';
+import { PickerMode } from './components/Game/PickerMode';
 
 export const App: React.FC = observer(() => {
   const { settingsStore, gameStore } = useStores();
@@ -95,12 +96,10 @@ export const App: React.FC = observer(() => {
         transition: 'opacity 0.2s ease'
       }}>
         <main className="game-container">
-          <FlagDisplay />
-          {settingsStore.gameMode === 'quiz' ? (
-            <QuizMode />
-          ) : (
-            <TypeMode />
-          )}
+          {settingsStore.gameMode !== 'picker' && <FlagDisplay />}
+          {settingsStore.gameMode === 'quiz' && <QuizMode />}
+          {settingsStore.gameMode === 'type' && <TypeMode />}
+          {settingsStore.gameMode === 'picker' && <PickerMode />}
         </main>
         {gameStore.isGameOver && (
           <>
