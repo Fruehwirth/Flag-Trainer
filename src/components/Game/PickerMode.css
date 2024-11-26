@@ -8,7 +8,7 @@
   }
   
   .country-name {
-    font-size: 24px;
+    font-size: 40px;
     font-weight: 500;
     text-align: center;
     color: var(--color-text);
@@ -26,28 +26,14 @@
     width: 100%;
     aspect-ratio: 3/2;
     padding: 10px;
-    background-color: var(--color-button-background);
-    border: 2px solid var(--color-button);
+    background: none;
+    border: none;
     border-radius: 20px;
     cursor: pointer;
     transition: all 0.3s ease;
     display: flex;
     align-items: center;
     justify-content: center;
-  }
-  
-  .picker-option:hover:not(:disabled) {
-    background-color: var(--color-button-hover);
-  }
-  
-  .picker-option.correct {
-    background-color: rgba(0, 128, 0, 0.301) !important;
-    border: 2px solid rgba(0, 128, 0, 0.678) !important;
-  }
-  
-  .picker-option.incorrect {
-    background-color: rgba(255, 0, 0, 0.371) !important;
-    border: 2px solid rgba(255, 0, 0, 0.715) !important;
   }
   
   .picker-option .flag-container {
@@ -61,12 +47,21 @@
   .picker-option .flag-image {
     max-width: 100%;
     max-height: 100%;
-    border-radius: 10px;
+    border-radius: 20px;
     object-fit: contain;
-    transition: transform 0.15s ease, opacity 0.15s ease;
+    transition: transform 0.15s ease, opacity 0.15s ease, border 0.3s ease;
+    border: 10px solid transparent;
   }
   
   .picker-option .flag-image.changing {
     transform: scale(0.99);
     opacity: 0;
+  }
+  
+  .picker-option.correct .flag-image {
+    border-color: rgba(0, 128, 0, 0.6);
+  }
+  
+  .picker-option.incorrect .flag-image {
+    border-color: rgba(255, 0, 0, 0.6);
   }
