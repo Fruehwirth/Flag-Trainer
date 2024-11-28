@@ -79,7 +79,7 @@
     },
     {
       "name": "red_and_white_bicolor_horizontal_without_emblem",
-      "weight": 9,
+      "weight": 8,
       "countries": [
         "PL",
         "ID",
@@ -88,7 +88,7 @@
     },
     {
       "name": "nordic_cross_flags",
-      "weight": 8,
+      "weight": 7,
       "countries": [
         "DK",
         "SE",
@@ -279,16 +279,6 @@
       ]
     },
     {
-      "name": "horizontal_blue_yellow_red",
-      "weight": 6,
-      "countries": [
-        "RO",
-        "TD",
-        "AD",
-        "MD"
-      ]
-    },
-    {
       "name": "red_yellow_green",
       "weight": 6,
       "countries": [
@@ -393,16 +383,6 @@
         "MW",
         "AF",
         "VU"
-      ]
-    },
-    {
-      "name": "flags_with_vertical_blue_yellow_red",
-      "weight": 7,
-      "countries": [
-        "RO",
-        "AD",
-        "MD",
-        "TD"
       ]
     },
     {
@@ -640,10 +620,12 @@
       "countries": [
         "NE",
         "CI",
+        "IN",
         "BG",
         "HU",
         "IE",
-        "IT"
+        "IT",
+        "MX"
       ]
     },
     {
