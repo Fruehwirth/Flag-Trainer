@@ -1,7 +1,7 @@
 {
     "name": "Flag Trainer",
     "short_name": "Flag Trainer",
-    "description": "Learn the world's flags through quizzes",
+    "description": "Test your knowledge with an interactive flag quiz game. Learn country flags through multiple quiz modes and difficulty levels.",
     "icons": [
         {
             "src": "./android-chrome-192x192.png",
